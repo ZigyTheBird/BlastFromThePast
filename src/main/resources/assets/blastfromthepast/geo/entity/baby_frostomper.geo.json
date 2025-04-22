@@ -1,0 +1,142 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.baby_frostomper",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "frostyomper",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "frostyomper",
+					"pivot": [0, 14, 0.5],
+					"cubes": [
+						{"origin": [-6.5, 5, -10.5], "size": [13, 3, 17], "uv": [0, 31]},
+						{"origin": [-6.5, 8, -10.5], "size": [13, 14, 17], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 20, 6.5],
+					"cubes": [
+						{"origin": [-1.5, 20, 6.5], "size": [3, 0, 2], "uv": [30, 68]},
+						{"origin": [-2.5, 18, 8.5], "size": [5, 5, 7], "uv": [60, 29]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 19.5, -10.5],
+					"cubes": [
+						{"origin": [-3.5, 24, -14.5], "size": [7, 5, 0], "uv": [14, 66]},
+						{"origin": [-3.5, 24, -14.5], "size": [7, 5, 0], "pivot": [0, 25, -14.5], "rotation": [0, 90, 0], "uv": [14, 66]},
+						{"origin": [-4, 19, -17.5], "size": [8, 1, 7], "uv": [60, 0]},
+						{"origin": [-4.5, 14, -17.5], "size": [9, 5, 7], "uv": [42, 51]},
+						{"origin": [-6, 10, -20.5], "size": [12, 19, 12], "uv": [0, 97]},
+						{"origin": [-5.5, 20, -19.5], "size": [11, 5, 10], "uv": [0, 51]}
+					]
+				},
+				{
+					"name": "right_ear",
+					"parent": "head",
+					"pivot": [-3.5, 22, -13.5],
+					"cubes": [
+						{"origin": [-7.5, 17, -12.5], "size": [4, 5, 1], "uv": [14, 71]},
+						{"origin": [-9, 15, -12.25], "size": [5, 7, 0], "uv": [28, 70]}
+					]
+				},
+				{
+					"name": "left_ear",
+					"parent": "head",
+					"pivot": [3.5, 22, -13.5],
+					"cubes": [
+						{"origin": [3.5, 17, -12.5], "size": [4, 5, 1], "uv": [14, 71], "mirror": true},
+						{"origin": [4, 15, -12.25], "size": [5, 7, 0], "uv": [28, 70], "mirror": true}
+					]
+				},
+				{
+					"name": "trunk",
+					"parent": "head",
+					"pivot": [0, 17, -16.5],
+					"cubes": [
+						{"origin": [-2.5, 10, -18.5], "size": [5, 9, 4], "uv": [42, 63]}
+					]
+				},
+				{
+					"name": "trunk_tip",
+					"parent": "trunk",
+					"pivot": [0, 10, -16.5],
+					"cubes": [
+						{"origin": [-2, 2, -18.5], "size": [4, 8, 4], "uv": [60, 63]}
+					]
+				},
+				{
+					"name": "left_tusk2",
+					"parent": "head",
+					"pivot": [-4, 15.5, -15.75],
+					"rotation": [0, -45, 0],
+					"cubes": [
+						{"origin": [-7.2837, 13.25, -15.4288], "size": [2, 2, 5], "pivot": [-10.2837, 9.25, -16.4288], "rotation": [13.25, 45, 0], "uv": [0, 66]},
+						{"origin": [-3.5337, 10.5, -19.1788], "size": [2, 4, 0], "pivot": [-5.5337, 9.5, -23.1788], "rotation": [0, -45, 0], "uv": [24, 71]}
+					]
+				},
+				{
+					"name": "right_tusk2",
+					"parent": "head",
+					"pivot": [4, 15.5, -15.75],
+					"rotation": [0, 45, 0],
+					"cubes": [
+						{"origin": [5.2837, 13.25, -15.4288], "size": [2, 2, 5], "pivot": [10.2837, 9.25, -16.4288], "rotation": [13.25, -45, 0], "uv": [0, 66], "mirror": true},
+						{"origin": [1.5337, 10.5, -19.1788], "size": [2, 4, 0], "pivot": [5.5337, 9.5, -23.1788], "rotation": [0, 45, 0], "uv": [24, 71], "mirror": true}
+					]
+				},
+				{
+					"name": "leg_1",
+					"parent": "frostyomper",
+					"pivot": [2.5, 8, -6.5],
+					"cubes": [
+						{"origin": [0.25, 1.75, -9.5], "size": [6, 6, 6], "uv": [60, 17], "mirror": true},
+						{"origin": [-0.25, 0, -10], "size": [7, 2, 7], "inflate": -0.09, "uv": [60, 8], "mirror": true}
+					]
+				},
+				{
+					"name": "leg_2",
+					"parent": "frostyomper",
+					"pivot": [2.5, 8, 2.5],
+					"cubes": [
+						{"origin": [0.25, 1.75, -0.5], "size": [6, 6, 6], "uv": [60, 17], "mirror": true},
+						{"origin": [-0.25, 0, -1], "size": [7, 2, 7], "inflate": -0.09, "uv": [60, 8], "mirror": true}
+					]
+				},
+				{
+					"name": "leg_3",
+					"parent": "frostyomper",
+					"pivot": [-2.5, 8, 2.5],
+					"cubes": [
+						{"origin": [-6.25, 1.75, -0.5], "size": [6, 6, 6], "uv": [60, 17]},
+						{"origin": [-6.75, 0, -1], "size": [7, 2, 7], "inflate": -0.09, "uv": [60, 8]}
+					]
+				},
+				{
+					"name": "leg_4",
+					"parent": "frostyomper",
+					"pivot": [-2.5, 8, -6.5],
+					"cubes": [
+						{"origin": [-6.25, 1.75, -9.5], "size": [6, 6, 6], "uv": [60, 17]},
+						{"origin": [-6.75, 0, -10], "size": [7, 2, 7], "inflate": -0.09, "uv": [60, 8]}
+					]
+				}
+			]
+		}
+	]
+}

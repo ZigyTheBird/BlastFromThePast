@@ -1,0 +1,43 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "there_goes_our_last_female": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:snowdo"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.there_goes_our_last_female.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:snowdo_display"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.there_goes_our_last_female.title"
+    }
+  },
+  "requirements": [
+    [
+      "there_goes_our_last_female"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

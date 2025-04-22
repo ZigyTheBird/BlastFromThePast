@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "blastfromthepast:block/rusty_cedar_leaves",
+    "particle": "blastfromthepast:block/rusty_cedar_leaves",
+    "side": "blastfromthepast:block/rusty_cedar_leaves_snowy",
+    "top": "minecraft:block/snow"
+  }
+}

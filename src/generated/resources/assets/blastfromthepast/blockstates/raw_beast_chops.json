@@ -1,0 +1,394 @@
+{
+  "variants": {
+    "axis=x,facing=down,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=down,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=down,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=down,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=down,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=east,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=east,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=east,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=east,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=east,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=north,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=north,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=north,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=north,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=north,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=south,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=south,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=south,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=south,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=south,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=up,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=up,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=up,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=up,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=up,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 270
+    },
+    "axis=x,facing=west,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,facing=west,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,facing=west,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,facing=west,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,facing=west,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,facing=down,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 180
+    },
+    "axis=y,facing=down,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 180
+    },
+    "axis=y,facing=down,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 180
+    },
+    "axis=y,facing=down,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 180
+    },
+    "axis=y,facing=down,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 180
+    },
+    "axis=y,facing=east,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0"
+    },
+    "axis=y,facing=east,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1"
+    },
+    "axis=y,facing=east,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2"
+    },
+    "axis=y,facing=east,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3"
+    },
+    "axis=y,facing=east,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4"
+    },
+    "axis=y,facing=north,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0"
+    },
+    "axis=y,facing=north,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1"
+    },
+    "axis=y,facing=north,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2"
+    },
+    "axis=y,facing=north,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3"
+    },
+    "axis=y,facing=north,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4"
+    },
+    "axis=y,facing=south,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0"
+    },
+    "axis=y,facing=south,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1"
+    },
+    "axis=y,facing=south,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2"
+    },
+    "axis=y,facing=south,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3"
+    },
+    "axis=y,facing=south,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4"
+    },
+    "axis=y,facing=up,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0"
+    },
+    "axis=y,facing=up,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1"
+    },
+    "axis=y,facing=up,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2"
+    },
+    "axis=y,facing=up,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3"
+    },
+    "axis=y,facing=up,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4"
+    },
+    "axis=y,facing=west,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0"
+    },
+    "axis=y,facing=west,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1"
+    },
+    "axis=y,facing=west,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2"
+    },
+    "axis=y,facing=west,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3"
+    },
+    "axis=y,facing=west,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4"
+    },
+    "axis=z,facing=down,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=down,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=down,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=down,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=down,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=east,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=east,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=east,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=east,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=east,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=north,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90
+    },
+    "axis=z,facing=north,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90
+    },
+    "axis=z,facing=north,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90
+    },
+    "axis=z,facing=north,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90
+    },
+    "axis=z,facing=north,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90
+    },
+    "axis=z,facing=south,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=south,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=south,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=south,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=south,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=up,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=up,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=up,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=up,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=up,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=west,states=0": {
+      "model": "blastfromthepast:block/raw_beast_chops_0",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=west,states=1": {
+      "model": "blastfromthepast:block/raw_beast_chops_1",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=west,states=2": {
+      "model": "blastfromthepast:block/raw_beast_chops_2",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=west,states=3": {
+      "model": "blastfromthepast:block/raw_beast_chops_3",
+      "x": 90,
+      "y": 180
+    },
+    "axis=z,facing=west,states=4": {
+      "model": "blastfromthepast:block/raw_beast_chops_4",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

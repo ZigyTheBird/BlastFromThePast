@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "blastfromthepast:block/cedar_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "blastfromthepast:block/cedar_wood"
+    },
+    "axis=z": {
+      "model": "blastfromthepast:block/cedar_wood_horizontal",
+      "x": 90
+    }
+  }
+}

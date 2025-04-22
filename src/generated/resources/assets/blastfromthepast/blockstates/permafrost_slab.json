@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "blastfromthepast:block/permafrost_slab"
+    },
+    "type=double": {
+      "model": "blastfromthepast:block/permafrost"
+    },
+    "type=top": {
+      "model": "blastfromthepast:block/permafrost_slab_top"
+    }
+  }
+}

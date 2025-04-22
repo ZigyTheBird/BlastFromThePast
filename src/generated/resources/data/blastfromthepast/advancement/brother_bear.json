@@ -1,0 +1,43 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "brother_bear": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:psycho_bear"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:pacify_bear_trigger"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.brother_bear.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:psycho_bear_display"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.brother_bear.title"
+    }
+  },
+  "requirements": [
+    [
+      "brother_bear"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

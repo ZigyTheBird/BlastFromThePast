@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left",
+      "x": -90,
+      "y": 270
+    },
+    "facing=north": {
+      "model": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left",
+      "x": -90,
+      "y": 180
+    },
+    "facing=south": {
+      "model": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left",
+      "x": -90
+    },
+    "facing=up": {
+      "model": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left"
+    },
+    "facing=west": {
+      "model": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left",
+      "x": -90,
+      "y": 90
+    }
+  }
+}

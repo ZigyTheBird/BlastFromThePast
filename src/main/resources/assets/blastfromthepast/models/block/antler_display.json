@@ -1,0 +1,11 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "builtin/entity",
+  "textures": {
+    "particle": "minecraft:block/dark_oak_log"
+  },
+  "texture_size": [
+    64,
+    64
+  ]
+}

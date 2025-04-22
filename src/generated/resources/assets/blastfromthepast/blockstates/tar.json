@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "cover=false": {
+      "model": "blastfromthepast:block/tar"
+    },
+    "cover=true": {
+      "model": "blastfromthepast:block/tar_cover"
+    }
+  }
+}

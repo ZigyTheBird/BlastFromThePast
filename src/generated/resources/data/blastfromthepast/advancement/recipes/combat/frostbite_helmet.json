@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shaggy_pelt": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:shaggy_pelt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:frostbite_helmet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_shaggy_pelt"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:frostbite_helmet"
+    ]
+  }
+}

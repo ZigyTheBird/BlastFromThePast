@@ -1,0 +1,42 @@
+{
+  "required": true,
+  "package": "com.clonz.blastfromthepast.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "blastfromthepast.refmap.json",
+  "minVersion": "0.8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "AbstractArrowMixin",
+    "AbstractChestedHorseAccessor",
+    "AxeItemMixin",
+    "BlockMixin",
+    "BoatAccessor",
+    "BreedGoalAccessor",
+    "ContainerOpenersCounterMixin",
+    "DecoratedPotPatternsMixin",
+    "EntityMixin",
+    "FallingBlockMixin",
+    "FollowParentGoalAccessor",
+    "GoalAccessor",
+    "IBlockExtensionMixin",
+    "LivingEntityAccessor",
+    "MeleeAttackGoalAccessor",
+    "MoveToBlockGoalAccessor",
+    "PathAccessor",
+    "PlayerMixin",
+    "ServerPlayerAccessor",
+    "WalkNodeEvaluatorAccess"
+  ],
+  "client": [
+    "client.CameraMixin",
+    "client.FogRendererMixin",
+    "client.FogTypeMixin",
+    "client.GameRendererMixin",
+    "client.HumanoidModelMixin",
+    "client.InventoryScreenMixin",
+    "client.LevelRendererMixin",
+    "client.PlayerModelMixin"
+  ]
+}

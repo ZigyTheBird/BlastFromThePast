@@ -1,0 +1,26 @@
+{
+	"parent": "minecraft:item/handheld",
+	"loader": "neoforge:separate_transforms",
+	"overrides": [
+		{
+			"predicate": {
+				"blastfromthepast:throwing": 1
+			},
+			"model": "blastfromthepast:item/ice_spear_throw"
+		}
+	],
+	"base": {
+		"parent": "blastfromthepast:item/ice_spear_3d"
+	},
+	"perspectives": {
+		"gui": {
+			"parent": "blastfromthepast:item/ice_spear_2d"
+		},
+		"ground": {
+			"parent": "blastfromthepast:item/ice_spear_2d"
+		},
+		"fixed": {
+			"parent": "blastfromthepast:item/ice_spear_2d"
+		}
+	}
+}

@@ -1,0 +1,3 @@
+// 1.21.1	2025-04-17T14:31:27.7268023	Tags for minecraft:worldgen/biome mod id blastfromthepast
+1cac8d0f150d98b096b1d01486b6254a0ccf0c6c data/minecraft/tags/worldgen/biome/is_forest.json
+9ce023b737765f6d4aaa43f4cdb19ace4714e22e data/minecraft/tags/worldgen/biome/is_river.json

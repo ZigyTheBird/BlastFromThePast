@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "": {
+      "model": "blastfromthepast:block/silene",
+      "uvlock": true
+    }
+  }
+}

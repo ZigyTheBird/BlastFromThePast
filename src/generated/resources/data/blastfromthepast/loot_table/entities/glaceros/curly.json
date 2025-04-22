@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:curly_glaceros_antlers"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "blastfromthepast:entities/glaceros"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "blastfromthepast:entities/glaceros/curly"
+}

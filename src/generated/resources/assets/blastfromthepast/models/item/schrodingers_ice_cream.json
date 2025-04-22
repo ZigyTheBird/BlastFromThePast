@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "blastfromthepast:item/schrodingers_ice_cream"
+  }
+}

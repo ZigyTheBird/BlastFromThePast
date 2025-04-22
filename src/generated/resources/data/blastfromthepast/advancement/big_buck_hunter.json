@@ -1,0 +1,43 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "big_buck_hunter": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:glaceros"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.big_buck_hunter.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:glaceros_display"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.big_buck_hunter.title"
+    }
+  },
+  "requirements": [
+    [
+      "big_buck_hunter"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

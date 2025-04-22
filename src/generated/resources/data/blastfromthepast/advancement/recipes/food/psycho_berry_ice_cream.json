@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bowl": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bowl"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:ice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_milk_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:milk_bucket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_psycho_berry": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:psycho_berry"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_psycho_berry_ice_cream": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:psycho_berry_ice_cream"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:psycho_berry_ice_cream"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_psycho_berry_ice_cream",
+      "has_bowl",
+      "has_ice",
+      "has_milk_bucket",
+      "has_psycho_berry"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:psycho_berry_ice_cream"
+    ]
+  }
+}

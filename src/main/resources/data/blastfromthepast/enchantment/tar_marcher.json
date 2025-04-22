@@ -1,0 +1,22 @@
+{
+  "description": {
+    "translate": "enchantment.blastfromthepast.tar_marcher"
+  },
+  "supported_items": "#minecraft:enchantable/foot_armor",
+  "primary_items": "#minecraft:enchantable/foot_armor",
+  "weight": 6,
+  "max_level": 1,
+  "max_cost": {
+    "base": 45,
+    "per_level_above_first": 9
+  },
+  "min_cost": {
+    "base": 2,
+    "per_level_above_first": 8
+  },
+  "anvil_cost": 1,
+  "slots": [
+    "feet"
+  ],
+  "effects": {}
+}

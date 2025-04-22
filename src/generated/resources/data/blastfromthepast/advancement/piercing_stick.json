@@ -1,0 +1,39 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "piercing_stick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:ice_spear"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.piercing_stick.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:ice_spear"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.piercing_stick.title"
+    }
+  },
+  "requirements": [
+    [
+      "piercing_stick"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

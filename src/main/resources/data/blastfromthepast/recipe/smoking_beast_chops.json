@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "blastfromthepast:beast_chops"
+  },
+  "result": {
+    "item": "blastfromthepast:beast_chops_cooked"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

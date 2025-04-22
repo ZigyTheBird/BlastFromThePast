@@ -1,0 +1,65 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "the_ice_cream_man": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:sap_ice_cream"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "the_ice_cream_manone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:psycho_berry_ice_cream"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "the_ice_cream_mantwo": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:melon_ice_cream"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.the_ice_cream_man.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:schrodingers_ice_cream"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.the_ice_cream_man.title"
+    }
+  },
+  "requirements": [
+    [
+      "the_ice_cream_man"
+    ],
+    [
+      "the_ice_cream_manone"
+    ],
+    [
+      "the_ice_cream_mantwo"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

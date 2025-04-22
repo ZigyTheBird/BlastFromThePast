@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "blastfromthepast:glaceros_antlers"
+    },
+    "S": {
+      "item": "blastfromthepast:sap_ball"
+    },
+    "T": {
+      "item": "blastfromthepast:tar"
+    }
+  },
+  "pattern": [
+    "ASA",
+    "TTT",
+    " T "
+  ],
+  "result": {
+    "count": 1,
+    "id": "blastfromthepast:idol_of_retrieval"
+  }
+}

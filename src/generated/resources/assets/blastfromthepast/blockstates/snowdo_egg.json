@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "hatch=0,snowdo_eggs=1": {
+      "model": "blastfromthepast:block/one_egg_smooth"
+    },
+    "hatch=0,snowdo_eggs=2": {
+      "model": "blastfromthepast:block/two_eggs_smooth"
+    },
+    "hatch=0,snowdo_eggs=3": {
+      "model": "blastfromthepast:block/three_eggs_smooth"
+    },
+    "hatch=1,snowdo_eggs=1": {
+      "model": "blastfromthepast:block/one_egg_chipped"
+    },
+    "hatch=1,snowdo_eggs=2": {
+      "model": "blastfromthepast:block/two_eggs_chipped"
+    },
+    "hatch=1,snowdo_eggs=3": {
+      "model": "blastfromthepast:block/three_eggs_chipped"
+    },
+    "hatch=2,snowdo_eggs=1": {
+      "model": "blastfromthepast:block/one_egg_cracked"
+    },
+    "hatch=2,snowdo_eggs=2": {
+      "model": "blastfromthepast:block/two_eggs_cracked"
+    },
+    "hatch=2,snowdo_eggs=3": {
+      "model": "blastfromthepast:block/three_eggs_cracked"
+    }
+  }
+}

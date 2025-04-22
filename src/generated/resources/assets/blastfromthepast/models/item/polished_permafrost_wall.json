@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "blastfromthepast:block/polished_permafrost"
+  }
+}

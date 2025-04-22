@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "blastfromthepast:glaceros_antlers"
+    },
+    "X": {
+      "item": "blastfromthepast:shaggy_pelt"
+    }
+  },
+  "pattern": [
+    "A A",
+    "XXX",
+    "X X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "blastfromthepast:frostbite_helmet"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:ice"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "item": "blastfromthepast:psycho_berry"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "blastfromthepast:psycho_berry_ice_cream"
+  }
+}

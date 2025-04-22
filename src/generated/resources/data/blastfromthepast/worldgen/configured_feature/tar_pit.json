@@ -1,0 +1,32 @@
+{
+  "type": "blastfromthepast:pit",
+  "config": {
+    "barrier": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "blastfromthepast:permafrost",
+        "Properties": {
+          "snowy": "false"
+        }
+      }
+    },
+    "block": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "blastfromthepast:tar",
+        "Properties": {
+          "cover": "false"
+        }
+      }
+    },
+    "cover": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "blastfromthepast:tar",
+        "Properties": {
+          "cover": "true"
+        }
+      }
+    }
+  }
+}

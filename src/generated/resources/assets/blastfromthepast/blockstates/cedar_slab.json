@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "blastfromthepast:block/cedar_slab"
+    },
+    "type=double": {
+      "model": "blastfromthepast:block/cedar"
+    },
+    "type=top": {
+      "model": "blastfromthepast:block/cedar_slab_top"
+    }
+  }
+}

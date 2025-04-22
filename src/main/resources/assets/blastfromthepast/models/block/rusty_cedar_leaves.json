@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "blastfromthepast:block/rusty_cedar_leaves"
+  }
+}

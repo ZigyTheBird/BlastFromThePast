@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "blastfromthepast:block/permafrost",
+    "east": "blastfromthepast:block/permafrost",
+    "north": "blastfromthepast:block/permafrost",
+    "particle": "blastfromthepast:block/permafrost",
+    "south": "blastfromthepast:block/permafrost",
+    "up": "blastfromthepast:block/permafrost_frostomper_painting_bottom_left",
+    "west": "blastfromthepast:block/permafrost"
+  }
+}

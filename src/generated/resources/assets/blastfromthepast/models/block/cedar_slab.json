@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "blastfromthepast:block/cedar",
+    "side": "blastfromthepast:block/cedar",
+    "top": "blastfromthepast:block/cedar"
+  }
+}

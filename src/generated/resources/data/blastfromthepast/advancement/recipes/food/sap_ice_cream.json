@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bowl": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bowl"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:ice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_milk_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:milk_bucket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sap_ball": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:sap_ball"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sap_ice_cream": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:sap_ice_cream"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:sap_ice_cream"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sap_ice_cream",
+      "has_bowl",
+      "has_ice",
+      "has_milk_bucket",
+      "has_sap_ball"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:sap_ice_cream"
+    ]
+  }
+}

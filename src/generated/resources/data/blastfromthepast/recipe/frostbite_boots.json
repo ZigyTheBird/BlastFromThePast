@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "blastfromthepast:bear_claw"
+    },
+    "X": {
+      "item": "blastfromthepast:shaggy_pelt"
+    }
+  },
+  "pattern": [
+    "X X",
+    "X X",
+    "C C"
+  ],
+  "result": {
+    "count": 1,
+    "id": "blastfromthepast:frostbite_boots"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "blastfromthepast:block/ice_brick_slab"
+    },
+    "type=double": {
+      "model": "blastfromthepast:block/ice_brick"
+    },
+    "type=top": {
+      "model": "blastfromthepast:block/ice_brick_slab_top"
+    }
+  }
+}

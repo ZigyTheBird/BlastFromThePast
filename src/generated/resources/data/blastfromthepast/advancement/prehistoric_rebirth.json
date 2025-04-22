@@ -1,0 +1,37 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "prehistoric_rebirth": {
+      "conditions": {
+        "item": {
+          "items": "blastfromthepast:idol_of_retrieval"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.prehistoric_rebirth.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:idol_of_retrieval"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.prehistoric_rebirth.title"
+    }
+  },
+  "requirements": [
+    [
+      "prehistoric_rebirth"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,39 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "adamantium_claws": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:bear_glove"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.adamantium_claws.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:bear_glove"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.adamantium_claws.title"
+    }
+  },
+  "requirements": [
+    [
+      "adamantium_claws"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

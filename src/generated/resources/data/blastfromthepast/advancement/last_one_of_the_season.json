@@ -1,0 +1,48 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "last_one_of_the_season": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "biomes": "blastfromthepast:frostbite_forest"
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "minecraft:dandelion"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.last_one_of_the_season.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:dandelion"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.last_one_of_the_season.title"
+    }
+  },
+  "requirements": [
+    [
+      "last_one_of_the_season"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

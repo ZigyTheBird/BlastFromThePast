@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "blastfromthepast:block/pinecone"
+    },
+    "hanging=true": {
+      "model": "blastfromthepast:block/pinecone_hanging"
+    }
+  }
+}

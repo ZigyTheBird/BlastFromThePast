@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "snowy=false,rusty=false": {
+      "model": "blastfromthepast:block/cedar_leaves"
+    },
+    "snowy=true,rusty=false": {
+      "model": "blastfromthepast:block/cedar_leaves_snowy"
+    },
+    "snowy=false,rusty=true": {
+      "model": "blastfromthepast:block/rusty_cedar_leaves"
+    },
+    "snowy=true,rusty=true": {
+      "model": "blastfromthepast:block/rusty_cedar_leaves_snowy"
+    }
+  }
+}

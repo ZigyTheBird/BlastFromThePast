@@ -1,0 +1,128 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "prehistoric_party": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:frostomper"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partyfive": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:psycho_bear"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partyfour": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:speartooth"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partyone": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:snowdo"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partythree": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:glaceros"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partytwo": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:burrel"
+            }
+          }
+        ]
+      },
+      "trigger": "blastfromthepast:dance_trigger"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.prehistoric_party.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:blizzard_revelry_disc"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.prehistoric_party.title"
+    }
+  },
+  "requirements": [
+    [
+      "prehistoric_party"
+    ],
+    [
+      "prehistoric_partyone"
+    ],
+    [
+      "prehistoric_partytwo"
+    ],
+    [
+      "prehistoric_partythree"
+    ],
+    [
+      "prehistoric_partyfour"
+    ],
+    [
+      "prehistoric_partyfive"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

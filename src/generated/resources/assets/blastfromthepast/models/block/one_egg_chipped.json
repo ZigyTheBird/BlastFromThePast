@@ -1,0 +1,6 @@
+{
+  "parent": "blastfromthepast:block/snowdo_eggs",
+  "textures": {
+    "1": "blastfromthepast:block/one_egg_chipped"
+  }
+}

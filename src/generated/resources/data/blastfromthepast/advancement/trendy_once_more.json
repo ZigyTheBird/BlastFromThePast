@@ -1,0 +1,78 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "trendy_once_more": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:frostbite_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "trendy_once_moreone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:frostbite_leggings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "trendy_once_morethree": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:frostbite_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "trendy_once_moretwo": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:frostbite_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.trendy_once_more.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:frostbite_helmet"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.trendy_once_more.title"
+    }
+  },
+  "requirements": [
+    [
+      "trendy_once_more"
+    ],
+    [
+      "trendy_once_moreone"
+    ],
+    [
+      "trendy_once_moretwo"
+    ],
+    [
+      "trendy_once_morethree"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "blastfromthepast:block/thorns",
+  "textures": {
+    "2": "blastfromthepast:block/thorn_berries"
+  }
+}

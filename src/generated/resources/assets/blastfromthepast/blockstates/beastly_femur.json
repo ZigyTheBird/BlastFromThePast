@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "attached=false,facing=east,waterlogged=false": {
+      "model": "blastfromthepast:block/femur",
+      "y": 270
+    },
+    "attached=false,facing=east,waterlogged=true": {
+      "model": "blastfromthepast:block/femur",
+      "y": 270
+    },
+    "attached=false,facing=north,waterlogged=false": {
+      "model": "blastfromthepast:block/femur",
+      "y": 180
+    },
+    "attached=false,facing=north,waterlogged=true": {
+      "model": "blastfromthepast:block/femur",
+      "y": 180
+    },
+    "attached=false,facing=south,waterlogged=false": {
+      "model": "blastfromthepast:block/femur"
+    },
+    "attached=false,facing=south,waterlogged=true": {
+      "model": "blastfromthepast:block/femur"
+    },
+    "attached=false,facing=west,waterlogged=false": {
+      "model": "blastfromthepast:block/femur",
+      "y": 90
+    },
+    "attached=false,facing=west,waterlogged=true": {
+      "model": "blastfromthepast:block/femur",
+      "y": 90
+    },
+    "attached=true,facing=east,waterlogged=false": {
+      "model": "blastfromthepast:block/femur_connected",
+      "y": 270
+    },
+    "attached=true,facing=east,waterlogged=true": {
+      "model": "blastfromthepast:block/femur_connected",
+      "y": 270
+    },
+    "attached=true,facing=north,waterlogged=false": {
+      "model": "blastfromthepast:block/femur_connected",
+      "y": 180
+    },
+    "attached=true,facing=north,waterlogged=true": {
+      "model": "blastfromthepast:block/femur_connected",
+      "y": 180
+    },
+    "attached=true,facing=south,waterlogged=false": {
+      "model": "blastfromthepast:block/femur_connected"
+    },
+    "attached=true,facing=south,waterlogged=true": {
+      "model": "blastfromthepast:block/femur_connected"
+    },
+    "attached=true,facing=west,waterlogged=false": {
+      "model": "blastfromthepast:block/femur_connected",
+      "y": 90
+    },
+    "attached=true,facing=west,waterlogged=true": {
+      "model": "blastfromthepast:block/femur_connected",
+      "y": 90
+    }
+  }
+}

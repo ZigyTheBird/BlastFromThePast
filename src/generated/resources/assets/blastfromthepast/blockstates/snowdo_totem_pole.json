@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "blastfromthepast:block/snowdo_totem_pole"
+    },
+    "facing=east": {
+      "model": "blastfromthepast:block/snowdo_totem_pole",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "blastfromthepast:block/snowdo_totem_pole"
+    },
+    "facing=south": {
+      "model": "blastfromthepast:block/snowdo_totem_pole",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "blastfromthepast:block/snowdo_totem_pole"
+    },
+    "facing=west": {
+      "model": "blastfromthepast:block/snowdo_totem_pole",
+      "y": 270
+    }
+  }
+}

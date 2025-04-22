@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "blastfromthepast:block/psycho_berry_sprout",
+      "uvlock": true
+    },
+    "age=1": {
+      "model": "blastfromthepast:block/psycho_berry_sprout",
+      "uvlock": true
+    }
+  }
+}

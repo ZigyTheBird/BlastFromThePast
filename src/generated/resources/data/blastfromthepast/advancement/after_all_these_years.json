@@ -1,0 +1,37 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "after_all_these_years": {
+      "conditions": {
+        "item": {
+          "items": "blastfromthepast:pinecone"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.after_all_these_years.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:burrel_display"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.after_all_these_years.title"
+    }
+  },
+  "requirements": [
+    [
+      "after_all_these_years"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

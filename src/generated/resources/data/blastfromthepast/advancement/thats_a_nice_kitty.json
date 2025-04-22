@@ -1,0 +1,43 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "thats_a_nice_kitty": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:speartooth"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.thats_a_nice_kitty.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:speartooth_display"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.thats_a_nice_kitty.title"
+    }
+  },
+  "requirements": [
+    [
+      "thats_a_nice_kitty"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

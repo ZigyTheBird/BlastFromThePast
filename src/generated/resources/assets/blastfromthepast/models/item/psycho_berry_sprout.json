@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "layer0": "blastfromthepast:block/psycho_berry_sprout"
+  }
+}

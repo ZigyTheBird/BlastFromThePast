@@ -1,0 +1,46 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "super_glue": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {}
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "blastfromthepast:sap_ball"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.super_glue.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:sap_ball"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.super_glue.title"
+    }
+  },
+  "requirements": [
+    [
+      "super_glue"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

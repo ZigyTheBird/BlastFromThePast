@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "blastfromthepast:block/cedar_pressure_plate"
+    },
+    "powered=true": {
+      "model": "blastfromthepast:block/cedar_pressure_plate_down"
+    }
+  }
+}

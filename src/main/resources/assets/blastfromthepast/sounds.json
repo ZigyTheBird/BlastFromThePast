@@ -1,0 +1,297 @@
+{
+  "aurora_frolics": {
+    "sounds": [
+      {
+        "name": "blastfromthepast:aurora_frolics",
+        "stream": true
+      }
+    ]
+  },
+  "blizzard_revelry": {
+    "subtitle": "sounds.blastfromthepast.blizzard_revelry",
+    "sounds": [
+      {
+        "name": "blastfromthepast:blizzard_revelry",
+        "stream": true
+      }
+    ]
+  },
+  "bear_trap": {
+    "subtitle": "sounds.blastfromthepast.bear_trap",
+    "sounds": [
+      "blastfromthepast:bear_trap"
+    ]
+  },
+  "bear_glove_slash": {
+    "subtitle": "sounds.blastfromthepast.bear_glove_slash",
+    "sounds": [
+      "blastfromthepast:bear_glove_slash"
+    ]
+  },
+  "bear_glove_slash_crit": {
+    "subtitle": "sounds.blastfromthepast.bear_glove_slash_crit",
+    "sounds": [
+      "blastfromthepast:bear_glove_slash_crit"
+    ]
+  },
+  "wall_grab": {
+    "subtitle": "sounds.blastfromthepast.wall_grab",
+    "sounds": [
+      "blastfromthepast:wall_grab"
+    ]
+  },
+  "speartooth_death": {
+    "subtitle": "sounds.blastfromthepast.speartooth_death",
+    "sounds": [
+      "blastfromthepast:speartooth_death"
+    ]
+  },
+  "speartooth_hurt": {
+    "subtitle": "sounds.blastfromthepast.speartooth_hurt",
+    "sounds": [
+      "blastfromthepast:speartooth_hurt_0",
+      "blastfromthepast:speartooth_hurt_1"
+    ]
+  },
+  "speartooth_idle": {
+    "subtitle": "sounds.blastfromthepast.speartooth_idle",
+    "sounds": [
+      "blastfromthepast:speartooth_idle_0",
+      "blastfromthepast:speartooth_idle_1",
+      "blastfromthepast:speartooth_idle_2"
+    ]
+  },
+  "speartooth_roar": {
+    "subtitle": "sounds.blastfromthepast.speartooth_roar",
+    "sounds": [
+      "blastfromthepast:speartooth_roar"
+    ]
+  },
+  "speartooth_yawn": {
+    "subtitle": "sounds.blastfromthepast.speartooth_yawn",
+    "sounds": [
+      "blastfromthepast:speartooth_yawn"
+    ]
+  },
+  "burrel_death": {
+    "subtitle": "sounds.blastfromthepast.burrel_death",
+    "sounds": [
+      "blastfromthepast:burrel_death_0",
+      "blastfromthepast:burrel_death_1",
+      "blastfromthepast:burrel_death_2"
+    ]
+  },
+  "burrel_hurt": {
+    "subtitle": "sounds.blastfromthepast.burrel_hurt",
+    "sounds": [
+      "blastfromthepast:burrel_hurt_0",
+      "blastfromthepast:burrel_hurt_1"
+    ]
+  },
+  "burrel_idle": {
+    "subtitle": "sounds.blastfromthepast.burrel_idle",
+    "sounds": [
+      "blastfromthepast:burrel_idle_0",
+      "blastfromthepast:burrel_idle_1"
+    ]
+  },
+  "burrel_eat": {
+    "subtitle": "sounds.blastfromthepast.burrel_eat",
+    "sounds": [
+      "blastfromthepast:burrel_eat_0",
+      "blastfromthepast:burrel_eat_1"
+    ]
+  },
+  "glaceros_death": {
+    "subtitle": "sounds.blastfromthepast.glaceros_death",
+    "sounds": [
+      "blastfromthepast:glaceros_death_0",
+      "blastfromthepast:glaceros_death_1"
+    ]
+  },
+  "glaceros_hurt": {
+  "subtitle": "sounds.blastfromthepast.glaceros_hurt",
+    "sounds": [
+      "blastfromthepast:glaceros_hurt_0",
+      "blastfromthepast:glaceros_hurt_1",
+      "blastfromthepast:glaceros_hurt_2"
+    ]
+  },
+  "glaceros_idle": {
+    "subtitle": "sounds.blastfromthepast.glaceros_idle",
+    "sounds": [
+      "blastfromthepast:glaceros_idle_0",
+      "blastfromthepast:glaceros_idle_1",
+      "blastfromthepast:glaceros_idle_2"
+    ]
+  },
+  "glaceros_shear": {
+    "subtitle": "sounds.blastfromthepast.glaceros_shear",
+    "sounds": [
+      "blastfromthepast:glaceros_shear_0",
+      "blastfromthepast:glaceros_shear_1",
+      "blastfromthepast:glaceros_shear_2"
+    ]
+  },
+  "glaceros_hoof_scrape": {
+    "subtitle": "sounds.blastfromthepast.glaceros_hoof_scrape",
+    "sounds": [
+      "blastfromthepast:glaceros_hoof_scrape"
+    ]
+  },
+  "glaceros_clash": {
+    "subtitle": "sounds.blastfromthepast.glaceros_clash",
+    "sounds": [
+      "blastfromthepast:glaceros_clash_0",
+      "blastfromthepast:glaceros_clash_1",
+      "blastfromthepast:glaceros_clash_2"
+    ]
+  },
+  "snowdo_death": {
+    "subtitle": "sounds.blastfromthepast.snowdo_death",
+    "sounds": [
+      "blastfromthepast:snowdo_death"
+    ]
+  },
+  "snowdo_hurt": {
+    "subtitle": "sounds.blastfromthepast.snowdo_hurt",
+    "sounds": [
+      "blastfromthepast:snowdo_hurt_0",
+      "blastfromthepast:snowdo_hurt_1"
+    ]
+  },
+  "snowdo_idle": {
+    "subtitle": "sounds.blastfromthepast.snowdo_idle",
+    "sounds": [
+      "blastfromthepast:snowdo_idle_0",
+      "blastfromthepast:snowdo_idle_1",
+      "blastfromthepast:snowdo_idle_2"
+    ]
+  },
+  "snowdo_trip": {
+    "subtitle": "sounds.blastfromthepast.snowdo_trip",
+    "sounds": [
+      "blastfromthepast:snowdo_trip"
+    ]
+  },
+  "snowdo_flap": {
+    "subtitle": "sounds.blastfromthepast.snowdo_flap",
+    "sounds": [
+      "blastfromthepast:snowdo_flap_0",
+      "blastfromthepast:snowdo_flap_1"
+    ]
+  },
+  "frostomper_charge": {
+    "subtitle": "sounds.blastfromthepast.frostomper_charge",
+    "sounds": [
+      "blastfromthepast:frostomper_charge"
+
+    ]
+  },
+  "frostomper_death": {
+    "subtitle": "sounds.blastfromthepast.frostomper_death",
+    "sounds": [
+      "blastfromthepast:frostomper_death"
+
+    ]
+  },
+  "frostomper_hurt": {
+    "subtitle": "sounds.blastfromthepast.frostomper_hurt",
+    "sounds": [
+      "blastfromthepast:frostomper_hurt_0",
+      "blastfromthepast:frostomper_hurt_2"
+
+    ]
+  },
+  "frostomper_idle": {
+    "subtitle": "sounds.blastfromthepast.frostomper_idle",
+    "sounds": [
+      "blastfromthepast:frostomper_idle_0",
+      "blastfromthepast:frostomper_idle_2"
+
+    ]
+  },
+  "frostomper_stomp": {
+    "subtitle": "sounds.blastfromthepast.frostomper_stomp",
+    "sounds": [
+      "blastfromthepast:frostomper_stomp_0",
+      "blastfromthepast:frostomper_stomp_2"
+
+    ]
+  },
+  "frostomper_trumpet": {
+    "subtitle": "sounds.blastfromthepast.frostomper_trumpet",
+    "sounds": [
+      "blastfromthepast:frostomper_trumpet_0",
+      "blastfromthepast:frostomper_trumpet_1",
+      "blastfromthepast:frostomper_trumpet_2",
+      "blastfromthepast:frostomper_trumpet_3"
+
+    ]
+  },
+  "psycho_bear_death": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_death",
+    "sounds": [
+      "blastfromthepast:psycho_bear_death"
+    ]
+  },
+  "psycho_bear_eat": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_eat",
+    "sounds": [
+      "blastfromthepast:psycho_bear_eat_0",
+      "blastfromthepast:psycho_bear_eat_1"
+    ]
+  },
+  "psycho_bear_hurt": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_hurt",
+    "sounds": [
+      "blastfromthepast:psycho_bear_hurt_0",
+      "blastfromthepast:psycho_bear_hurt_1"
+    ]
+  },
+  "psycho_bear_idle": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_idle",
+    "sounds": [
+      "blastfromthepast:psycho_bear_idle_0",
+      "blastfromthepast:psycho_bear_idle_1",
+      "blastfromthepast:psycho_bear_idle_2"
+    ]
+  },
+  "psycho_bear_roar": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_roar",
+    "sounds": [
+      "blastfromthepast:psycho_bear_roar_0",
+      "blastfromthepast:psycho_bear_roar_1"
+    ]
+  },
+  "psycho_bear_scratch": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_scratch",
+    "sounds": [
+      "blastfromthepast:psycho_bear_scratch_0",
+      "blastfromthepast:psycho_bear_scratch_1",
+      "blastfromthepast:psycho_bear_scratch_2"
+    ]
+  },
+  "psycho_bear_slash": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_slash",
+    "sounds": [
+      "blastfromthepast:psycho_bear_slash_0",
+      "blastfromthepast:psycho_bear_slash_1",
+      "blastfromthepast:psycho_bear_slash_2"
+    ]
+  },
+  "psycho_bear_snore": {
+    "subtitle": "sounds.blastfromthepast.psycho_bear_snore",
+    "sounds": [
+      "blastfromthepast:psycho_bear_snore_0",
+      "blastfromthepast:psycho_bear_snore_1",
+      "blastfromthepast:psycho_bear_snore_2"
+    ]
+  }
+}
+
+
+
+
+
+

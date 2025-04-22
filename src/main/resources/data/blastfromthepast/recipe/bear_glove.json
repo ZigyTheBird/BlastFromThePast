@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#L#",
+    "LLL"
+  ],
+  "key": {
+    "#": {
+      "item": "blastfromthepast:bear_claw"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "id": "blastfromthepast:bear_glove",
+    "count": 1
+  }
+}

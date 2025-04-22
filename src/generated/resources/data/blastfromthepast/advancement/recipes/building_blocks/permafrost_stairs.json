@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_permafrost": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:permafrost"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:permafrost_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_permafrost"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:permafrost_stairs"
+    ]
+  }
+}

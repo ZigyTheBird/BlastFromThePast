@@ -1,0 +1,39 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "shiver_me_timbers": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:cedar_log"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.shiver_me_timbers.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blastfromthepast:cedar_log"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.shiver_me_timbers.title"
+    }
+  },
+  "requirements": [
+    [
+      "shiver_me_timbers"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "snowy=false": {
+      "model": "blastfromthepast:block/permafrost",
+      "uvlock": true
+    },
+    "snowy=true": {
+      "model": "blastfromthepast:block/snowy_permafrost",
+      "uvlock": true
+    }
+  }
+}

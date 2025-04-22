@@ -1,0 +1,14 @@
+{
+  "type": "blastfromthepast:boulder",
+  "config": {
+    "state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "blastfromthepast:permafrost",
+        "Properties": {
+          "snowy": "false"
+        }
+      }
+    }
+  }
+}

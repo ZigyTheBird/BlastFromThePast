@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "blastfromthepast:block/snow_larkspur_bottom",
+      "uvlock": true
+    },
+    "half=upper": {
+      "model": "blastfromthepast:block/snow_larkspur_top",
+      "uvlock": true
+    }
+  }
+}

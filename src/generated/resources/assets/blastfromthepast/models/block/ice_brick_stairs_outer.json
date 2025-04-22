@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "blastfromthepast:block/ice_brick",
+    "side": "blastfromthepast:block/ice_brick",
+    "top": "blastfromthepast:block/ice_brick"
+  }
+}

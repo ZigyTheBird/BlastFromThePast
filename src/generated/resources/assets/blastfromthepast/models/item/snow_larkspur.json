@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "blastfromthepast:block/snow_larkspur_top"
+  }
+}

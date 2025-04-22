@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_snow_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blastfromthepast:snow_brick"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:snow_brick_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_snow_brick"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:snow_brick_stairs"
+    ]
+  }
+}
