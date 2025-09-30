@@ -1,0 +1,8 @@
+{
+  "processors": [
+    {
+      "processor_type": "blastfromthepast:sloth_painting_randomizer",
+      "rules": []
+    }
+  ]
+}

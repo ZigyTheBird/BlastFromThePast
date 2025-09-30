@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "builtin/entity",
+	"parent": "shaggy_hide",
+	"render_type": "minecraft:cutout_mipped",
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "blastfromthepast:block/shaggy_block",
@@ -188,11 +189,6 @@
 			}
 		}
 	],
-	"display": {
-		"thirdperson_righthand": {
-			"scale": [0.25, 0.25, 0.25]
-		}
-	},
 	"groups": [
 		{
 			"name": "Block",

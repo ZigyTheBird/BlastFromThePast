@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.clonz.blastfromthepast.mixin",
+  "package": "team.recrafted.blastfromthepast.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "blastfromthepast.refmap.json",
   "minVersion": "0.8",
@@ -26,6 +26,7 @@
     "MoveToBlockGoalAccessor",
     "PathAccessor",
     "PlayerMixin",
+    "ServerLevelMixin",
     "ServerPlayerAccessor",
     "WalkNodeEvaluatorAccess"
   ],

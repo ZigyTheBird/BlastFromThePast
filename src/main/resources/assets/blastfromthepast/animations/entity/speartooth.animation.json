@@ -1320,7 +1320,7 @@
 			"animation_length": 2,
 			"bones": {
 				"torso": {
-					"rotation": ["math.cos((query.anim_time -0.0) *180) *+4.5", "math.cos((query.anim_time -0.2) *180) *-0.5", "math.cos((query.anim_time -0.4) *180) *2"],
+					"rotation": ["math.cos(query.anim_time *180) * 4.5", "math.cos((query.anim_time -0.2) *180) *-0.5", "math.cos((query.anim_time -0.4) *180) *2"],
 					"position": [0, "-3+(math.cos((query.anim_time -0.6) *360) *-0.2)", 0]
 				},
 				"mane": {

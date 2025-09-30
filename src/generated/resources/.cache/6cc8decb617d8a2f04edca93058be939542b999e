@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-17T14:31:27.7237949	Tags for minecraft:block mod id blastfromthepast
+// 1.21.1	2025-09-28T20:36:27.0138908	Tags for minecraft:block mod id blastfromthepast
 a4e8097fff07f9a74259d6b5dd583f3437ff28a2 data/blastfromthepast/tags/block/frostomper_can_break.json
 b147fcff5c0b4d72df1cb7809b063b2562180832 data/blastfromthepast/tags/block/psycho_bear_scratches_back_on.json
 2a0116ae6116d13a8be8a8dfd8f4f4869d45893f data/minecraft/tags/block/ceiling_hanging_signs.json
@@ -11,6 +11,7 @@ c9d618c7ed8c7500453361c5569df7177de16aed data/minecraft/tags/block/mineable/pick
 c9d618c7ed8c7500453361c5569df7177de16aed data/minecraft/tags/block/needs_stone_tool.json
 adc047c4ca9711425285ae902799316a7d8b7619 data/minecraft/tags/block/planks.json
 4358ae9c67be2de99d39b60948012d3a41c350ee data/minecraft/tags/block/slabs.json
+99689ae4bd3d6d672b500c2824c2172cb60bf4ac data/minecraft/tags/block/snow_layer_cannot_survive_on.json
 2f5e13e947990fde2478a04fb4cea2a5481641da data/minecraft/tags/block/stairs.json
 8f88d8df8de626f756c772939b6c3367a2478347 data/minecraft/tags/block/standing_signs.json
 57a12d5b96870b0c13bc7b51b8cfa6560d3e60b1 data/minecraft/tags/block/tall_flowers.json

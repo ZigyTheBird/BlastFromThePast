@@ -713,7 +713,7 @@
 				},
 				"neck": {
 					"rotation": [
-						"Math.sin((query.anim_time -0.2) * 720) * +96",
+						"Math.sin((query.anim_time -0.2) * 720) * 96",
 						"(Math.sin((query.anim_time -0.1) * 720) * 2)",
 						"(Math.sin((query.anim_time -0.3) * 720) * 5)"
 					],
