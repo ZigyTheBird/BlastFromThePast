@@ -76,7 +76,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerBFTPData
                 if (bftp$screenShake.elapsedTicks > bftp$screenShake.maxDuration) bftp$screenShake = null;
             }
         }
-        else if (ClientUtils.isHost(player) && bftp$shouldPlayBearGloveWallAnim) {
+        else if (bftp$shouldPlayBearGloveWallAnim) {
             bftp$shouldPlayBearGloveWallAnim = false;
             PacketDistributor.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
         }
