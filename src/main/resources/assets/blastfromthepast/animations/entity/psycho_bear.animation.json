@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.Psycho Bear.Pose": {
+		"animation.psycho_bear.Pose": {
 			"loop": true,
 			"bones": {
 				"head": {
@@ -56,7 +56,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.tail_wiggle": {
+		"animation.psycho_bear.tail_wiggle": {
 			"animation_length": 1,
 			"bones": {
 				"tail": {
@@ -88,7 +88,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.idle": {
+		"animation.psycho_bear.idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -205,7 +205,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.walk": {
+		"animation.psycho_bear.walk": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {
@@ -424,7 +424,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.attack": {
+		"animation.psycho_bear.attack": {
 			"animation_length": 1,
 			"bones": {
 				"body": {
@@ -688,7 +688,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.attack_flipped": {
+		"animation.psycho_bear.attack_flipped": {
 			"animation_length": 1,
 			"bones": {
 				"body": {
@@ -952,7 +952,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.dance": {
+		"animation.psycho_bear.dance": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -1307,7 +1307,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.sleep_start": {
+		"animation.psycho_bear.sleep_start": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -1480,7 +1480,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.sleep": {
+		"animation.psycho_bear.sleep": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -1589,7 +1589,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.sleep_end": {
+		"animation.psycho_bear.sleep_end": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -1838,7 +1838,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.eat": {
+		"animation.psycho_bear.eat": {
 			"animation_length": 2.5,
 			"bones": {
 				"body": {
@@ -2286,7 +2286,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.roar": {
+		"animation.psycho_bear.roar": {
 			"animation_length": 2.5,
 			"bones": {
 				"body": {
@@ -3054,7 +3054,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.back_scratch_start": {
+		"animation.psycho_bear.back_scratch_start": {
 			"animation_length": 0.5,
 			"bones": {
 				"psycho_bear": {
@@ -3364,7 +3364,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.back_scratch_loop": {
+		"animation.psycho_bear.back_scratch_loop": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -3488,7 +3488,7 @@
 				}
 			}
 		},
-		"animation.Psycho Bear.back_scratch_stop": {
+		"animation.psycho_bear.back_scratch_stop": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
