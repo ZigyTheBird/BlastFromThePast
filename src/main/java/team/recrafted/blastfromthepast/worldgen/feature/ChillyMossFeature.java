@@ -26,7 +26,8 @@ public class ChillyMossFeature extends Feature<NoneFeatureConfiguration> {
         } else {
             for (BlockPos blockpos1 : BlockPos.betweenClosed(blockpos.offset(-8, 0, -8), blockpos.offset(8, 0, 8))) {
                 blockpos1 = blockpos1.atY(worldgenlevel.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, blockpos1.getX(), blockpos1.getZ()));
-                if (!context.level().getBlockState(blockpos).is(Blocks.WATER) || !context.level().getBlockState(blockpos.above()).is(Blocks.WATER) || (blockpos1.distToLowCornerSqr(blockpos.getX(), blockpos1.getY(), blockpos.getZ()) > 36 && randomsource.nextBoolean())) continue;
+                if (!context.level().getBlockState(blockpos1).is(Blocks.WATER) || !context.level().getBlockState(blockpos1.above()).is(Blocks.WATER) || !context.level().getBlockState(blockpos1.above(2)).is(Blocks.WATER)
+                        || (blockpos1.distToLowCornerSqr(blockpos.getX(), blockpos1.getY(), blockpos.getZ()) > 36 && randomsource.nextBoolean())) continue;
                 this.placeBlock(worldgenlevel, blockpos1, randomsource);
             }
 

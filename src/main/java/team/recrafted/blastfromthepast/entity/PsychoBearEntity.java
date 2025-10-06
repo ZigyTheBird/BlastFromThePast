@@ -55,7 +55,7 @@ import team.recrafted.blastfromthepast.entity.ai.goal.complex_animal.MoveToOrSit
 import team.recrafted.blastfromthepast.entity.ai.goal.complex_animal.SeekShelterGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.complex_animal.SleepGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.roar.RoarAtTargetGoal;
-import team.recrafted.blastfromthepast.entity.ai.navigation.BFTPGroundPathNavigation;
+import team.recrafted.blastfromthepast.entity.ai.navigation.AzureNavigation;
 import team.recrafted.blastfromthepast.entity.misc.*;
 import team.recrafted.blastfromthepast.init.ModCriteriaTriggers;
 import team.recrafted.blastfromthepast.init.ModEntities;
@@ -186,7 +186,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        return new BFTPGroundPathNavigation(this, level);
+        return new AzureNavigation(this, level);
     }
 
     @Override

@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.baby_speartooth.Pose": {
+		"animation.speartooth.Pose": {
 			"loop": true,
 			"bones": {
 				"tail": {
@@ -36,7 +36,7 @@
 				}
 			}
 		},
-		"animation.baby_speartooth.idle": {
+		"animation.speartooth.idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -52,7 +52,7 @@
 				}
 			}
 		},
-		"animation.baby_speartooth.walk": {
+		"animation.speartooth.walk": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -83,7 +83,7 @@
 				}
 			}
 		},
-		"animation.baby_speartooth.run": {
+		"animation.speartooth.run": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
@@ -115,7 +115,7 @@
 				}
 			}
 		},
-		"animation.baby_speartooth.cold": {
+		"animation.speartooth.cold": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
@@ -143,7 +143,7 @@
 				}
 			}
 		},
-		"animation.baby_speartooth.sleep": {
+		"animation.speartooth.sleep": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -172,7 +172,7 @@
 				}
 			}
 		},
-		"animation.baby_speartooth.sit": {
+		"animation.speartooth.sit": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {

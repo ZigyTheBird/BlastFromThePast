@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.baby_psycho_bear.Pose": {
+		"animation.psycho_bear.Pose": {
 			"loop": true,
 			"bones": {
 				"head": {
@@ -27,7 +27,7 @@
 				}
 			}
 		},
-		"animation.baby_psycho_bear.idle": {
+		"animation.psycho_bear.idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -43,7 +43,7 @@
 				}
 			}
 		},
-		"animation.baby_psycho_bear.walk": {
+		"animation.psycho_bear.walk": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {
@@ -72,7 +72,7 @@
 				}
 			}
 		},
-		"animation.baby_psycho_bear.sleep": {
+		"animation.psycho_bear.sleep": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -103,7 +103,7 @@
 				}
 			}
 		},
-		"animation.baby_psycho_bear.back_scratch": {
+		"animation.psycho_bear.back_scratch": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {

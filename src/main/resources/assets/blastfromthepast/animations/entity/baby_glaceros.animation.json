@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.baby_glaceros.Pose": {
+		"animation.glaceros.Pose": {
 			"loop": true,
 			"bones": {
 				"neck": {
@@ -27,7 +27,7 @@
 				}
 			}
 		},
-		"animation.baby_glaceros.idle": {
+		"animation.glaceros.idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -43,7 +43,7 @@
 				}
 			}
 		},
-		"animation.baby_glaceros.walk": {
+		"animation.glaceros.walk": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -75,7 +75,7 @@
 				}
 			}
 		},
-		"animation.baby_glaceros.run": {
+		"animation.glaceros.run": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
@@ -107,7 +107,7 @@
 				}
 			}
 		},
-		"animation.baby_glaceros.eat": {
+		"animation.glaceros.eat": {
 			"animation_length": 2.3333,
 			"bones": {
 				"body": {

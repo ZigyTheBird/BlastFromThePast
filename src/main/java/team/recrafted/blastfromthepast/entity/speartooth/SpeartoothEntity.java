@@ -139,7 +139,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
         this.goalSelector.addGoal(i++, new PanicGoal(this, 2.0F, EntityHelper::getPanicInducingDamageTypes));
 
         this.goalSelector.addGoal(i++, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(i++, new FollowOwnerGoal(this, 1.25f, 8.0F, 2.0F));
+        this.goalSelector.addGoal(i++, new FollowOwnerGoal(this, 1.25f, 10.0F, 2.0F));
         this.goalSelector.addGoal(i++, new TemptGoal(this, 1.25F, this::isTemptItem, false));
 
         this.goalSelector.addGoal(i++, new SpeartoothTigerIdleGoal(this));
@@ -264,7 +264,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
                 }
                 if (this.isBaby() || itemstack.is(ModItems.RAW_VENISON)) {
                     return super.mobInteract(player, hand);
-                } else if (this.isOwnedBy(player) && !this.isBaby() /* Baby speartooth doesn't have a sitting animation */) {
+                } else if (this.isOwnedBy(player)) {
                     if (hand == InteractionHand.MAIN_HAND) {
                         this.setOrderedToSit(!this.isOrderedToSit());
 //                        Minecraft.getInstance().player.sendSystemMessage(Component.literal((this.level().isClientSide ? "[Client] " : "[Server] ") + this + " is now " + (this.isOrderedToSit() ? "sitting" : "standing")));

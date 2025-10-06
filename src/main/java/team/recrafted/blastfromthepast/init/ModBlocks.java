@@ -54,7 +54,7 @@ public class ModBlocks {
             () -> new ChillyMossSprout(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_BLOCK).randomTicks().noOcclusion().noCollission()), new Item.Properties());
 
     public static final DeferredBlock<Block> CHILLY_MOSS = createRegistry("chilly_moss",
-            () -> new ChillyMoss(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_BLOCK).pushReaction(PushReaction.NORMAL)), new Item.Properties());
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_BLOCK).pushReaction(PushReaction.NORMAL)), new Item.Properties());
 
     public static final DeferredBlock<Block> BEAST_CHOPS = createRegistry("raw_beast_chops",
             () -> new BeastChopsBlock(BlockBehaviour.Properties.of().forceSolidOn().strength(0.5F).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY)), new Item.Properties());
