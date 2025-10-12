@@ -74,7 +74,7 @@ public class ModPlacedFeatures {
                 BiomeFilter.biome()
         );
         Holder<ConfiguredFeature<?, ?>> psychoBerryConfigured = configuredFeatures.getOrThrow(ModConfiguredFeatures.PSYCHO_BERRY);
-        PlacementUtils.register(context, PSYCHO_BERRY, psychoBerryConfigured, RarityFilter.onAverageOnceEvery(192), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+        PlacementUtils.register(context, PSYCHO_BERRY, psychoBerryConfigured, RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 
         PlacementUtils.register(context, CHILLY_MOSS, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHILLY_MOSS), RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
 
