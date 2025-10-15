@@ -2,9 +2,9 @@ package team.recrafted.blastfromthepast.datagen.client;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.block.BFTPBlockGroup;
 import team.recrafted.blastfromthepast.block.BFTPStoneGroup;
@@ -113,7 +113,7 @@ public class ModItemModelGen extends ItemModelProvider {
         withExistingParent(stoneGroup.COBBLESTONE_WALL.getId().getPath(), mcLoc("block/wall_inventory"))
                 .texture("wall", modLoc("block/" + stoneGroup.COBBLESTONE_WALL.getId().getPath().replaceAll("_wall", "")));
 
-        for (DeferredBlock<?> block : stoneGroup.blocks) {
+        for (RegistryObject<? extends Block> block : stoneGroup.blocks) {
             if (block.getId().getPath().contains("ore")) createWithParent(block);
         }
     }
@@ -146,29 +146,29 @@ public class ModItemModelGen extends ItemModelProvider {
                 .texture("wall", modLoc("block/" + blockGroup.WALL.getId().getPath().replaceAll("_wall", "")));
     }
 
-    private void createWithParent(DeferredBlock<? extends Block> key) {
+    private void createWithParent(RegistryObject<? extends Block> key) {
         withExistingParent(key.getId().getPath(), modLoc( "block/" + key.getId().getPath()));
     }
 
-    private void createWithCutoutParent(DeferredBlock<? extends Block> key) {
+    private void createWithCutoutParent(RegistryObject<? extends Block> key) {
         withExistingParent(key.getId().getPath(), modLoc( "block/" + key.getId().getPath())).renderType("cutout_mipped");
     }
 
-    private void singleTextureBlock(DeferredBlock<? extends Block> key){
+    private void singleTextureBlock(RegistryObject<? extends Block> key){
         singleTexture(key.getId().getPath(), mcLoc("item/generated"), "layer0",
                 modLoc("item/" + key.getId().getPath())).renderType("cutout_mipped");
     }
 
-    private void singleTexturePlantBlock(DeferredBlock<? extends Block> key){
+    private void singleTexturePlantBlock(RegistryObject<? extends Block> key){
         singleTexture(key.getId().getPath(), mcLoc("item/generated"), "layer0",
                 modLoc("block/" + key.getId().getPath())).renderType("cutout_mipped");
     }
 
-    private void createSuffixedParent(DeferredBlock<? extends Block> handler, String suffix) {
+    private void createSuffixedParent(RegistryObject<? extends Block> handler, String suffix) {
         withExistingParent(handler.getId().getPath(), modLoc( "block/" + handler.getId().getPath() + suffix));
     }
 
-    private void singleTextureDoublePlantBlock(DeferredBlock<Block> block, boolean isTop){
+    private void singleTextureDoublePlantBlock(RegistryObject<Block> block, boolean isTop){
         singleTexture((block.getId().getPath()),
                 mcLoc("item/generated"),
                 "layer0", modLoc("block/" + block.getId().getPath() + (isTop ? "_top" : "_bottom")));

@@ -10,7 +10,6 @@ import net.minecraft.world.level.pathfinder.NodeEvaluator;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.Vec3;
-import team.recrafted.blastfromthepast.mixin.PathAccessor;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -36,11 +35,6 @@ public class BFTPPathFinder extends PathFinder {
     static class PatchedPath extends Path {
         public PatchedPath(Path original) {
             super(copyPathPoints(original), original.getTarget(), original.canReach());
-            // Needed so DebugUtils / the vanilla DebugRenderer works properly for this subclass of Path
-            DebugData debugData = original.debugData();
-            if(debugData != null){
-                ((PathAccessor)this).callSetDebug(debugData.openSet(), debugData.closedSet(), debugData.targetNodes());
-            }
         }
 
         @Override

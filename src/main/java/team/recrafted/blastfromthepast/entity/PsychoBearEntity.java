@@ -29,21 +29,21 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.Animation;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.ai.controller.OverridableBodyRotationControl;
@@ -55,6 +55,7 @@ import team.recrafted.blastfromthepast.entity.ai.goal.complex_animal.MoveToOrSit
 import team.recrafted.blastfromthepast.entity.ai.goal.complex_animal.SeekShelterGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.complex_animal.SleepGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.roar.RoarAtTargetGoal;
+import team.recrafted.blastfromthepast.entity.ai.navigation.AzureNavigation;
 import team.recrafted.blastfromthepast.entity.ai.navigation.BFTPGroundPathNavigation;
 import team.recrafted.blastfromthepast.entity.misc.*;
 import team.recrafted.blastfromthepast.init.ModCriteriaTriggers;
@@ -122,26 +123,26 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
         this.lookControl = new OverridableLookControl<>(this);
         this.moveControl = new OverridableMoveControl<>(this);
         this.setCanPickUpLoot(true);
+        this.setMaxUpStep(1.0f);
     }
 
     public static AttributeSupplier.Builder createAttributes(){
         return Mob.createMobAttributes()
-                .add(Attributes.STEP_HEIGHT, 1.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 8.0D)
                 .add(Attributes.MAX_HEALTH, 70.0D);
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DATA_ACTIVE_ATTACK_TYPE, OptionalInt.empty());
-        builder.define(DATA_FLAGS, (byte)0);
-        builder.define(DATA_PACIFIED, false);
-        builder.define(DATA_EATING, false);
-        builder.define(DATA_SLEEP_STATE, (byte) TransitioningState.INACTIVE.ordinal());
-        builder.define(DATA_BACK_SCRATCH_STATE, (byte) TransitioningState.INACTIVE.ordinal());
-        builder.define(DATA_PREPARING_TO_SCRATCH_BACK, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_ACTIVE_ATTACK_TYPE, OptionalInt.empty());
+        this.entityData.define(DATA_FLAGS, (byte)0);
+        this.entityData.define(DATA_PACIFIED, false);
+        this.entityData.define(DATA_EATING, false);
+        this.entityData.define(DATA_SLEEP_STATE, (byte) TransitioningState.INACTIVE.ordinal());
+        this.entityData.define(DATA_BACK_SCRATCH_STATE, (byte) TransitioningState.INACTIVE.ordinal());
+        this.entityData.define(DATA_PREPARING_TO_SCRATCH_BACK, false);
     }
 
     protected boolean getFlag(int flag) {
@@ -186,16 +187,16 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        return new BFTPGroundPathNavigation(this, level);
+        return new AzureNavigation(this, level);
     }
 
     @Override
-    protected EntityDimensions getDefaultDimensions(Pose pose) {
+    public EntityDimensions getDimensions(Pose pose) {
         if(this.isBackScratching() || this.isPreparingToScratchBack()){
             EntityDimensions normalDimensions = this.getType().getDimensions();
-            return EntityDimensions.scalable(ADULT_VERTICAL_WIDTH, normalDimensions.width());
+            return EntityDimensions.scalable(ADULT_VERTICAL_WIDTH, normalDimensions.width);
         }
-        return this.isBaby() ? PSYCHO_BEAR_BABY_DIMENSIONS : super.getDefaultDimensions(pose);
+        return this.isBaby() ? PSYCHO_BEAR_BABY_DIMENSIONS : super.getDimensions(pose);
     }
 
     @Override
@@ -203,11 +204,11 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new RoarAtTargetGoal<>(this, 3));
         this.goalSelector.addGoal(2, new PredicatedGoal<>(new AnimatedMeleeAttackGoal<>(this, 1.0F, true), this, Predicate.not(OverrideAnimatedAttacker::isAllActionBlocked)));
-        this.goalSelector.addGoal(3, new PanicGoal(this, 2.0F, EntityHelper::getPanicInducingDamageTypes));
+        this.goalSelector.addGoal(3, new CustomPanicGoal<>(this, 2.0F, EntityHelper.getPanicInducingDamageTypes()));
         this.goalSelector.addGoal(4, new SeekShelterGoal<>(this, 1.0F));
         this.goalSelector.addGoal(5, new SleepGoal<>(this));
         this.goalSelector.addGoal(6, new HitboxAdjustedBreedGoal(this, 1.0));
-        this.goalSelector.addGoal(7, new TemptGoal(this, 1.25F, this::isTemptItem, false));
+        this.goalSelector.addGoal(7, new TemptGoal(this, 1.25F, this.isTemptItem(), false));
         this.goalSelector.addGoal(8, new MoveToOrSitWithItemGoal<>(this, this::isWantedItem, 1.0F));
         this.goalSelector.addGoal(9, new HitboxAdjustedFollowParentGoal(this, 1.25F));
         this.goalSelector.addGoal(10, new RaidFoodContainerGoal<>(this, 1.0F, 16, 1));
@@ -237,8 +238,8 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
         return target.attackable() && !target.getType().is(ModTags.EntityTypes.PSYCHO_BEAR_IGNORES);
     }
 
-    private boolean isTemptItem(ItemStack stack) {
-        return stack.is(this.isBaby() ? ModTags.Items.BABY_PSYCHO_BEAR_TEMPT_ITEMS : ModTags.Items.PSYCHO_BEAR_TEMPT_ITEMS);
+    private Ingredient isTemptItem() {
+        return Ingredient.of(this.isBaby() ? ModTags.Items.BABY_PSYCHO_BEAR_TEMPT_ITEMS : ModTags.Items.PSYCHO_BEAR_TEMPT_ITEMS);
     }
 
     @Override
@@ -287,7 +288,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
                 lastFedPlayer = player;
                 this.setEating(true);
                 ItemStack mainHandItem = this.getItemInMouth();
-                if (!mainHandItem.isEmpty() && !player.hasInfiniteMaterials()) {
+                if (!mainHandItem.isEmpty() && !player.isCreative()) {
                     this.spawnAtLocation(mainHandItem);
                 }
 
@@ -392,6 +393,15 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
     }
      */
 
+    protected void clampHeadRotationToBody() {
+        float f = (float)this.getMaxHeadYRot();
+        float f1 = this.getYHeadRot();
+        float f2 = Mth.wrapDegrees(this.yBodyRot - f1);
+        float f3 = Mth.clamp(Mth.wrapDegrees(this.yBodyRot - f1), -f, f);
+        float f4 = f1 + f2 - f3;
+        this.setYHeadRot(f4);
+    }
+
     @Override
     public boolean isRoaring(){
         return this.getFlag(ROARING_FLAG);
@@ -409,7 +419,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
             this.setRoaring(true);
             this.playSound(ModSounds.PSYCHO_BEAR_ROAR.get(), 6.0F, this.getVoicePitch());
             for (Player player : this.level().getEntitiesOfClass(Player.class, new AABB(this.blockPosition()).inflate(ModSounds.PSYCHO_BEAR_ROAR.get().getRange(6)-1))) {
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ScreenShakePayload(20f, 60));
+                BlastFromThePast.INSTANCE.send(PacketDistributor.PLAYER.with( ()-> (ServerPlayer) player), new ScreenShakePayload(20f, 60));
             }
         }
     }
@@ -843,7 +853,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
 
     @Override
     public void playBackScratchSound() {
-        this.makeSound(ModSounds.PSYCHO_BEAR_SCRATCH.get());
+        this.playSound(ModSounds.PSYCHO_BEAR_SCRATCH.get(), this.getSoundVolume(), this.getVoicePitch());
     }
 
     @Override
@@ -867,7 +877,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<GeoAnimatable>(this, "main", 5, state -> {
+        controllers.add(new AnimationController<>(this, "main", 5, state -> {
             PsychoBearEntity.PsychoBearAttackType activeAttackType = this.getActiveAttackType();
             if (!this.isBaby()) {
                 if (this.isRoaring()) return state.setAndContinue(ROAR);
@@ -916,7 +926,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
             Vec3 attackSize = this.getAttackSize().scale(attacker.getScale());
             AABB attackBounds = HitboxHelper.createHitboxRelativeToFront(attacker, attackSize.x(), attackSize.y(), attackSize.z());
             if(this == SLASH){
-                attacker.makeSound(ModSounds.PSYCHO_BEAR_SLASH.get());
+                attacker.playSound(ModSounds.PSYCHO_BEAR_SLASH.get(), attacker.getSoundVolume(), attacker.getVoicePitch());
                 EntityHelper.hitTargetsWithAOEAttack(attacker, attackBounds, this.getAttackDamage(), this.getAttackKnockback(), false);
             }
         }

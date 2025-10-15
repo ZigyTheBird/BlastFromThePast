@@ -1,15 +1,9 @@
 {
-  "required": true,
   "package": "team.recrafted.blastfromthepast.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "refmap": "blastfromthepast.refmap.json",
+  "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "injectors": {
-    "defaultRequire": 1
-  },
   "mixins": [
     "AbstractArrowMixin",
-    "AbstractChestedHorseAccessor",
     "AxeItemMixin",
     "BlockMixin",
     "BoatAccessor",
@@ -20,7 +14,7 @@
     "FallingBlockMixin",
     "FollowParentGoalAccessor",
     "GoalAccessor",
-    "IBlockExtensionMixin",
+    "FrostBiteBootsFrictionMixin",
     "LivingEntityAccessor",
     "MeleeAttackGoalAccessor",
     "MoveToBlockGoalAccessor",
@@ -30,6 +24,7 @@
     "ServerPlayerAccessor",
     "WalkNodeEvaluatorAccess"
   ],
+  "refmap": "blastfromthepast.refmap.json",
   "client": [
     "client.CameraMixin",
     "client.FogRendererMixin",

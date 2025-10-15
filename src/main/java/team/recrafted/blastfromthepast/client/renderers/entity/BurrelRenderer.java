@@ -14,12 +14,12 @@ public class BurrelRenderer extends GeoEntityRenderer<BurrelEntity> {
     }
 
     @Override
-    protected void applyRotations(BurrelEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick, float nativeScale) {
+    protected void applyRotations(BurrelEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
         if (entity.isBesideClimbableBlock()) {
             poseStack.mulPose(Axis.YP.rotationDegrees(entity.getYRot()));
             return;
         }
-        super.applyRotations(entity, poseStack, ageInTicks, rotationYaw, partialTick, nativeScale);
+        super.applyRotations(entity, poseStack, ageInTicks, rotationYaw, partialTick);
     }
 
     @Override

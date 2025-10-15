@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.baby_snowdo.idle": {
+		"animation.snowdo.idle": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -11,7 +11,7 @@
 				}
 			}
 		},
-		"animation.baby_snowdo.walk": {
+		"animation.snowdo.walk": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -29,7 +29,7 @@
 				}
 			}
 		},
-		"animation.baby_snowdo.trip": {
+		"animation.snowdo.trip": {
 			"animation_length": 2,
 			"bones": {
 				"baby": {
@@ -189,7 +189,7 @@
 				}
 			}
 		},
-		"animation.baby_snowdo.hide": {
+		"animation.snowdo.hide": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
@@ -219,7 +219,7 @@
 				}
 			}
 		},
-		"animation.baby_snowdo.hide_start": {
+		"animation.snowdo.hide_start": {
 			"animation_length": 0.25,
 			"bones": {
 				"baby": {
@@ -272,7 +272,7 @@
 				}
 			}
 		},
-		"animation.baby_snowdo.hide_end": {
+		"animation.snowdo.hide_end": {
 			"animation_length": 1.2917,
 			"bones": {
 				"body": {

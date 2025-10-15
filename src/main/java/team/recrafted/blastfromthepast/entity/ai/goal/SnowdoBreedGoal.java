@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import team.recrafted.blastfromthepast.block.SnowdoEggBlock;
 import team.recrafted.blastfromthepast.init.ModBlocks;
+import team.recrafted.blastfromthepast.util.EntityHelper;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -46,7 +47,7 @@ public class SnowdoBreedGoal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return this.partner.isAlive() && this.partner.isInLove() && this.loveTime < 60 && !this.partner.isPanicking();
+        return this.partner.isAlive() && this.partner.isInLove() && this.loveTime < 60 && !EntityHelper.isPanicking(this.partner);
     }
 
     public void stop() {
@@ -73,7 +74,7 @@ public class SnowdoBreedGoal extends Goal {
 
         while(var5.hasNext()) {
             Animal animal1 = (Animal)var5.next();
-            if (this.animal.canMate(animal1) && !animal1.isPanicking() && this.animal.distanceToSqr(animal1) < d0) {
+            if (this.animal.canMate(animal1) && !EntityHelper.isPanicking(animal1) && this.animal.distanceToSqr(animal1) < d0) {
                 animal = animal1;
                 d0 = this.animal.distanceToSqr(animal1);
             }
@@ -87,7 +88,7 @@ public class SnowdoBreedGoal extends Goal {
         boolean eggSpawnFailed = false;
         BlockState snowdoEggs = ModBlocks.SNOWDO_EGG.get().defaultBlockState().setValue(SnowdoEggBlock.EGGS, number);
         BlockPos eggsPos = this.animal.blockPosition();
-        if(!this.animal.level().getBlockState(this.animal.blockPosition()).isEmpty()){
+        if(!this.animal.level().getBlockState(this.animal.blockPosition()).isAir()){
             eggsPos = findSuitableEggPosition(this.animal.blockPosition());
             if(eggsPos == this.animal.blockPosition()){
                 eggSpawnFailed = true;

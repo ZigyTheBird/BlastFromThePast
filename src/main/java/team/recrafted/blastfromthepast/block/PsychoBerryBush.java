@@ -1,6 +1,5 @@
 package team.recrafted.blastfromthepast.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -11,7 +10,6 @@ import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,35 +36,29 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.IShearable;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.IForgeShearable;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModEntities;
 import team.recrafted.blastfromthepast.init.ModItems;
 
-public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IShearable, BonemealableBlock {
+public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IForgeShearable, BonemealableBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_1;
-    public static final MapCodec<PsychoBerryBush> CODEC = simpleCodec(PsychoBerryBush::new);
 
     public PsychoBerryBush(Properties properties) {
         super(properties);
         this.registerDefaultState((this.stateDefinition.any()).setValue(AGE, 0).setValue(WATERLOGGED, false));
     }
 
-    @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
-    }
-
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return state.getValue(AGE) < 1;
     }
-    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
         return Shapes.empty();
     }
 
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -75,24 +67,24 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
     }
 
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (!canSurvive(state, level, pos)) {
             level.destroyBlock(pos, true);
         }
     }
 
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int i = state.getValue(AGE);
-        if (i < 1 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(10) == 0)) {
+        if (i < 1 && level.getRawBrightness(pos.above(), 0) >= 9 && ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(10) == 0)) {
             BlockState blockstate = (BlockState)state.setValue(AGE, i + 1);
             level.setBlock(pos, blockstate, 2);
-            CommonHooks.fireCropGrowPost(level, pos, state);
+            ForgeHooks.onCropsGrowPost(level, pos, state);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
         }
     }
 
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity && entity.getType() != ModEntities.PSYCHO_BEAR.get() && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
             entity.makeStuckInBlock(state, new Vec3(0.6, 0.7, 0.6));
             if (!level.isClientSide) {
@@ -101,24 +93,21 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
         }
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         int i = state.getValue(AGE);
         boolean flag = i == 1;
-        return !flag && stack.is(Items.BONE_MEAL) ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION : super.useItemOn(stack, state, level, pos, player, hand, hitResult);
-    }
-
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        int i = state.getValue(AGE);
-        if (i == 1) {
+        if (!flag && player.getItemInHand(hand).is(Items.BONE_MEAL)) {
+            return InteractionResult.PASS;
+        } else if (i > 0) {
             int j = 1 + level.random.nextInt(2);
-            popResource(level, pos, new ItemStack(ModItems.PSYCHO_BERRY.get(), j));
+            popResource(level, pos, new ItemStack(ModItems.PSYCHO_BERRY.get(), j + (flag ? 1 : 0)));
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
             BlockState blockstate = state.setValue(AGE, 0);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else {
-            return super.useWithoutItem(state, level, pos, player, hitResult);
+            return super.use(state, level, pos, player, hand, blockHitResult);
         }
     }
 
@@ -126,7 +115,7 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
         builder.add(AGE, WATERLOGGED);
     }
 
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean b) {
         return state.getValue(AGE) == 0;
     }
 
@@ -139,7 +128,7 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
         level.setBlock(pos, state.setValue(AGE, i), 2);
     }
 
-    protected FluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
@@ -160,8 +149,8 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos.below());
-        return blockState.isSolidRender(level, pos) || blockState.is(ModBlocks.PSYCHO_BERRY_BUSH);
+        return blockState.isSolidRender(level, pos) || blockState.is(ModBlocks.PSYCHO_BERRY_BUSH.get());
     }
 }

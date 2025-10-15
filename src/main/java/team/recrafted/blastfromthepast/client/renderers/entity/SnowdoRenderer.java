@@ -14,8 +14,8 @@ public class SnowdoRenderer extends GeoEntityRenderer<SnowdoEntity> {
     }
 
     @Override
-    protected void applyRotations(SnowdoEntity pEntity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick, float nativeScale) {
-        super.applyRotations(pEntity, poseStack, ageInTicks, rotationYaw, partialTick, nativeScale);
+    protected void applyRotations(SnowdoEntity pEntity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
+        super.applyRotations(pEntity, poseStack, ageInTicks, rotationYaw, partialTick);
         if(!pEntity.isTripped()){
             float f = Mth.rotLerp(partialTick, pEntity.yBodyRotO, pEntity.yBodyRot);
             float f1 = Mth.rotLerp(partialTick, pEntity.yHeadRotO, pEntity.yHeadRot);

@@ -1,0 +1,40 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "time_doesnt_erase_history": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "blastfromthepast:permafrost_painting"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.time_doesnt_erase_history.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "blastfromthepast:permafrost_snowdo_painting"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.time_doesnt_erase_history.title"
+    }
+  },
+  "requirements": [
+    [
+      "time_doesnt_erase_history"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

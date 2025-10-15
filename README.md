@@ -1,25 +1,11 @@
+![](https://media.forgecdn.net/attachments/description/1357019/description_bc1ede37-be59-4d39-b700-2da4739b28fc.png)
 
-Installation information
-=======
+<p style="text-align:center">Welcome to the Frostbite Forest, an ancient yet beautiful biome full of unique plants, from the towering cedar trees to the various larkspur flowers, and even giant berry bushes! This surreal forest is also home to fantastical versions of ice age animals, each with a unique personality! There’s also plenty of blocks, items, and secrets for you to uncover!  
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+**CurseForge**: https://www.curseforge.com/minecraft/mc-mods/bftp
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+This Mod requires [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib) and [TerraBlender](https://www.curseforge.com/minecraft/mc-mods/terrablender-neoforge).</p><p style="text-align:center">[Feel free to join our Discord!](https://discord.gg/brPabsMDwF)</p>
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+![](https://media.forgecdn.net/attachments/description/null/description_abfe26c9-0336-44bd-b3c0-8a4d0e4c0910.png)
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+<h3 style="text-align:center">**Credits**</h3> <p style="text-align:center">**Directors**</p><p style="text-align:center">TheGBZard</p><p style="text-align:center">domino7218</p><p style="text-align:center">Natsirt10</p><p style="text-align:center">**Artists**</p><p style="text-align:center"><span style="font-weight:400">domino7218</span></p><p style="text-align:center">Natsirt10</p><p style="text-align:center">noonyeyz</p><p style="text-align:center">Crispytwig</p><p style="text-align:center">**Sound Team**</p><p style="text-align:center">Gateoh</p><p style="text-align:center">PrismaticPinky</p><p style="text-align:center">Nyan X</p><p style="text-align:center">**Programmers**</p><p style="text-align:center">zigythebird</p><p style="text-align:center">PROhitman</p><p style="text-align:center">TheInfamous1</p>

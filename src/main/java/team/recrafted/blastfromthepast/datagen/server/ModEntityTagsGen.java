@@ -5,8 +5,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.init.ModEntities;
@@ -20,7 +21,7 @@ public class ModEntityTagsGen extends EntityTypeTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)
                 .add(ModEntities.FROSTOMPER.get());
         this.tag(ModTags.EntityTypes.PSYCHO_BEAR_IGNORES)

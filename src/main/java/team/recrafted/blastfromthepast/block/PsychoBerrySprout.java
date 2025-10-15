@@ -1,11 +1,10 @@
 package team.recrafted.blastfromthepast.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,46 +22,40 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.IShearable;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.IForgeShearable;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 
-public class PsychoBerrySprout extends BushBlock implements IShearable, BonemealableBlock {
-    public static final MapCodec<PsychoBerrySprout> CODEC = simpleCodec(PsychoBerrySprout::new);
+public class PsychoBerrySprout extends BushBlock implements IForgeShearable, BonemealableBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_1;
     public PsychoBerrySprout(Properties properties) {
         super(properties);
         this.registerDefaultState((this.stateDefinition.any()).setValue(AGE, 0));
     }
 
-    @Override
-    protected MapCodec<? extends BushBlock> codec() {
-        return CODEC;
-    }
-
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
-    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
         return Shapes.empty();
     }
 
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (!canSurvive(state, level, pos)) {
             level.destroyBlock(pos, true);
         }
     }
 
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int i = state.getValue(AGE);
-        boolean canGrow = level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(10) == 0);
+        boolean canGrow = level.getRawBrightness(pos.above(), 0) >= 9 && ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(10) == 0);
         if(canGrow){
             if (i < 1) {
                 BlockState blockstate = state.setValue(AGE, i + 1);
                 level.setBlock(pos, blockstate, 2);
-                CommonHooks.fireCropGrowPost(level, pos, state);
+                ForgeHooks.onCropsGrowPost(level, pos, state);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
             }
             else if(i == 1){
@@ -93,10 +86,12 @@ public class PsychoBerrySprout extends BushBlock implements IShearable, Bonemeal
         }
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack stack = player.getItemInHand(hand);
         int i = state.getValue(AGE);
         boolean flag = i == 1;
-        return !flag && stack.is(Items.BONE_MEAL) ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION : super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return !flag && stack.is(Items.BONE_MEAL) ? InteractionResult.PASS : super.use(state, level, pos, player, hand, hitResult);
     }
 
     @Override
@@ -104,7 +99,7 @@ public class PsychoBerrySprout extends BushBlock implements IShearable, Bonemeal
         builder.add(AGE);
     }
 
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean p_50900_) {
         return true;
     }
 
@@ -125,8 +120,8 @@ public class PsychoBerrySprout extends BushBlock implements IShearable, Bonemeal
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos.below());
-        return blockState.isSolidRender(level, pos) || blockState.is(ModBlocks.PSYCHO_BERRY_BUSH);
+        return blockState.isSolidRender(level, pos) || blockState.is(ModBlocks.PSYCHO_BERRY_BUSH.get());
     }
 }

@@ -9,9 +9,8 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.block.signs.BFTPCeilingHangingSignBlock;
 import team.recrafted.blastfromthepast.block.signs.BFTPStandingSignBlock;
@@ -20,37 +19,34 @@ import team.recrafted.blastfromthepast.block.signs.BFTPWallSignBlock;
 import team.recrafted.blastfromthepast.init.ModItems;
 
 public class BFTPWoodGroup {
-    public final DeferredBlock<Block> BLOCK;
-    public final DeferredBlock<SlabBlock> SLAB;
-    public final DeferredBlock<StairBlock> STAIRS;
-    public final DeferredBlock<FenceBlock> FENCE;
-    public final DeferredBlock<FenceGateBlock> FENCE_GATE;
-    public final DeferredBlock<RotatedPillarBlock> LOG;
-    public final DeferredBlock<RotatedPillarBlock> WOOD;
-    public final DeferredBlock<RotatedPillarBlock> STRIPPED_WOOD;
-    public final DeferredBlock<RotatedPillarBlock> STRIPPED_LOG;
-    public final DeferredBlock<DoorBlock> DOOR;
-    public final DeferredBlock<ButtonBlock> BUTTON;
-    public final DeferredBlock<PressurePlateBlock> PRESSURE_PLATE;
-    public final DeferredBlock<TrapDoorBlock> TRAPDOOR;
-    public final DeferredBlock<StandingSignBlock> SIGN;
-    public final DeferredItem<Item> SIGN_ITEM;
-    public final DeferredBlock<WallSignBlock> WALL_SIGN;
-    public final DeferredBlock<CeilingHangingSignBlock> HANGING_SIGN;
-    public final DeferredBlock<WallHangingSignBlock> HANGING_SIGN_WALL;
-    public final DeferredItem<Item> HANGING_SIGN_ITEM;
-    public final DeferredBlock<Block> LEAVES;
+    public final RegistryObject<Block> BLOCK;
+    public final RegistryObject<SlabBlock> SLAB;
+    public final RegistryObject<StairBlock> STAIRS;
+    public final RegistryObject<FenceBlock> FENCE;
+    public final RegistryObject<FenceGateBlock> FENCE_GATE;
+    public final RegistryObject<RotatedPillarBlock> LOG;
+    public final RegistryObject<RotatedPillarBlock> WOOD;
+    public final RegistryObject<RotatedPillarBlock> STRIPPED_WOOD;
+    public final RegistryObject<RotatedPillarBlock> STRIPPED_LOG;
+    public final RegistryObject<DoorBlock> DOOR;
+    public final RegistryObject<ButtonBlock> BUTTON;
+    public final RegistryObject<PressurePlateBlock> PRESSURE_PLATE;
+    public final RegistryObject<TrapDoorBlock> TRAPDOOR;
+    public final RegistryObject<StandingSignBlock> SIGN;
+    public final RegistryObject<Item> SIGN_ITEM;
+    public final RegistryObject<WallSignBlock> WALL_SIGN;
+    public final RegistryObject<CeilingHangingSignBlock> HANGING_SIGN;
+    public final RegistryObject<WallHangingSignBlock> HANGING_SIGN_WALL;
+    public final RegistryObject<Item> HANGING_SIGN_ITEM;
+    public final RegistryObject<Block> LEAVES;
 
     public final WoodType woodType;
     public final BlockSetType woodSetType;
 
-    public BFTPWoodGroup(String name, MapColor color, Item.Properties empty, DeferredRegister.Blocks blockRegister) {
+    public BFTPWoodGroup(String name, MapColor color, Item.Properties empty, DeferredRegister<Block> blockRegister) {
         woodSetType = BlockSetType.register(new BlockSetType(
                 name,
                 true,
-                true,
-                true,
-                BlockSetType.PressurePlateSensitivity.EVERYTHING,
                 SoundType.WOOD,
                 SoundEvents.WOODEN_DOOR_CLOSE,
                 SoundEvents.WOODEN_DOOR_OPEN,
@@ -62,23 +58,23 @@ public class BFTPWoodGroup {
                 SoundEvents.WOODEN_BUTTON_CLICK_ON
         ));
         woodType = WoodType.register(new WoodType(BlastFromThePast.MODID + ":" + name, woodSetType));
-        BLOCK = blockRegister.register(name, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).mapColor(color)));
-        SLAB = blockRegister.register(name + "_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB).mapColor(color)));
-        STAIRS = blockRegister.register(name + "_stairs", () -> new StairBlock(BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS).mapColor(color)));
-        FENCE = blockRegister.register(name + "_fence", () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE).mapColor(color)));
-        FENCE_GATE = blockRegister.register(name + "_fence_gate", () -> new FenceGateBlock(woodType, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE).mapColor(color)));
-        STRIPPED_LOG = blockRegister.register("stripped_" + name + "_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_LOG).mapColor(color)));
-        LOG = blockRegister.register(name + "_log", () -> new CustomLogBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG).mapColor(color), STRIPPED_LOG));
-        STRIPPED_WOOD = blockRegister.register("stripped_" + name + "_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STRIPPED_OAK_WOOD).mapColor(color)));
-        WOOD = blockRegister.register(name + "_wood", () -> new CustomLogBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD).mapColor(color), STRIPPED_WOOD));
-        DOOR = blockRegister.register(name + "_door", () -> new DoorBlock(woodSetType,BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR).mapColor(color)));
-        BUTTON = blockRegister.register(name + "_button", () -> new ButtonBlock(woodSetType, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON).mapColor(color)));
-        PRESSURE_PLATE = blockRegister.register(name + "_pressure_plate", () -> new PressurePlateBlock(woodSetType, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE).mapColor(color)));
-        SIGN = blockRegister.register(name + "_sign", () -> new BFTPStandingSignBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SIGN).mapColor(color), woodType));
-        TRAPDOOR = blockRegister.register(name + "_trapdoor", () -> new TrapDoorBlock(woodSetType, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).mapColor(color)));
-        WALL_SIGN = blockRegister.register(name + "_wall_sign", () -> new BFTPWallSignBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN).mapColor(color), woodType));
-        HANGING_SIGN = blockRegister.register(name + "_hanging_sign", () -> new BFTPCeilingHangingSignBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN).mapColor(color), woodType));
-        HANGING_SIGN_WALL = blockRegister.register(name + "_hanging_wall_sign", () -> new BFTPWallHangingSignBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN).mapColor(color), woodType));
+        BLOCK = blockRegister.register(name, () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).mapColor(color)));
+        SLAB = blockRegister.register(name + "_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB).mapColor(color)));
+        STAIRS = blockRegister.register(name + "_stairs", () -> new StairBlock(BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).mapColor(color)));
+        FENCE = blockRegister.register(name + "_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE).mapColor(color)));
+        FENCE_GATE = blockRegister.register(name + "_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).mapColor(color), woodType));
+        STRIPPED_LOG = blockRegister.register("stripped_" + name + "_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).mapColor(color)));
+        LOG = blockRegister.register(name + "_log", () -> new CustomLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(color), STRIPPED_LOG));
+        STRIPPED_WOOD = blockRegister.register("stripped_" + name + "_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).mapColor(color)));
+        WOOD = blockRegister.register(name + "_wood", () -> new CustomLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).mapColor(color), STRIPPED_WOOD));
+        DOOR = blockRegister.register(name + "_door", () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR).mapColor(color), woodSetType));
+        BUTTON = blockRegister.register(name + "_button", () -> new ButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON).mapColor(color), woodSetType, 30, true));
+        PRESSURE_PLATE = blockRegister.register(name + "_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE).mapColor(color), woodSetType));
+        SIGN = blockRegister.register(name + "_sign", () -> new BFTPStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN).mapColor(color), woodType));
+        TRAPDOOR = blockRegister.register(name + "_trapdoor", () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR).mapColor(color), woodSetType));
+        WALL_SIGN = blockRegister.register(name + "_wall_sign", () -> new BFTPWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN).mapColor(color), woodType));
+        HANGING_SIGN = blockRegister.register(name + "_hanging_sign", () -> new BFTPCeilingHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN).mapColor(color), woodType));
+        HANGING_SIGN_WALL = blockRegister.register(name + "_hanging_wall_sign", () -> new BFTPWallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_HANGING_SIGN).mapColor(color), woodType));
         if (name.equals("cedar")) LEAVES = blockRegister.register("cedar_leaves", () -> new CedarLeavesBlock(
                 BlockBehaviour.Properties.of()
                         .mapColor(MapColor.PLANT)

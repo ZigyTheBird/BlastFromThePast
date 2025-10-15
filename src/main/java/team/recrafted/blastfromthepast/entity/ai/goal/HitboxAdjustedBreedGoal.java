@@ -5,6 +5,7 @@ import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import team.recrafted.blastfromthepast.mixin.BreedGoalAccessor;
+import team.recrafted.blastfromthepast.util.EntityHelper;
 import team.recrafted.blastfromthepast.util.HitboxHelper;
 
 import javax.annotation.Nullable;
@@ -59,7 +60,7 @@ public class HitboxAdjustedBreedGoal extends BreedGoal {
         Animal partner = null;
 
         for (Animal potentialPartner : potentialPartners) {
-            if (this.animal.canMate(potentialPartner) && !potentialPartner.isPanicking() && this.animal.distanceToSqr(potentialPartner) < closestDistanceToSqr) {
+            if (this.animal.canMate(potentialPartner) && !EntityHelper.isPanicking(potentialPartner) && this.animal.distanceToSqr(potentialPartner) < closestDistanceToSqr) {
                 partner = potentialPartner;
                 closestDistanceToSqr = this.animal.distanceToSqr(potentialPartner);
             }

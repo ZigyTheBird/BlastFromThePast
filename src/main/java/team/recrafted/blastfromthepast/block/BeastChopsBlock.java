@@ -6,7 +6,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -74,7 +73,7 @@ public class BeastChopsBlock extends RotatedPillarBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         VoxelShape baseShape = getVoxelShapeForState(state.getValue(STATES));
 
         Direction.Axis axis = state.getValue(RotatedPillarBlock.AXIS);
@@ -94,7 +93,7 @@ public class BeastChopsBlock extends RotatedPillarBlock {
     }
 
     @Override
-    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         if (state.getValue(STATES) == 0) {
             return super.getDrops(state, params);
         } else {
@@ -103,6 +102,15 @@ public class BeastChopsBlock extends RotatedPillarBlock {
     }
 
     @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if(!itemStack.isEmpty()){
+            useItemOn(itemStack, state, level, pos, player, hand, hitResult);
+        }
+
+        return this.useWithoutItem(state, level, pos, player, hitResult);
+    }
+
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(STATES) == 4) {
             return InteractionResult.PASS;
@@ -118,21 +126,20 @@ public class BeastChopsBlock extends RotatedPillarBlock {
         return eat(level, pos, state, player);
     }
 
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() == ModItems.SAP_BALL.get()) {
             if (this != ModBlocks.BEAST_CHOPS_COOKED.get() || state.getValue(STATES) == 4) {
-                return ItemInteractionResult.FAIL;
+                return InteractionResult.FAIL;
             } else {
                 level.setBlock(pos, ModBlocks.BEAST_CHOPS_GLAZED.get().defaultBlockState().setValue(FACING, state.getValue(FACING)).setValue(AXIS, state.getValue(AXIS)).setValue(STATES, state.getValue(STATES)), 3);
                 if (!player.isCreative()) {
                     itemStack.shrink(1);
                 }
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     protected static InteractionResult eat(LevelAccessor pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
@@ -155,7 +162,7 @@ public class BeastChopsBlock extends RotatedPillarBlock {
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockPos belowPos = pos.below();
         BlockState belowState = level.getBlockState(belowPos);
         return belowState.isFaceSturdy(level, belowPos, Direction.UP);
@@ -177,7 +184,7 @@ public class BeastChopsBlock extends RotatedPillarBlock {
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState p_60475_, BlockGetter p_60476_, BlockPos p_60477_, PathComputationType p_60478_) {
         return false;
     }
 

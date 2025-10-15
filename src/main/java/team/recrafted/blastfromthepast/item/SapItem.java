@@ -13,9 +13,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import team.recrafted.blastfromthepast.entity.SapEntity;
 
+import java.util.function.Supplier;
+
 public class SapItem extends HangingEntityItem {
-    public SapItem(EntityType<? extends HangingEntity> type, Properties properties) {
-        super(type, properties);
+    public SapItem( Properties properties) {
+        super(null, properties);
     }
 
     protected boolean mayPlace(Player player, Direction direction, ItemStack itemStack, BlockPos pos) {

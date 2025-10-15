@@ -9,7 +9,7 @@ import team.recrafted.blastfromthepast.block.signs.entity.BFTPSignBlockEntity;
 
 public class BFTPWallSignBlock extends WallSignBlock {
     public BFTPWallSignBlock(Properties properties, WoodType woodType) {
-        super(woodType, properties);
+        super(properties, woodType);
     }
 
     @Override

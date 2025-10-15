@@ -33,7 +33,7 @@ public class EatDelphiniumGoal extends MoveToBlockGoal {
     @Override
     public void tick() {
         if (this.isReachedTarget()) {
-            Vec3 lookVec = blockPos.getBottomCenter();
+            Vec3 lookVec = Vec3.atBottomCenterOf(blockPos);
             mob.getLookControl().setLookAt(lookVec);
             if (this.ticksWaited >= 40) {
                 mob.setEating(false);
@@ -57,7 +57,7 @@ public class EatDelphiniumGoal extends MoveToBlockGoal {
     }
 
     protected void onReachedTarget() {
-        if (net.neoforged.neoforge.event.EventHooks.canEntityGrief(this.mob.level(), mob)) {
+        if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.level(), mob)) {
             this.mob.heal(2);
             if(this.mob.isBaby()){
                 this.mob.ageUp(AgeableMob.getSpeedUpSecondsWhenFeeding(-this.mob.getAge()), true);

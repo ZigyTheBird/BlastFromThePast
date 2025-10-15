@@ -164,9 +164,9 @@ public class AzureNavigation extends GroundPathNavigation {
             }
             return;
         }
-        if (this.getTargetPos() != null)
-            this.mob.getLookControl()
-                    .setLookAt(this.getTargetPos().getX(), this.getTargetPos().getY(), this.getTargetPos().getZ());
+//        if (this.getTargetPos() != null)
+//            this.mob.getLookControl()
+//                    .setLookAt(this.getTargetPos().getX(), this.getTargetPos().getY(), this.getTargetPos().getZ());
     }
 
     private boolean isAt(Path path, float threshold) {
@@ -252,22 +252,17 @@ public class AzureNavigation extends GroundPathNavigation {
                 for (int z = z0; z != z1; z += stepz) {
                     for (int y = y0; y != y1; y += stepy) {
                         BlockState block = this.level.getBlockState(pos.set(x, y, z));
-                        if (!block.isPathfindable(PathComputationType.LAND))
+                        if (!block.isPathfindable(this.level, pos, PathComputationType.LAND))
                             return false;
                     }
-                    PathType below = this.nodeEvaluator.getPathType(
-                            new PathfindingContext(mob.level(), mob),
-                            x,
-                            y0 - 1,
-                            z
-                    );
-                    if (below == PathType.WATER || below == PathType.LAVA || below == PathType.OPEN)
+                    BlockPathTypes below = this.nodeEvaluator.getBlockPathType(this.level, x, y0 - 1, z, this.mob);
+                    if (below == BlockPathTypes.WATER || below == BlockPathTypes.LAVA || below == BlockPathTypes.OPEN)
                         return false;
-                    PathType in = this.nodeEvaluator.getPathType(new PathfindingContext(mob.level(), mob), x, y0, z);
+                    BlockPathTypes in = this.nodeEvaluator.getBlockPathType(this.level, x, y0, z, this.mob);
                     float priority = this.mob.getPathfindingMalus(in);
                     if (priority < 0.0F || priority >= 8.0F)
                         return false;
-                    if (in == PathType.DAMAGE_FIRE || in == PathType.DANGER_FIRE || in == PathType.DAMAGE_OTHER)
+                    if (in == BlockPathTypes.DAMAGE_FIRE || in == BlockPathTypes.DANGER_FIRE || in == BlockPathTypes.DAMAGE_OTHER)
                         return false;
                 }
             }

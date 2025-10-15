@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "blastfromthepast:shaggy_pelt"
+    }
+  },
+  "pattern": [
+    "ss",
+    "ss"
+  ],
+  "result": {
+    "item": "blastfromthepast:shaggy_block"
+  },
+  "show_notification": true
+}

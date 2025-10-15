@@ -60,9 +60,9 @@ public class BFTPBoat extends Boat{
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        super.defineSynchedData(pBuilder);
-        pBuilder.define(BOAT_TYPE, BoatType.CEDAR.ordinal());
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(BOAT_TYPE, BoatType.CEDAR.ordinal());
     }
 
     @Override
@@ -112,8 +112,8 @@ public class BFTPBoat extends Boat{
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity p_352110_) {
-        return new ClientboundAddEntityPacket(this, p_352110_);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(this);
     }
 
     public enum BoatType implements StringRepresentable {

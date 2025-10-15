@@ -1,0 +1,69 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "prehistoric_party": {
+      "conditions": {},
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partyfive": {
+      "conditions": {},
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partyfour": {
+      "conditions": {},
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partyone": {
+      "conditions": {},
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partythree": {
+      "conditions": {},
+      "trigger": "blastfromthepast:dance_trigger"
+    },
+    "prehistoric_partytwo": {
+      "conditions": {},
+      "trigger": "blastfromthepast:dance_trigger"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.prehistoric_party.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "blastfromthepast:blizzard_revelry_disc"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.prehistoric_party.title"
+    }
+  },
+  "requirements": [
+    [
+      "prehistoric_party"
+    ],
+    [
+      "prehistoric_partyone"
+    ],
+    [
+      "prehistoric_partytwo"
+    ],
+    [
+      "prehistoric_partythree"
+    ],
+    [
+      "prehistoric_partyfour"
+    ],
+    [
+      "prehistoric_partyfive"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

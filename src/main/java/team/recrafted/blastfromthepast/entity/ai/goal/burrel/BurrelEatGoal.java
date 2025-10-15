@@ -46,7 +46,8 @@ public class BurrelEatGoal extends TargetGoal {
         if (itemTarget == null || itemTarget.isRemoved()) return;
         float entityDistance = burrel.distanceTo(itemTarget);
         if (entityDistance < 1.5) {
-            burrel.makeSound(ModSounds.BURREL_EAT.get());
+            burrel.playSound(ModSounds.BURREL_EAT.get(), 1, burrel.getVoicePitch());
+
             burrel.triggerAnim("second", "eat");
             itemTarget.discard();
             burrel.getNavigation().stop();
@@ -59,10 +60,10 @@ public class BurrelEatGoal extends TargetGoal {
         ItemEntity targetCandidate = null;
         float distance = 0;
         for (ItemEntity entry : itemEntityList) {
-            if ((burrel.isFood(entry.getItem()) || entry.getItem().is(ModItems.SAP_BALL)) && burrel.hasLineOfSight(entry)) {
+            if ((burrel.isFood(entry.getItem()) || entry.getItem().is(ModItems.SAP_BALL.get())) && burrel.hasLineOfSight(entry)) {
                 float entityDistance = burrel.distanceTo(entry);
                 if (entityDistance < 1.5) {
-                    burrel.makeSound(ModSounds.BURREL_EAT.get());
+                    burrel.playSound(ModSounds.BURREL_EAT.get(), 1, burrel.getVoicePitch());
                     burrel.triggerAnim("second", "eat");
                     burrel.getNavigation().stop();
                     entry.discard();

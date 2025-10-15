@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.init.ModBlockEntities;
 
@@ -27,7 +27,11 @@ public class BearTrapBlockEntity extends BlockEntity implements GeoBlockEntity {
 
     public void interact(Level level, BlockPos pos, Player player) {
         if (player.getMainHandItem().is(Items.SNOW)) {
-            if (!this.hidden) player.getMainHandItem().consume(1, player);
+            if (!this.hidden){
+                if (!player.isCreative()) {
+                    player.getMainHandItem().shrink(1);
+                }
+            }
             this.hidden = true;
             return;
         }
@@ -40,7 +44,9 @@ public class BearTrapBlockEntity extends BlockEntity implements GeoBlockEntity {
         bait = new ItemEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, new ItemStack(player.getMainHandItem().getItem(), 1));
         bait.makeFakeItem();
         bait.setInvisible(true);
-        player.getMainHandItem().consume(1, player);
+        if (!player.isCreative()) {
+            player.getMainHandItem().shrink(1);
+        }
     }
 
     public void tick(Level level, BlockPos pos) {

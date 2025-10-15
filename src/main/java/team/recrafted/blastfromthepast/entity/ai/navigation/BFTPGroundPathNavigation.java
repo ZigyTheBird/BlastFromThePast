@@ -135,14 +135,14 @@ public class BFTPGroundPathNavigation extends GroundPathNavigation {
                 for (int z = z0; z != z1; z += stepz) {
                     for (int y = y0; y != y1; y += stepy) {
                         BlockState block = this.level.getBlockState(pos.set(x, y, z));
-                        if (!block.isPathfindable(/*this.level, pos, */PathComputationType.LAND)) return false;
+                        if (!block.isPathfindable(this.level, pos, PathComputationType.LAND)) return false;
                     }
-                    PathType below = this.customNodeEvaluator.getBlockPathTypeWithCustomEntitySize(new PathfindingContext(this.level, this.mob), x, y0 - 1, z, this.mob, 1, 1, 1);
-                    if (below == PathType.WATER || below == PathType.LAVA || below == PathType.OPEN) return false;
-                    PathType in = this.customNodeEvaluator.getBlockPathTypeWithCustomEntitySize(new PathfindingContext(this.level, this.mob), x, y0, z, this.mob, 1, y1 - y0, 1);
+                    BlockPathTypes below = this.nodeEvaluator.getBlockPathType(this.level, x, y0 - 1, z, this.mob);
+                    if (below == BlockPathTypes.WATER || below == BlockPathTypes.LAVA || below == BlockPathTypes.OPEN) return false;
+                    BlockPathTypes in = this.customNodeEvaluator.getBlockPathTypeWithCustomEntitySize(this.level, x, y0, z, this.mob, 1, y1 - y0, 1);
                     float priority = this.mob.getPathfindingMalus(in);
                     if (priority < 0.0F || priority >= 8.0F) return false;
-                    if (in == PathType.DAMAGE_FIRE || in == PathType.DANGER_FIRE || in == PathType.DAMAGE_OTHER) return false;
+                    if (in == BlockPathTypes.DAMAGE_FIRE || in == BlockPathTypes.DANGER_FIRE || in == BlockPathTypes.DAMAGE_OTHER) return false;
                 }
             }
         } while (t <= max_t);

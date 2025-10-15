@@ -1,15 +1,13 @@
 package team.recrafted.blastfromthepast.datagen.client;
 
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.LanguageProvider;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
+import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.registries.RegistryObject;
 import org.codehaus.plexus.util.StringUtils;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.block.BFTPBlockGroup;
@@ -162,29 +160,31 @@ public class ModLangGen extends LanguageProvider {
 
         add("effect.blastfromthepast.psychod", "Psycho'd");
 
-        for (AdvancementHolder holder : ModAdvancementGen.holders) {
-            add("advancements.blastfromthepast." + holder.id().getPath() + ".title", StringUtils.capitaliseAllWords(holder.id().getPath().replaceAll("_", " ")));
+        for (Advancement holder : ModAdvancementGen.holders) {
+            add("advancements.blastfromthepast." + holder.getId().getPath() + ".title", StringUtils.capitaliseAllWords(holder.getId().getPath().replaceAll("_", " ")));
         }
+
+        add("item.blastfromthepast.blizzard_revelry_disc.desc", "Gateoh - Blizzard Revelry");
     }
 
-    private void addBlock(DeferredBlock<? extends Block> key) {
+    private void addBlock(RegistryObject<? extends Block> key) {
         add(key.get().getDescriptionId(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")));
     }
 
-    private void addBlockWithSuffix(DeferredBlock<? extends Block> key, String suffix) {
+    private void addBlockWithSuffix(RegistryObject<? extends Block> key, String suffix) {
         add(key.get().getDescriptionId(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")).concat(suffix));
     }
 
-    private void addItem(DeferredItem<? extends Item> key){
+    private void addItem(RegistryObject<? extends Item> key){
         add(key.get().getDescriptionId(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")));
     }
 
-    private <T extends Entity> void addEntity(DeferredHolder<EntityType<?>, EntityType<T>> key){
+    private <T extends Entity> void addEntity(RegistryObject<EntityType<T>> key){
         add(key.get().getDescriptionId(), StringUtils.capitaliseAllWords(key.getId().getPath().replaceAll("_", " ")));
     }
 
     private void registerStoneGroup(BFTPStoneGroup stoneGroup){
-        for (DeferredBlock<?> block : stoneGroup.blocks) {
+        for (RegistryObject<? extends Block> block : stoneGroup.blocks) {
             addBlock(block);
         }
     }

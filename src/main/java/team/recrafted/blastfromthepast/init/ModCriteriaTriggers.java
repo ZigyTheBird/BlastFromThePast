@@ -1,17 +1,13 @@
 package team.recrafted.blastfromthepast.init;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonObject;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.CriterionValidator;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.storage.loot.LootContext;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 
 import java.util.Optional;
@@ -21,10 +17,13 @@ public class ModCriteriaTriggers {
     public static final PacifyBearTrigger PACIFY_BEAR_TRIGGER = new PacifyBearTrigger();
 
     public static class DanceTrigger extends SimpleCriterionTrigger<DanceTrigger.TriggerInstance> {
-        public DanceTrigger() {}
 
-        public Codec<TriggerInstance> codec() {
-            return TriggerInstance.CODEC;
+        @Override
+        protected @NotNull TriggerInstance createInstance(@NotNull JsonObject jsonObject, @NotNull ContextAwarePredicate contextAwarePredicate, @NotNull DeserializationContext deserializationContext) {
+            ContextAwarePredicate lootContextPredicate1 = EntityPredicate.fromJson(jsonObject, "player", deserializationContext);
+            ContextAwarePredicate lootContextPredicate2 = EntityPredicate.fromJson(jsonObject, "entity", deserializationContext);
+
+            return new DanceTrigger.TriggerInstance(contextAwarePredicate, Optional.of(lootContextPredicate1), Optional.of(lootContextPredicate2));
         }
 
         public void trigger(ServerPlayer player, Animal entity) {
@@ -32,35 +31,27 @@ public class ModCriteriaTriggers {
             this.trigger(player, (p_68838_) -> p_68838_.matches(lootcontext));
         }
 
-        public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) implements SimpleInstance {
-            public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create((p_337399_) -> p_337399_.group(EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player), EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(TriggerInstance::entity)).apply(p_337399_, TriggerInstance::new));
+        @Override
+        public @NotNull ResourceLocation getId() {
+            return ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "dance_trigger");
+        }
 
-            public TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) {
+        public static class TriggerInstance extends AbstractCriterionTriggerInstance {
+            Optional<ContextAwarePredicate> player;
+            Optional<ContextAwarePredicate> entity;
+
+            public TriggerInstance(ContextAwarePredicate contextAwarePredicate, Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) {
+                super(BlastFromThePast.location("dance_trigger"), contextAwarePredicate);
                 this.player = player;
                 this.entity = entity;
             }
 
-            public static Criterion<TriggerInstance> madeEntityDance(EntityPredicate.Builder entity) {
-                return DANCE_TRIGGER.createCriterion(new TriggerInstance(Optional.empty(), Optional.of(EntityPredicate.wrap(entity))));
-            }
-
-            public void validate(CriterionValidator validator) {
-                validator.validateEntity(this.player(), ".player");
-                validator.validateEntity(this.entity, ".entity");
+            public static Criterion madeEntityDance(EntityPredicate.Builder entity) {
+                return new Criterion(new TriggerInstance(ContextAwarePredicate.ANY, Optional.empty(), Optional.of(EntityPredicate.wrap(entity.build()))));
             }
 
             public boolean matches(LootContext lootContext) {
                 return this.entity.isEmpty() || this.entity.get().matches(lootContext);
-            }
-
-            @Override
-            public Optional<ContextAwarePredicate> player() {
-                return this.player;
-            }
-
-            @Override
-            public Optional<ContextAwarePredicate> entity() {
-                return this.entity;
             }
         }
     }
@@ -68,8 +59,12 @@ public class ModCriteriaTriggers {
     public static class PacifyBearTrigger extends SimpleCriterionTrigger<PacifyBearTrigger.TriggerInstance> {
         public PacifyBearTrigger() {}
 
-        public Codec<TriggerInstance> codec() {
-            return TriggerInstance.CODEC;
+        @Override
+        protected TriggerInstance createInstance(JsonObject jsonObject, ContextAwarePredicate contextAwarePredicate, DeserializationContext deserializationContext) {
+            ContextAwarePredicate lootContextPredicate1 = EntityPredicate.fromJson(jsonObject, "player", deserializationContext);
+            ContextAwarePredicate lootContextPredicate2 = EntityPredicate.fromJson(jsonObject, "entity", deserializationContext);
+
+            return new PacifyBearTrigger.TriggerInstance(contextAwarePredicate, Optional.of(lootContextPredicate1), Optional.of(lootContextPredicate2));
         }
 
         public void trigger(ServerPlayer player, Animal entity) {
@@ -77,41 +72,31 @@ public class ModCriteriaTriggers {
             this.trigger(player, (p_68838_) -> p_68838_.matches(lootcontext));
         }
 
-        public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) implements SimpleInstance {
-            public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create((p_337399_) -> p_337399_.group(EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player), EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(TriggerInstance::entity)).apply(p_337399_, TriggerInstance::new));
+        @Override
+        public ResourceLocation getId() {
+            return BlastFromThePast.location("pacify_bear_trigger");
+        }
 
-            public TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) {
+        public static class TriggerInstance extends AbstractCriterionTriggerInstance {
+
+            Optional<ContextAwarePredicate> player;
+            Optional<ContextAwarePredicate> entity;
+
+            public TriggerInstance(ContextAwarePredicate contextAwarePredicate, Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) {
+                super(BlastFromThePast.location("pacify_bear_trigger"), contextAwarePredicate);
                 this.player = player;
                 this.entity = entity;
             }
 
-            public static Criterion<TriggerInstance> madeEntityDance(EntityPredicate.Builder entity) {
-                return PACIFY_BEAR_TRIGGER.createCriterion(new TriggerInstance(Optional.empty(), Optional.of(EntityPredicate.wrap(entity))));
-            }
-
-            public void validate(CriterionValidator validator) {
-                validator.validateEntity(this.player(), ".player");
-                validator.validateEntity(this.entity, ".entity");
+            public static Criterion madeEntityDance(EntityPredicate.Builder entity) {
+                return new Criterion(new TriggerInstance(ContextAwarePredicate.ANY, Optional.empty(), Optional.of(EntityPredicate.wrap(entity.build()))));
             }
 
             public boolean matches(LootContext lootContext) {
                 return this.entity.isEmpty() || this.entity.get().matches(lootContext);
             }
-
-            @Override
-            public Optional<ContextAwarePredicate> player() {
-                return this.player;
-            }
-
-            @Override
-            public Optional<ContextAwarePredicate> entity() {
-                return this.entity;
-            }
         }
     }
 
-    public static void init() {
-        Registry.register(BuiltInRegistries.TRIGGER_TYPES, BlastFromThePast.location("dance_trigger"), DANCE_TRIGGER);
-        Registry.register(BuiltInRegistries.TRIGGER_TYPES, BlastFromThePast.location("pacify_bear_trigger"), PACIFY_BEAR_TRIGGER);
-    }
+    public static void init() {}
 }

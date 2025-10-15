@@ -11,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.event.EventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.common.util.FakePlayer;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.misc.ComplexAnimal;
 import team.recrafted.blastfromthepast.mixin.ServerPlayerAccessor;
@@ -43,7 +43,7 @@ public class RaidFoodContainerGoal<T extends PathfinderMob & ComplexAnimal> exte
     @Override
     public boolean canUse() {
         if (this.nextStartTick <= 0) {
-            if (!EventHooks.canEntityGrief(this.foodRaider.level(), this.foodRaider)) {
+            if (!ForgeEventFactory.getMobGriefingEvent(this.foodRaider.level(), this.foodRaider)) {
                 return false;
             }
             this.canRaid = false;
@@ -144,7 +144,7 @@ public class RaidFoodContainerGoal<T extends PathfinderMob & ComplexAnimal> exte
     private static void openMenu(FakePlayer player, MenuProvider menuProvider){
         if (menuProvider != null) {
             if (player.containerMenu != player.inventoryMenu) {
-                if (menuProvider.shouldTriggerClientSideContainerClosingOnOpen()) {
+                if (true) {
                     player.closeContainer();
                 } else {
                     player.doCloseContainer();

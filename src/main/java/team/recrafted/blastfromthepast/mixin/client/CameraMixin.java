@@ -19,7 +19,7 @@ public class CameraMixin {
 
     @Inject(method = "getFluidInCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", shift = At.Shift.AFTER), cancellable = true)
     private void getFluidInCamera(CallbackInfoReturnable<FogType> cir, @Local BlockPos blockpos) {
-        if (this.level.getBlockState(blockpos).is(ModBlocks.TAR)) {
+        if (this.level.getBlockState(blockpos).is(ModBlocks.TAR.get())) {
             cir.setReturnValue(TarBlock.FOG_TYPE);
         }
     }

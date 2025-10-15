@@ -2,7 +2,7 @@ package team.recrafted.blastfromthepast.entity.boats;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.storage.loot.LootTable;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.init.ModEntities;
@@ -32,7 +31,7 @@ import team.recrafted.blastfromthepast.init.ModItems;
 public class BFTPChestBoat extends BFTPBoat implements HasCustomInventoryScreen, ContainerEntity {
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(27, ItemStack.EMPTY);
     @Nullable
-    private ResourceKey<LootTable> lootTable;
+    private ResourceLocation lootTable;
     private long lootTableSeed;
 
     public BFTPChestBoat(EntityType<? extends Boat> pEntityType, Level pLevel) {
@@ -65,7 +64,7 @@ public class BFTPChestBoat extends BFTPBoat implements HasCustomInventoryScreen,
 
     protected void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        this.addChestVehicleSaveData(pCompound, this.registryAccess());
+        this.addChestVehicleSaveData(pCompound);
     }
 
     /**
@@ -73,7 +72,7 @@ public class BFTPChestBoat extends BFTPBoat implements HasCustomInventoryScreen,
      */
     protected void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        this.readChestVehicleSaveData(pCompound, this.registryAccess());
+        this.readChestVehicleSaveData(pCompound);
     }
 
     public void destroy(@NotNull DamageSource pDamageSource) {
@@ -198,12 +197,12 @@ public class BFTPChestBoat extends BFTPBoat implements HasCustomInventoryScreen,
 
     @Nullable
     @Override
-    public ResourceKey<LootTable> getLootTable() {
+    public ResourceLocation getLootTable() {
         return lootTable;
     }
 
     @Override
-    public void setLootTable(@Nullable ResourceKey<LootTable> pLootTable) {
+    public void setLootTable(@Nullable ResourceLocation pLootTable) {
         lootTable = pLootTable;
     }
 

@@ -1,22 +1,14 @@
 package team.recrafted.blastfromthepast.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import team.recrafted.blastfromthepast.BlastFromThePast;
+import net.minecraft.network.FriendlyByteBuf;
 
-public record RiddenEntityPayload(int entityId) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<RiddenEntityPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "ridden_entity"));
-    public static final StreamCodec<ByteBuf, RiddenEntityPayload> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VAR_INT,
-            RiddenEntityPayload::entityId,
-            RiddenEntityPayload::new
-    );
+public record RiddenEntityPayload(int entityId) {
 
-    @Override
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static void write(RiddenEntityPayload packet, FriendlyByteBuf buffer) {
+        buffer.writeInt(packet.entityId);
+    }
+
+    public static RiddenEntityPayload read(FriendlyByteBuf buffer) {
+        return new RiddenEntityPayload(buffer.readInt());
     }
 }

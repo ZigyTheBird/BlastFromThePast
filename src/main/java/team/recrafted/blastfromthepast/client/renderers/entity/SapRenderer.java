@@ -19,7 +19,7 @@ public class SapRenderer extends GeoEntityRenderer<SapEntity> {
     }
 
     @Override
-    public void preRender(PoseStack poseStack, SapEntity animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void preRender(PoseStack poseStack, SapEntity animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.translate(0, -0.5, 0);
         Direction direction = animatable.getDirection();
         if (direction != Direction.UP && direction != Direction.DOWN) {
@@ -35,5 +35,5 @@ public class SapRenderer extends GeoEntityRenderer<SapEntity> {
     }
 
     @Override
-    protected void applyRotations(SapEntity animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick, float nativeScale) {}
+    protected void applyRotations(SapEntity animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {}
 }

@@ -26,7 +26,6 @@ import team.recrafted.blastfromthepast.init.ModSounds;
 import java.util.List;
 
 public class BearTrapBlock extends BaseEntityBlock {
-    public static final MapCodec<BearTrapBlock> CODEC = simpleCodec(BearTrapBlock::new);
 
     public BearTrapBlock(Properties properties) {
         super(properties);
@@ -38,12 +37,7 @@ public class BearTrapBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         BearTrapBlockEntity blockEntity = (BearTrapBlockEntity) level.getBlockEntity(pos);
         if (blockEntity.entity == null && entity instanceof LivingEntity livingEntity) {
             blockEntity.entity = livingEntity;
@@ -61,8 +55,8 @@ public class BearTrapBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
-        return List.of(new ItemStack(ModBlocks.BEAR_TRAP.asItem(), 1));
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        return List.of(new ItemStack(ModBlocks.BEAR_TRAP.get().asItem(), 1));
     }
 
     @Override
@@ -76,23 +70,23 @@ public class BearTrapBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockPos blockpos = pos.below();
         return canSupportRigidBlock(level, blockpos) || canSupportCenter(level, blockpos, Direction.UP);
     }
 
     @Override
-    protected int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
         return ((BearTrapBlockEntity)blockAccess.getBlockEntity(pos)).isTrapping() ? 15 : 0;
     }
 
     @Override
-    protected int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    public int getDirectSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
         return side == Direction.UP ? getSignal(blockState, blockAccess, pos, side) : 0;
     }
 
     @Override
-    protected boolean isSignalSource(BlockState state) {
+    public boolean isSignalSource(BlockState state) {
         return true;
     }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+    "H": {
+      "item": "blastfromthepast:bear_claw"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "#H#"
+  ],
+  "result": {
+    "item": "blastfromthepast:bear_trap"
+  },
+  "show_notification": true
+}

@@ -26,26 +26,20 @@ import team.recrafted.blastfromthepast.init.ModBlocks;
 public class ChillyMossSprout extends BushBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public static final MapCodec<ChillyMossSprout> CODEC = simpleCodec(ChillyMossSprout::new);
     public ChillyMossSprout(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
     }
 
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.is(ModBlocks.CHILLY_MOSS);
+        return state.is(ModBlocks.CHILLY_MOSS.get());
     }
 
-    @Override
-    protected MapCodec<? extends BushBlock> codec() {
-        return CODEC;
-    }
-
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
 
-    protected @NotNull VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+    public @NotNull VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
         return Shapes.empty();
     }
 
@@ -53,11 +47,11 @@ public class ChillyMossSprout extends BushBlock implements SimpleWaterloggedBloc
         builder.add(WATERLOGGED);
     }
 
-    protected FluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         boolean waterLogged = state.getValue(WATERLOGGED);
         if (waterLogged) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
@@ -67,7 +61,7 @@ public class ChillyMossSprout extends BushBlock implements SimpleWaterloggedBloc
     }
 
     @Override
-    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (!canSurvive(state, level, pos)) {
             level.destroyBlock(pos, true);
@@ -75,7 +69,7 @@ public class ChillyMossSprout extends BushBlock implements SimpleWaterloggedBloc
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(ModBlocks.CHILLY_MOSS);
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        return level.getBlockState(pos.below()).is(ModBlocks.CHILLY_MOSS.get());
     }
 }

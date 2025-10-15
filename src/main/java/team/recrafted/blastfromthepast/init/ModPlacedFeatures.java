@@ -3,7 +3,7 @@ package team.recrafted.blastfromthepast.init;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ClampedInt;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -44,7 +43,7 @@ public class ModPlacedFeatures {
     public static ResourceKey<PlacedFeature> FROSTBITE_FOSSILS_LOWER = ResourceKey.create(Registries.PLACED_FEATURE,
             ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_fossils_lower"));
 
-    public static void register(BootstrapContext<PlacedFeature> context) {
+    public static void register(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
         Holder<ConfiguredFeature<?, ?>> frostbiteForestFlowersConfigured = configuredFeatures.getOrThrow(ModConfiguredFeatures.FROSTBITE_FOREST_FLOWERS);
         PlacementUtils.register(
@@ -74,7 +73,7 @@ public class ModPlacedFeatures {
                 BiomeFilter.biome()
         );
         Holder<ConfiguredFeature<?, ?>> psychoBerryConfigured = configuredFeatures.getOrThrow(ModConfiguredFeatures.PSYCHO_BERRY);
-        PlacementUtils.register(context, PSYCHO_BERRY, psychoBerryConfigured, RarityFilter.onAverageOnceEvery(192), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+        PlacementUtils.register(context, PSYCHO_BERRY, psychoBerryConfigured, RarityFilter.onAverageOnceEvery(70), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
 
         PlacementUtils.register(context, CHILLY_MOSS, configuredFeatures.getOrThrow(ModConfiguredFeatures.CHILLY_MOSS), RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
 

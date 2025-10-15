@@ -8,6 +8,7 @@ import team.recrafted.blastfromthepast.entity.GlacerosEntity;
 public class GlacerosRenderer extends GeoEntityRenderer<GlacerosEntity> {
     public GlacerosRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new GlacerosModel());
+
         this.shadowRadius = 0.8F;
     }
 

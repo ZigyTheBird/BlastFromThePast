@@ -1,5 +1,6 @@
 package team.recrafted.blastfromthepast.entity.projectile;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -10,10 +11,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -23,8 +21,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.init.ModEntities;
 import team.recrafted.blastfromthepast.init.ModItems;
@@ -32,7 +30,7 @@ import team.recrafted.blastfromthepast.init.ModItems;
 import javax.annotation.Nullable;
 
 public class ThrownIceSpear extends AbstractArrow implements GeoItem {
-    private final ItemStack spearItem = new ItemStack(ModItems.ICE_SPEAR.get());
+    private ItemStack spearItem = new ItemStack(ModItems.ICE_SPEAR.get());
     private static final EntityDataAccessor<Byte> ID_LOYALTY;
     private static final EntityDataAccessor<Boolean> ID_FOIL;
     private boolean dealtDamage;
@@ -43,21 +41,16 @@ public class ThrownIceSpear extends AbstractArrow implements GeoItem {
     }
 
     public ThrownIceSpear(Level level, LivingEntity shooter, ItemStack pickupItemStack) {
-        super(ModEntities.ICE_SPEAR.get(), shooter, level, pickupItemStack, (ItemStack)null);
-        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(pickupItemStack));
+        super(ModEntities.ICE_SPEAR.get(), shooter, level);
+        this.spearItem=pickupItemStack.copy();
+        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(pickupItemStack));
         this.entityData.set(ID_FOIL, pickupItemStack.hasFoil());
     }
 
-    public ThrownIceSpear(Level level, double x, double y, double z, ItemStack pickupItemStack) {
-        super(ModEntities.ICE_SPEAR.get(), x, y, z, level, pickupItemStack, pickupItemStack);
-        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(pickupItemStack));
-        this.entityData.set(ID_FOIL, pickupItemStack.hasFoil());
-    }
-
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(ID_LOYALTY, (byte)0);
-        builder.define(ID_FOIL, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ID_LOYALTY, (byte)0);
+        this.entityData.define(ID_FOIL, false);
     }
 
     public void tick() {
@@ -112,50 +105,37 @@ public class ThrownIceSpear extends AbstractArrow implements GeoItem {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         float f = 8.0F;
-        Entity entity1 = this.getOwner();
-        DamageSource damagesource = this.damageSources().trident(this, (Entity)(entity1 == null ? this : entity1));
-        Level var7 = this.level();
-        if (var7 instanceof ServerLevel serverlevel1) {
-            f = EnchantmentHelper.modifyDamage(serverlevel1, this.getWeaponItem(), entity, damagesource, f);
+        if (entity instanceof LivingEntity livingentity) {
+            f += EnchantmentHelper.getDamageBonus(this.spearItem, livingentity.getMobType());
         }
 
+        Entity entity1 = this.getOwner();
+        DamageSource damagesource = this.damageSources().trident(this, (Entity) (entity1 == null ? this : entity1));
         this.dealtDamage = true;
+        SoundEvent soundevent = SoundEvents.TRIDENT_HIT;
         if (entity.hurt(damagesource, f)) {
             if (entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
 
-            var7 = this.level();
-            if (var7 instanceof ServerLevel serverLevel) {
-                EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damagesource, this.getWeaponItem());
-            }
-
-            if (entity instanceof LivingEntity livingEntity) {
-                if(livingEntity.canFreeze()){
-                    livingEntity.setTicksFrozen(600);
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingentity1 = (LivingEntity) entity;
+                if (entity1 instanceof LivingEntity) {
+                    EnchantmentHelper.doPostHurtEffects(livingentity1, entity1);
+                    EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity1);
                 }
-                this.doKnockback(livingEntity, damagesource);
-                this.doPostHurtEffects(livingEntity);
+
+                if(livingentity1.canFreeze()){
+                    livingentity1.setTicksFrozen(600);
+                }
+                this.doPostHurtEffects(livingentity1);
             }
         }
 
-        this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01, -0.1, -0.01));
-        this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
-    }
+        this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
+        float f1 = 1.0F;
 
-    protected void hitBlockEnchantmentEffects(ServerLevel level, BlockHitResult hitResult, ItemStack stack) {
-        Vec3 vec3 = hitResult.getBlockPos().clampLocationWithin(hitResult.getLocation());
-        Entity var6 = this.getOwner();
-        LivingEntity var10002;
-        if (var6 instanceof LivingEntity livingentity) {
-            var10002 = livingentity;
-        } else {
-            var10002 = null;
-        }
-
-        EnchantmentHelper.onHitBlock(level, stack, var10002, this, (EquipmentSlot)null, vec3, level.getBlockState(hitResult.getBlockPos()), (p_348680_) -> {
-            this.kill();
-        });
+        this.playSound(soundevent, f1, 1.0F);
     }
 
     public ItemStack getWeaponItem() {
@@ -166,7 +146,7 @@ public class ThrownIceSpear extends AbstractArrow implements GeoItem {
         return super.tryPickup(player) || this.isNoPhysics() && this.ownedBy(player) && player.getInventory().add(this.getPickupItem());
     }
 
-    protected ItemStack getDefaultPickupItem() {
+    protected ItemStack getPickupItem() {
         return new ItemStack(ModItems.ICE_SPEAR.get());
     }
 
@@ -181,27 +161,20 @@ public class ThrownIceSpear extends AbstractArrow implements GeoItem {
 
     }
 
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.dealtDamage = compound.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(this.getPickupItemStackOrigin()));
-    }
-
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putBoolean("DealtDamage", this.dealtDamage);
-    }
-
-    private byte getLoyaltyFromItem(ItemStack stack) {
-        Level var3 = this.level();
-        byte var10000;
-        if (var3 instanceof ServerLevel serverlevel) {
-            var10000 = (byte) Mth.clamp(EnchantmentHelper.getTridentReturnToOwnerAcceleration(serverlevel, stack, this), 0, 127);
-        } else {
-            var10000 = 0;
+    public void readAdditionalSaveData(CompoundTag p_37578_) {
+        super.readAdditionalSaveData(p_37578_);
+        if (p_37578_.contains("Spear", 10)) {
+            this.spearItem = ItemStack.of(p_37578_.getCompound("Spear"));
         }
 
-        return var10000;
+        this.dealtDamage = p_37578_.getBoolean("DealtDamage");
+        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(this.spearItem));
+    }
+
+    public void addAdditionalSaveData(CompoundTag p_37582_) {
+        super.addAdditionalSaveData(p_37582_);
+        p_37582_.put("Spear", this.spearItem.save(new CompoundTag()));
+        p_37582_.putBoolean("DealtDamage", this.dealtDamage);
     }
 
     public void tickDespawn() {
@@ -209,7 +182,6 @@ public class ThrownIceSpear extends AbstractArrow implements GeoItem {
         if (this.pickup != Pickup.ALLOWED || i <= 0) {
             super.tickDespawn();
         }
-
     }
 
     protected float getWaterInertia() {

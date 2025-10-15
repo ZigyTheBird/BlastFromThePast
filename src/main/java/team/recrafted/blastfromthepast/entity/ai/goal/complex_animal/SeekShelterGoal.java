@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.FleeSunGoal;
-import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -59,11 +58,10 @@ public class SeekShelterGoal<T extends PathfinderMob & ComplexAnimal> extends Fl
     protected Vec3 getHidePos() {
         RandomSource random = this.mob.getRandom();
         BlockPos currentPos = this.mob.blockPosition();
-        PathfindingContext context = new PathfindingContext(this.mob.level(),this.mob);
         BlockPos.MutableBlockPos targetPos = currentPos.mutable();
         for(int i = 0; i < 10; ++i) {
             targetPos = targetPos.set(currentPos).move(random.nextInt(20) - 10, random.nextInt(6) - 3, random.nextInt(20) - 10);
-            if (EntityHelper.hasBlocksAbove(this.mob, targetPos) && this.mob.getPathfindingMalus(WalkNodeEvaluator.getPathTypeStatic(context, targetPos)) == 0.0F) {
+            if (EntityHelper.hasBlocksAbove(this.mob, targetPos) && this.mob.getPathfindingMalus(WalkNodeEvaluator.getBlockPathTypeStatic(this.mob.level(), targetPos)) == 0.0F) {
                 return Vec3.atBottomCenterOf(targetPos);
             }
         }

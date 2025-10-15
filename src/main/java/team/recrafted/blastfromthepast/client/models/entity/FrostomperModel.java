@@ -2,8 +2,8 @@ package team.recrafted.blastfromthepast.client.models.entity;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
@@ -54,7 +54,7 @@ public class FrostomperModel extends GeoModel<FrostomperEntity> {
     @Override
     public void setCustomAnimations(FrostomperEntity pEntity, long instanceId, AnimationState<FrostomperEntity> animationState) {
         if (!pEntity.canAnimateLook()) return;
-        GeoBone head = getAnimationProcessor().getBone("head");
+        CoreGeoBone head = getAnimationProcessor().getBone("head");
 
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);

@@ -47,7 +47,7 @@ public class MoveToOrSitWithItemGoal<T extends Mob & ComplexAnimal> extends Goal
         } else{
             List<ItemEntity> items = this.mob.level().getEntitiesOfClass(ItemEntity.class, this.mob.getBoundingBox().inflate(8.0, 8.0, 8.0), this::isWantedItem);
             if (!items.isEmpty()) {
-                this.mob.getNavigation().moveTo(items.getFirst(), this.speedModifier);
+                this.mob.getNavigation().moveTo(items.get(0), this.speedModifier);
             }
         }
         this.cooldown = 0;

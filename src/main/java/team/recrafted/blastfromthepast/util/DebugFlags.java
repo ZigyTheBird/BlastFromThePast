@@ -1,6 +1,6 @@
 package team.recrafted.blastfromthepast.util;
 
-import net.neoforged.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 public class DebugFlags {
     public static final boolean DEBUG_ANIMATED_ATTACK = !FMLEnvironment.production;

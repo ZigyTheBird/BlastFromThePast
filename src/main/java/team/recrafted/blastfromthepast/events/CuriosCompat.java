@@ -2,10 +2,13 @@ package team.recrafted.blastfromthepast.events;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.access.PlayerBFTPDataAccess;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.event.CurioDropsEvent;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.common.capability.CurioInventoryCapability;
@@ -28,7 +31,10 @@ public class CuriosCompat {
     @Nullable
     public static List<ItemStack> getCuriosItems(ServerPlayer player) {
         // TODO: there's likely a better way to do this
-        CurioInventoryCapability curioCap = (CurioInventoryCapability) player.getCapability(CuriosCapability.INVENTORY);
+        LazyOptional<ICuriosItemHandler> curiosCap = player.getCapability(CuriosCapability.INVENTORY);
+
+        ICuriosItemHandler curioCap = curiosCap.resolve().orElse(null);
+
         if (curioCap == null) {
             return null;
         }

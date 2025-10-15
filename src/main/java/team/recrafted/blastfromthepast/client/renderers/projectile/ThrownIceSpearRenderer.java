@@ -14,7 +14,7 @@ public class ThrownIceSpearRenderer extends GeoEntityRenderer<ThrownIceSpear> {
     }
 
     @Override
-    protected void applyRotations(ThrownIceSpear entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick, float nativeScale) {
+    protected void applyRotations(ThrownIceSpear entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, entity.yRotO, entity.getYRot()) - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTick, entity.xRotO, entity.getXRot()) + 90));
     }

@@ -39,7 +39,7 @@ public interface AnimatedAttacker<T extends Mob & AnimatedAttacker<T, A>, A exte
         default boolean isTargetCloseEnoughToStart(T attacker, LivingEntity target) {
             Vec3 startAttackSize = this.getAttackSize().scale(attacker.getScale()).multiply(1, 1, 0.5D);
             AABB startAttackBounds = HitboxHelper.createHitboxRelativeToFront(attacker, startAttackSize.x(), startAttackSize.y(), startAttackSize.z());
-            return startAttackBounds.intersects(target.getHitbox());
+            return startAttackBounds.intersects(target.getBoundingBox());
         }
 
         default boolean hasAttackPointAt(int attackTicker){

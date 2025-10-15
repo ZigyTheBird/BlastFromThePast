@@ -1,9 +1,10 @@
 package team.recrafted.blastfromthepast.init;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
@@ -31,7 +32,7 @@ public class ModBiomes {
     public static final int FROSTBITE_GRASS_COLOR = 0x5B8E77;
     public static final int FROSBITE_FOLIAGE_COLOR = 0x5B8E77;
 
-    public static void register(BootstrapContext<Biome> biomeBootstrapContext) {
+    public static void register(BootstapContext<Biome> biomeBootstrapContext) {
         HolderGetter<PlacedFeature> holdergetter = biomeBootstrapContext.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> worldCarvers = biomeBootstrapContext.lookup(Registries.CONFIGURED_CARVER);
         biomeBootstrapContext.register(
@@ -110,7 +111,7 @@ public class ModBiomes {
                 .fogColor(12638463)
                 .skyColor(calculateSkyColor(temperature))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(new Music(ModSounds.AURORA_FROLICS, 0, 12000, true));
+                .backgroundMusic(new Music(Holder.direct(ModSounds.AURORA_FROLICS.get()), 0, 12000, true));
         if (grassColorOverride != null) {
             biomespecialeffects$builder.grassColorOverride(grassColorOverride);
         }

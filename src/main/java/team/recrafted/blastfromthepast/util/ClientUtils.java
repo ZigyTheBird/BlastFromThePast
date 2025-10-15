@@ -19,9 +19,4 @@ public class ClientUtils {
     public static void openGlacialGuidebookScreen() {
         Minecraft.getInstance().setScreen(new GlacialGuidebookScreen());
     }
-
-    public static void shouldApplyPsychoedShader(boolean bool) {
-        Minecraft.getInstance().gameRenderer.shutdownEffect();
-        if (bool) Minecraft.getInstance().gameRenderer.loadEffect(BlastFromThePast.location("shaders/post/psycho.json"));
-    }
 }

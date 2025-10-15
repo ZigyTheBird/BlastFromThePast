@@ -1,7 +1,6 @@
 package team.recrafted.blastfromthepast.mixin;
 
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.context.UseOnContext;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,10 +16,13 @@ public class AxeItemMixin {
         if (context.getPlayer() == null) return;
         for (SapEntity sap : context.getLevel().getEntitiesOfClass(SapEntity.class, context.getPlayer().getBoundingBox().inflate(3))) {
             if (sap.getPos().relative(sap.getDirection().getOpposite()).equals(context.getClickedPos())) {
-                context.getItemInHand().hurtAndBreak(1, context.getPlayer(), LivingEntity.getSlotForHand(context.getHand()));
+                context.getItemInHand().hurtAndBreak(1, context.getPlayer(), (p_150686_) -> {
+                    p_150686_.broadcastBreakEvent(context.getHand());
+                });
                 sap.discard();
                 cir.setReturnValue(InteractionResult.SUCCESS);
             }
         }
     }
+
 }

@@ -30,28 +30,28 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.scores.PlayerTeam;
-import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraft.world.scores.Team;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.ai.controller.OverridableBodyRotationControl;
-import team.recrafted.blastfromthepast.entity.ai.controller.OverridableLookControl;
 import team.recrafted.blastfromthepast.entity.ai.controller.OverridableMoveControl;
 import team.recrafted.blastfromthepast.entity.ai.goal.CustomPanicGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.HitboxAdjustedBreedGoal;
@@ -68,7 +68,6 @@ import team.recrafted.blastfromthepast.entity.pack.EntityPack;
 import team.recrafted.blastfromthepast.entity.pack.EntityPackAgeableMobData;
 import team.recrafted.blastfromthepast.entity.pack.EntityPackHolder;
 import team.recrafted.blastfromthepast.init.*;
-import team.recrafted.blastfromthepast.mixin.AbstractChestedHorseAccessor;
 import team.recrafted.blastfromthepast.network.FrostomperCollidePayload;
 import team.recrafted.blastfromthepast.network.ScreenShakePayload;
 import team.recrafted.blastfromthepast.util.DebugFlags;
@@ -127,9 +126,9 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     public FrostomperEntity(EntityType<? extends FrostomperEntity> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new OverridableMoveControl<>(this);
-        this.setPathfindingMalus(PathType.LEAVES, 0.0F);
+        this.setPathfindingMalus(BlockPathTypes.LEAVES, 0.0F);
         this.parentTargeting = PARENT_TARGETING.copy().selector(entity -> HitboxHelper.isCloseEnoughForTargeting(this, entity, true, PARENT_TARGETING_DISTANCE));
-        ((AbstractChestedHorseAccessor)this).setBabyDimensions(BABY_FROSTOMPER_DIMENSIONS);
+        this.setMaxUpStep(1.0f);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -139,13 +138,22 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
                 .add(Attributes.ATTACK_DAMAGE, 12.0)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.5)
-                .add(Attributes.FOLLOW_RANGE, 32.0)
-                .add(Attributes.STEP_HEIGHT, 1.0);
+                .add(Attributes.FOLLOW_RANGE, 32.0);
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return this.isBaby() ? BABY_FROSTOMPER_DIMENSIONS : super.getDimensions(pose);
+    }
+
+    @Override
+    protected float getStandingEyeHeight(Pose p_30578_, EntityDimensions p_30579_) {
+        return this.isBaby()? HitboxHelper.pixelsToBlocks(15.0F): HitboxHelper.pixelsToBlocks(55.0F);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new CustomPanicGoal<>(this, FrostomperEntity::shouldPanic, 1.2, EntityHelper::getPanicInducingDamageTypes));
+        this.goalSelector.addGoal(1, new CustomPanicGoal<>(this, FrostomperEntity::shouldPanic, 1.2, EntityHelper.getPanicInducingDamageTypes()));
         //this.goalSelector.addGoal(1, new RunAroundLikeCrazyGoal(this, 1.2));
         this.goalSelector.addGoal(2, new HitboxAdjustedBreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new HitboxAdjustedFollowParentGoal(this, 1.0));
@@ -178,11 +186,11 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     @Override
     protected void addBehaviourGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, this::isTemptItem, false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, this.isTemptItem(), false));
     }
 
-    protected boolean isTemptItem(ItemStack stack) {
-        return stack.is(this.isBaby() ? ModTags.Items.BABY_FROSTOMPER_TEMPT_ITEMS : ModTags.Items.FROSTOMPER_TEMPT_ITEMS);
+    protected Ingredient isTemptItem() {
+        return this.isBaby()? Ingredient.of(ModTags.Items.BABY_FROSTOMPER_TEMPT_ITEMS): Ingredient.of(ModTags.Items.FROSTOMPER_TEMPT_ITEMS);
     }
 
     @Override
@@ -260,7 +268,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, CompoundTag compoundTag) {
         if (spawnGroupData == null) {
             spawnGroupData = new FrostomperEntity.FrostomperGroupData(BlastFromThePast.getUniversalEntityPacks(level.getLevel().getServer()).createFreshPack(), true);
         }
@@ -268,7 +276,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
         if(spawnGroupData instanceof FrostomperGroupData frostomperGroupData){
             frostomperGroupData.addPackMember(this);
         }
-        SpawnGroupData spawnData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        SpawnGroupData spawnData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, compoundTag);
         if(this.isBaby()) {
             this.setAge(AgeableMob.BABY_START_AGE);
         }
@@ -341,8 +349,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     public void move(MoverType type, Vec3 pos) {
         super.move(type, pos);
         if (this.hasPassenger(Predicates.alwaysTrue()) && this.lastCollide != this.horizontalCollision) {
-            PacketDistributor.sendToServer(new FrostomperCollidePayload(this.getId(), this.horizontalCollision));
-            this.lastCollide = horizontalCollision;
+            BlastFromThePast.INSTANCE.sendToServer(new FrostomperCollidePayload(this.getId(), this.horizontalCollision));
         }
     }
 
@@ -367,9 +374,9 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
                     fed = true;
                 }
             }
-            if (!this.isTamed() && this.getTemper() < this.getMaxTemper() && !this.level().isClientSide && !net.neoforged.neoforge.event.EventHooks.onAnimalTame(this, player)) {
+            if (!this.isTamed() && this.getTemper() < this.getMaxTemper() && !this.level().isClientSide && !ForgeEventFactory.onAnimalTame(this, player)) {
                 this.modifyTemper(10);
-                if (this.getTemper() >= this.getMaxTemper() && this.canBeTamedBy(player) && !EventHooks.onAnimalTame(this, player)) {
+                if (this.getTemper() >= this.getMaxTemper() && this.canBeTamedBy(player) && !ForgeEventFactory.onAnimalTame(this, player)) {
                     this.tameWithName(player);
                 }
                 else {
@@ -383,7 +390,8 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
             } else {
                 if (!this.isSilent()) {
                     SoundEvent eatingSound = this.getEatingSound();
-                    this.makeSound(eatingSound);
+                    if(eatingSound!=null)
+                        this.playSound(eatingSound, this.getSoundVolume(), this.getVoicePitch());
                 }
                 this.heal(4);
 
@@ -447,11 +455,11 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DATA_ACTIVE_ATTACK_TYPE, OptionalInt.empty());
-        builder.define(DATA_CHARGING_FORWARD, false);
-        builder.define(DATA_IDLE_STATE, IdleState.NONE);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_ACTIVE_ATTACK_TYPE, OptionalInt.empty());
+        this.entityData.define(DATA_CHARGING_FORWARD, false);
+        this.entityData.define(DATA_IDLE_STATE, IdleState.NONE);
     }
 
     @Override
@@ -557,7 +565,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
         }
         super.aiStep();
         if (this.isAlive() && !this.level().isClientSide) {
-            if ((this.horizontalCollision || this.serverHorizontalCollide) && EventHooks.canEntityGrief(this.level(), this)) {
+            if ((this.horizontalCollision || this.serverHorizontalCollide) && ForgeEventFactory.getMobGriefingEvent(this.level(), this)) {
                 boolean destroyedBlock = false;
                 AABB breakBox = this.getBoundingBox().inflate(0.2);
                 Iterator<BlockPos> nearbyBlockPositions = BlockPos.betweenClosed(Mth.floor(breakBox.minX), Mth.floor(breakBox.minY), Mth.floor(breakBox.minZ), Mth.floor(breakBox.maxX), Mth.floor(breakBox.maxY), Mth.floor(breakBox.maxZ)).iterator();
@@ -604,9 +612,10 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
         if (this.canRoar() && !this.level().isClientSide) {
             this.roarCounter = 1;
             this.setRoaring(true);
-            this.makeSound(this.getAngrySound());
+            if(this.getAngrySound()!=null)
+                this.playSound(this.getAngrySound(), this.getSoundVolume(), this.getVoicePitch());
             for (Player player : this.level().getEntitiesOfClass(Player.class, new AABB(this.blockPosition()).inflate(this.getAngrySound().getRange(this.getSoundVolume())-1))) {
-                PacketDistributor.sendToPlayer((ServerPlayer) player, new ScreenShakePayload(20f, 60));
+                BlastFromThePast.INSTANCE.send(PacketDistributor.PLAYER.with( ()-> (ServerPlayer) player), new ScreenShakePayload(20f, 60));
             }
         }
     }
@@ -641,7 +650,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     }
 
     @Override
-    public PlayerTeam getTeam() {
+    public Team getTeam() {
         if (this.isTamed()) {
             LivingEntity owner = this.getOwner();
             if (owner != null) {
@@ -782,7 +791,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<GeoAnimatable>(this, "main", 5, state -> {
+        controllers.add(new AnimationController<>(this, "main", 5, state -> {
             FrostomperAttackType activeAttackType = this.getActiveAttackType();
             if(!this.isBaby()) {
                 if (!this.canRotateHead()) {
@@ -800,7 +809,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
             if (this.party && !this.isBaby()) return state.setAndContinue(DANCE);
             return state.setAndContinue(IDLE);
         }));
-        controllers.add(new AnimationController<GeoAnimatable>(this, "idle", 5, state -> {
+        controllers.add(new AnimationController<>(this, "idle", 5, state -> {
             IdleState idleState = this.getEntityData().get(DATA_IDLE_STATE);
             if (idleState == IdleState.TAIL) return state.setAndContinue(TAILS);
             if (idleState == IdleState.EARS) return state.setAndContinue(EARS);
@@ -912,7 +921,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
                     if(!attacker.level().isClientSide){
                         attacker.setIsChargingForward(true);
                     }
-                    attacker.makeSound(ModSounds.FROSTOMPER_CHARGE.get());
+                    attacker.playSound(ModSounds.FROSTOMPER_CHARGE.get(), attacker.getSoundVolume(), attacker.getVoicePitch());
                 }
                 if(attacker.isChargingForward()){
                     // Passed in zero for attack knockback to prevent normal attack knockback application to targets
@@ -930,7 +939,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
                     EntityHelper.throwTarget(attacker, hitTarget, this.getAttackKnockback());
                 }
             } else if(this == SINGLE_STOMP){
-                attacker.makeSound(ModSounds.FROSTOMPER_STOMP.get());
+                attacker.playSound(ModSounds.FROSTOMPER_STOMP.get(), attacker.getSoundVolume(), attacker.getVoicePitch());
                 Vec3 lateralOffset = Vec3.ZERO.add(attacker.isLeftHanded() ? 1 : -1, 0, 0).scale(attacker.getScale()).yRot(-attacker.getYHeadRot() * Mth.DEG_TO_RAD);
                 attackBounds = attackBounds.move(lateralOffset);
                 EntityHelper.hitTargetsWithAOEAttack(attacker, attackBounds, this.getAttackDamage(), this.getAttackKnockback(), true);

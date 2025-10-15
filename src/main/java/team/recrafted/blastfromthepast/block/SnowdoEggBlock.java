@@ -1,6 +1,5 @@
 package team.recrafted.blastfromthepast.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -29,23 +28,18 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.event.EventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 import team.recrafted.blastfromthepast.entity.SnowdoEntity;
 import team.recrafted.blastfromthepast.init.ModEntities;
 
 import javax.annotation.Nullable;
 
 public class SnowdoEggBlock extends Block {
-    public static final MapCodec<SnowdoEggBlock> CODEC = simpleCodec(SnowdoEggBlock::new);
     public static final int MAX_HATCH_LEVEL = 2;
     public static final int MIN_EGGS = 1;
     public static final int MAX_EGGS = 3;
     public static final IntegerProperty HATCH = BlockStateProperties.HATCH;
     public static final IntegerProperty EGGS = IntegerProperty.create("snowdo_eggs", 1, 3);
-
-    public MapCodec<SnowdoEggBlock> codec() {
-        return CODEC;
-    }
 
     public SnowdoEggBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -88,7 +82,7 @@ public class SnowdoEggBlock extends Block {
 
     }
 
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (this.shouldUpdateHatchLevel(level) && onSuitableBlock(level, pos)) {
             int i = state.getValue(HATCH);
             if (i < 2) {
@@ -125,7 +119,7 @@ public class SnowdoEggBlock extends Block {
     }
 
 
-    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (onSuitableBlock(level, pos) && !level.isClientSide) {
             level.levelEvent(2012, pos, 15);
         }
@@ -140,7 +134,7 @@ public class SnowdoEggBlock extends Block {
         this.decreaseEggs(level, pos, state);
     }
 
-    protected boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
+    public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
         return !useContext.isSecondaryUseActive() && useContext.getItemInHand().is(this.asItem()) && state.getValue(EGGS) < 3 || super.canBeReplaced(state, useContext);
     }
 
@@ -150,7 +144,7 @@ public class SnowdoEggBlock extends Block {
         return blockstate.is(this) ? blockstate.setValue(EGGS, Math.min(3, blockstate.getValue(EGGS) + 1)) : super.getStateForPlacement(context);
     }
 
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         VoxelShape shape = Shapes.empty();
         shape = Shapes.join(shape, Shapes.box(0.125, 0, 0.125, 0.3125, 0.3125, 0.3125), BooleanOp.OR);
         if(state.getValue(EGGS) > 2){
@@ -169,7 +163,7 @@ public class SnowdoEggBlock extends Block {
 
     private boolean canDestroyEgg(Level level, Entity entity) {
         if (!(entity instanceof SnowdoEntity) && !(entity instanceof Bat)) {
-            return !(entity instanceof LivingEntity) ? false : entity instanceof Player || EventHooks.canEntityGrief(level, entity);
+            return !(entity instanceof LivingEntity) ? false : entity instanceof Player || ForgeEventFactory.getMobGriefingEvent(level, entity);
         } else {
             return false;
         }

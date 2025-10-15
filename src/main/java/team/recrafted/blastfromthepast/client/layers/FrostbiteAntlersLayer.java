@@ -30,14 +30,14 @@ public class FrostbiteAntlersLayer<T extends LivingEntity, M extends HumanoidMod
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.FROST_BITE_HELMET) && !entity.isInvisible()) {
+        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.FROST_BITE_HELMET.get()) && !entity.isInvisible()) {
             VertexConsumer buffer = bufferSource.getBuffer(RenderType.entityCutout(ANTLERS_TEXTURE));
             int packedOverlay = LivingEntityRenderer.getOverlayCoords(entity, 0.0F);
 
             poseStack.pushPose();
             this.getParentModel().head.translateAndRotate(poseStack);
             poseStack.scale(0.95F, 0.95F, 0.95F);
-            ANTLERS_MODEL.renderToBuffer(poseStack, buffer, packedLight, packedOverlay);
+            ANTLERS_MODEL.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, 1, 1, 1, 1);
             poseStack.popPose();
         }
     }
@@ -55,8 +55,8 @@ public class FrostbiteAntlersLayer<T extends LivingEntity, M extends HumanoidMod
         public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
         @Override
-        public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-            antlers.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float blue, float green, float alpha) {
+            antlers.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, blue, green, alpha);
         }
 
         public static LayerDefinition createHeadLayer() {

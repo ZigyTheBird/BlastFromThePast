@@ -14,21 +14,15 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class CedarLeavesBlock extends LeavesBlock {
-    public static final MapCodec<CedarLeavesBlock> CODEC = simpleCodec(CedarLeavesBlock::new);
     public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
     public static final BooleanProperty RUSTY = BooleanProperty.create("rusty");
-
-    @Override
-    public MapCodec<? extends CedarLeavesBlock> codec() {
-        return CODEC;
-    }
 
     public CedarLeavesBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return super.updateShape(state, facing, facingState, level, currentPos, facingPos).setValue(SNOWY, Boolean.valueOf(isSnowySetting(facingState, level, currentPos)));
     }
 

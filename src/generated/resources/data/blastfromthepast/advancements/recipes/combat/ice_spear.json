@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:ice_spear"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "speartooth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "blastfromthepast:speartooth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "speartooth",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:ice_spear"
+    ]
+  },
+  "sends_telemetry_event": false
+}

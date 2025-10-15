@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.baby_burrel.Pose": {
+		"animation.burrel.Pose": {
 			"loop": true,
 			"bones": {
 				"left_foot": {
@@ -33,7 +33,7 @@
 				}
 			}
 		},
-		"animation.baby_burrel.idle": {
+		"animation.burrel.idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -45,7 +45,7 @@
 				}
 			}
 		},
-		"animation.baby_burrel.walk": {
+		"animation.burrel.walk": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
@@ -65,7 +65,7 @@
 				}
 			}
 		},
-		"animation.baby_burrel.eat": {
+		"animation.burrel.eat": {
 			"loop": true,
 			"animation_length": 1.5,
 			"bones": {

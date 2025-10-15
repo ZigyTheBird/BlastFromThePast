@@ -20,7 +20,7 @@ public class ScreenShake {
     }
 
     public float screenShakeCalculations(Minecraft instance) {
-        float tickDelta = instance.getTimer().getGameTimeDeltaTicks();
+        float tickDelta = instance.getDeltaFrameTime();
         float progress = (elapsedTicks + tickDelta) / maxDuration;
         progress = Math.min(1.0f, Math.max(0.0f, progress));
 

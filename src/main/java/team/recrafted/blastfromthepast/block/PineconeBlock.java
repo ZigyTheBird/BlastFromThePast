@@ -1,7 +1,5 @@
 package team.recrafted.blastfromthepast.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +10,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -21,24 +19,21 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.util.TriState;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModTreeGrowers;
 
 public class PineconeBlock extends SaplingBlock {
-    public static final MapCodec<PineconeBlock> CODEC = RecordCodecBuilder.mapCodec((p_308831_) -> p_308831_.group(TreeGrower.CODEC.fieldOf("tree").forGetter((p_304527_) -> p_304527_.treeGrower), propertiesCodec()).apply(p_308831_, PineconeBlock::new));
     public static final BooleanProperty HANGING;
 
     protected static final VoxelShape SHAPE = Block.box(5.0, 0.0, 5.0, 11.0, 4.0, 11.0);
     protected static final VoxelShape SHAPE_HANGING = Block.box(5.0, 5.0, 5.0, 11.0, 12.0, 11.0);
 
-    public MapCodec<PineconeBlock> codec() {
-        return CODEC;
-    }
+    private final AbstractTreeGrower treeGrower;
 
-    public PineconeBlock(TreeGrower treeGrower, BlockBehaviour.Properties properties) {
+    public PineconeBlock(AbstractTreeGrower treeGrower, BlockBehaviour.Properties properties) {
         super(treeGrower, properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HANGING, false));
+        this.treeGrower=treeGrower;
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -61,22 +56,22 @@ public class PineconeBlock extends SaplingBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (isHanging(state)) return SHAPE_HANGING;
         return SHAPE;
     }
 
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         if (isHanging(state)) {
-            TriState soilDecision = level.getBlockState(pos.above()).canSustainPlant(level, pos.above(), Direction.DOWN, state);
-            return !soilDecision.isDefault() ? soilDecision.isTrue() : level.getBlockState(pos.above()).is(ModBlocks.CEDAR.LEAVES);
+            boolean soilDecision = level.getBlockState(pos.above()).canSustainPlant(level, pos.above(), Direction.DOWN, this);
+            return !soilDecision || level.getBlockState(pos.above()).is(ModBlocks.CEDAR.LEAVES.get());
         } else {
             return super.canSurvive(state, level, pos);
         }
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!isHanging(state)) super.randomTick(state, level, pos, random);
     }
 

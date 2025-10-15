@@ -9,7 +9,7 @@ import team.recrafted.blastfromthepast.block.signs.entity.BFTPHangingSignBlockEn
 
 public class BFTPCeilingHangingSignBlock extends CeilingHangingSignBlock {
     public BFTPCeilingHangingSignBlock(Properties pProperties, WoodType pType) {
-        super(pType, pProperties);
+        super(pProperties, pType);
     }
 
     @Override

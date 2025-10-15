@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class FrostbiteArmor extends ArmorItem {
-    public FrostbiteArmor(Holder<ArmorMaterial> material, Type type, Properties properties) {
+    public FrostbiteArmor(ArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
     }
 

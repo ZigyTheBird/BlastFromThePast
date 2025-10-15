@@ -10,18 +10,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.access.PlayerBFTPDataAccess;
 import team.recrafted.blastfromthepast.client.vfx.ScreenShake;
 import team.recrafted.blastfromthepast.init.ModItems;
 import team.recrafted.blastfromthepast.init.ModSounds;
 import team.recrafted.blastfromthepast.network.BearGloveWallAnimPayload;
+import team.recrafted.blastfromthepast.network.FrostomperCollidePayload;
 import team.recrafted.blastfromthepast.util.ClientUtils;
 
 import javax.annotation.Nonnull;
@@ -34,8 +35,6 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerBFTPData
     protected PlayerMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
-
-    @Shadow @Nonnull public abstract ItemStack getWeaponItem();
 
     @Shadow public abstract SoundSource getSoundSource();
 
@@ -68,7 +67,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerBFTPData
                 if (!bftp$shouldPlayBearGloveWallAnim) {
                     bftp$shouldPlayBearGloveWallAnim = true;
                     this.resetFallDistance();
-                    PacketDistributor.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), true));
+                    BlastFromThePast.INSTANCE.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), true));
                 }
             }
             if (bftp$screenShake != null) {
@@ -78,24 +77,19 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerBFTPData
         }
         else if (bftp$shouldPlayBearGloveWallAnim) {
             bftp$shouldPlayBearGloveWallAnim = false;
-            PacketDistributor.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
+            BlastFromThePast.INSTANCE.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
         }
-    }
-
-    @WrapWithCondition(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;)V"))
-    private boolean shouldPlayAttackSound(Level instance, Player player, double x, double y, double z, SoundEvent sound, SoundSource category) {
-        return this.getWeaponItem().getItem() != ModItems.BEAR_GLOVES.get();
     }
 
     @WrapWithCondition(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"))
     private boolean shouldPlayAttackSound(Level instance, Player player, double x, double y, double z, SoundEvent sound, SoundSource category, float volume, float pitch) {
-        return this.getWeaponItem().getItem() != ModItems.BEAR_GLOVES.get();
+        return this.getMainHandItem().getItem() != ModItems.BEAR_GLOVES.get();
     }
 
     @Inject(method = "attack", at = @At("TAIL"))
     private void playBearClawSound(Entity target, CallbackInfo ci) {
-        if (this.getWeaponItem().getItem() != ModItems.BEAR_GLOVES.get()) return;
-        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), ModSounds.BEAR_GLOVE_SLASH, this.getSoundSource(), 1.0F, 1.0F);
+        if (this.getMainHandItem().getItem() != ModItems.BEAR_GLOVES.get()) return;
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), ModSounds.BEAR_GLOVE_SLASH.get(), this.getSoundSource(), 1.0F, 1.0F);
     }
 
     @Override

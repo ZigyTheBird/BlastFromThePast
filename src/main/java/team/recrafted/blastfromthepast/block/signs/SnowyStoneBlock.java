@@ -15,19 +15,15 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.NotNull;
 
 public class SnowyStoneBlock extends Block {
-    public static final MapCodec<SnowyStoneBlock> CODEC = simpleCodec(SnowyStoneBlock::new);
-    public static final BooleanProperty SNOWY;
 
-    protected MapCodec<? extends SnowyStoneBlock> codec() {
-        return CODEC;
-    }
+    public static final BooleanProperty SNOWY;
 
     public SnowyStoneBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(SNOWY, false));
     }
 
-    protected @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return facing == Direction.UP ? state.setValue(SNOWY, isSnowySetting(facingState)) : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
     }
 

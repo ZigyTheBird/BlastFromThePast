@@ -1,30 +1,20 @@
 package team.recrafted.blastfromthepast.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import team.recrafted.blastfromthepast.BlastFromThePast;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.UUID;
 
-public record BearGloveWallAnimPayload(UUID player, boolean shouldPlay) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<BearGloveWallAnimPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "bear_claw_anim_packet"));
-    public static final StreamCodec<ByteBuf, BearGloveWallAnimPayload> STREAM_CODEC;
+public record BearGloveWallAnimPayload(UUID player, boolean shouldPlay) {
 
-    static {
-        STREAM_CODEC = StreamCodec.composite(
-                ModCodecs.UUID_STREAM_CODEC,
-                BearGloveWallAnimPayload::player,
-                ByteBufCodecs.BOOL,
-                BearGloveWallAnimPayload::shouldPlay,
-                BearGloveWallAnimPayload::new
-        );
+    public static void write(BearGloveWallAnimPayload packet, FriendlyByteBuf buffer) {
+        buffer.writeUUID(packet.player);
+        buffer.writeBoolean(packet.shouldPlay);
     }
 
-    @Override
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static BearGloveWallAnimPayload read(FriendlyByteBuf buffer) {
+        UUID player = buffer.readUUID();
+        boolean shouldPlay = buffer.readBoolean();
+
+        return new BearGloveWallAnimPayload(player, shouldPlay);
     }
 }

@@ -3,21 +3,20 @@ package team.recrafted.blastfromthepast.events;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.client.init.ModLayerLocations;
 import team.recrafted.blastfromthepast.client.layers.FrostbiteAntlersLayer;
 
 import java.util.function.Function;
 
-@EventBusSubscriber(value = Dist.CLIENT, modid = BlastFromThePast.MODID, bus = EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BlastFromThePast.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event)
@@ -35,13 +34,15 @@ public class ClientEvents {
         addLayerToHumanoid(event, EntityType.DROWNED, FrostbiteAntlersLayer::new);
         addLayerToHumanoid(event, EntityType.STRAY, FrostbiteAntlersLayer::new);
 
-        addLayerToPlayerSkin(event, PlayerSkin.Model.SLIM, FrostbiteAntlersLayer::new);
-        addLayerToPlayerSkin(event, PlayerSkin.Model.WIDE, FrostbiteAntlersLayer::new);
+        for(String skin: event.getSkins()){
+            addLayerToPlayerSkin(event, skin, FrostbiteAntlersLayer::new);
+            addLayerToPlayerSkin(event, skin, FrostbiteAntlersLayer::new);
+        }
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private static <E extends Player, M extends HumanoidModel<E>>
-    void addLayerToPlayerSkin(EntityRenderersEvent.AddLayers event, PlayerSkin.Model skinName, Function<LivingEntityRenderer<E, M>, ? extends RenderLayer<E, M>> factory)
+    void addLayerToPlayerSkin(EntityRenderersEvent.AddLayers event, String skinName, Function<LivingEntityRenderer<E, M>, ? extends RenderLayer<E, M>> factory)
     {
         LivingEntityRenderer renderer = event.getSkin(skinName);
         if (renderer != null) renderer.addLayer(factory.apply(renderer));

@@ -1,7 +1,6 @@
 package team.recrafted.blastfromthepast.entity.pack;
 
 import com.google.common.collect.Maps;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
@@ -9,6 +8,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.saveddata.SavedData;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 
 import java.util.Iterator;
@@ -21,10 +21,6 @@ public class EntityPacks extends SavedData {
     private final Map<UUID, EntityPack<?>> entityPackMap = Maps.newHashMap();
     private final ServerLevel level;
     private int tick;
-
-    public static SavedData.Factory<EntityPacks> factory(ServerLevel level) {
-        return new SavedData.Factory<>(() -> new EntityPacks(level), (tag, provider) -> load(level, tag), null);
-    }
 
     public EntityPacks(ServerLevel level) {
         this.level = level;
@@ -90,7 +86,7 @@ public class EntityPacks extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
+    public @NotNull CompoundTag save(CompoundTag tag) {
         tag.putInt("Tick", this.tick);
         ListTag entityPacksTag = new ListTag();
 

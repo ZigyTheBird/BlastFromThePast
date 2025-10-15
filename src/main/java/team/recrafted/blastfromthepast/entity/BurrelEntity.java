@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -30,13 +31,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.ai.goal.burrel.*;
@@ -44,9 +45,9 @@ import team.recrafted.blastfromthepast.entity.ai.navigation.AzureNavigation;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModEntities;
 import team.recrafted.blastfromthepast.init.ModSounds;
+import team.recrafted.blastfromthepast.util.EntityHelper;
 
 public class BurrelEntity extends TamableAnimal implements GeoEntity {
-    public static final ResourceLocation STEP_ATTRIBUTE = ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "burrel_jump");
 
     public static final RawAnimation WALK = RawAnimation.begin().then("animation.burrel.walk", Animation.LoopType.DEFAULT);
     public static final RawAnimation IDLE = RawAnimation.begin().then("animation.burrel.idle", Animation.LoopType.DEFAULT);
@@ -78,9 +79,9 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
     public BurrelEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 5;
-        this.setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
-        this.getAttribute(Attributes.STEP_HEIGHT).addOrReplacePermanentModifier(new AttributeModifier(STEP_ATTRIBUTE, 0.6, AttributeModifier.Operation.ADD_VALUE));
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+        this.setMaxUpStep(0.6f);
     }
 
     @Override
@@ -183,7 +184,7 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
             this.setDeltaMovement(vector3d.multiply(0.6D, 0.4D, 0.6D));
         }
 
-        if (!this.isSleeping() && random.nextIntBetweenInclusive(1, 2000) == 1) this.makeSound(ModSounds.BURREL_IDLE.get());
+        if (!this.isSleeping() && random.nextIntBetweenInclusive(1, 2000) == 1) this.playSound(ModSounds.BURREL_IDLE.get(), this.getSoundVolume(), this.getVoicePitch());
 
         if (!this.isBesideClimbableBlock() && !this.isSleeping() && this.wantsToBeOnGround() && this.random.nextIntBetweenInclusive(1, 500) == 1) {
             triggerAnim("second", "look");
@@ -208,11 +209,11 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
                 this.setInLove(player);
             }
             if (!level().isClientSide) {
-                this.makeSound(ModSounds.BURREL_EAT.get());
+                this.playSound(ModSounds.BURREL_EAT.get(), this.getSoundVolume(), this.getVoicePitch());
                 this.getNavigation().stop();
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, itemStack);
             }
-            itemStack.consume(1, this);
+            EntityHelper.consumeStack(1, this, itemStack);
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
@@ -224,14 +225,14 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(BABY, false);
-        builder.define(TYPES, 0);
-        builder.define(CLIMBING, false);
-        builder.define(ATTACHED_FACE, Direction.DOWN);
-        builder.define(WANTS_TO_BE_ON_GROUND, false);
-        builder.define(SLEEPING, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(BABY, false);
+        this.entityData.define(TYPES, 0);
+        this.entityData.define(CLIMBING, false);
+        this.entityData.define(ATTACHED_FACE, Direction.DOWN);
+        this.entityData.define(WANTS_TO_BE_ON_GROUND, false);
+        this.entityData.define(SLEEPING, false);
     }
 
     @Override
@@ -302,8 +303,8 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData sg = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
+        SpawnGroupData sg = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, compoundTag);
         if (!(sg instanceof BurrelGroupData)) {
             int variant = 0;
             if (random.nextIntBetweenInclusive(1, 5) == 5) variant = 1;
@@ -317,7 +318,7 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
 
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return itemStack.is(ModBlocks.PINECONE.asItem());
+        return itemStack.is(ModBlocks.PINECONE.get().asItem());
     }
 
     @Nullable
@@ -338,14 +339,14 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<GeoAnimatable>(this, "main", 5, state -> {
+        controllers.add(new AnimationController<>(this, "main", 5, state -> {
             if (this.isSleeping()) return state.setAndContinue(SLEEP);
             if (this.isBesideClimbableBlock()) return state.setAndContinue(CLIMB);
             if (state.isMoving()) return state.setAndContinue(WALK);
             if (this.partyBurrel) return state.setAndContinue(DANCE);
             return state.setAndContinue(IDLE);
         }));
-        controllers.add(new AnimationController<GeoAnimatable>(this, "second", state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "second", state -> PlayState.STOP)
                 .triggerableAnim("eat", EAT).triggerableAnim("look", LOOK));
     }
 
@@ -364,6 +365,20 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
             this.variant = variant;
         }
 
+    }
+
+    public boolean isPanicking() {
+        if (this.brain.hasMemoryValue(MemoryModuleType.IS_PANICKING)) {
+            return this.brain.getMemory(MemoryModuleType.IS_PANICKING).isPresent();
+        } else {
+            for (WrappedGoal wrappedgoal : this.goalSelector.getAvailableGoals()) {
+                if (wrappedgoal.isRunning() && wrappedgoal.getGoal() instanceof PanicGoal) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
 }

@@ -1,0 +1,44 @@
+{
+  "parent": "blastfromthepast:blast_from_the_past",
+  "criteria": {
+    "titanic_takedown": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "blastfromthepast:frostomper"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.titanic_takedown.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "blastfromthepast:frostomper_display"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.titanic_takedown.title"
+    }
+  },
+  "requirements": [
+    [
+      "titanic_takedown"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

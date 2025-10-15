@@ -25,11 +25,11 @@ public class BlockWithDirection extends Block {
         return this.defaultBlockState().setValue(FACING, horizontalOnly ? blockPlaceContext.getHorizontalDirection().getOpposite() : blockPlaceContext.getNearestLookingDirection().getOpposite());
     }
 
-    protected BlockState rotate(BlockState blockState, Rotation rotation) {
+    public BlockState rotate(BlockState blockState, Rotation rotation) {
         return blockState.setValue(FACING, rotation.rotate(blockState.getValue(FACING)));
     }
 
-    protected BlockState mirror(BlockState blockState, Mirror mirror) {
+    public BlockState mirror(BlockState blockState, Mirror mirror) {
         return blockState.rotate(mirror.getRotation(blockState.getValue(FACING)));
     }
 

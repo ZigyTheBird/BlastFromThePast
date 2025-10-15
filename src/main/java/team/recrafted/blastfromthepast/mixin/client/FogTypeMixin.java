@@ -29,7 +29,7 @@ public class FogTypeMixin {
     private static FogType bftp$addType(String internalName, Consumer<FogType> valueStore) {
         assert $VALUES != null;
         ArrayList<FogType> types = new ArrayList<>(Arrays.asList($VALUES));
-        FogType type = initValue(internalName, types.getLast().ordinal() + 1);
+        FogType type = initValue(internalName, types.get(types.size() - 1).ordinal() + 1);
         valueStore.accept(type);
         types.add(type);
         $VALUES = types.toArray(new FogType[0]);

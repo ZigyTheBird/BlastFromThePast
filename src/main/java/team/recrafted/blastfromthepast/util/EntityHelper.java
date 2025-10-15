@@ -7,17 +7,20 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.GameRules;
@@ -25,9 +28,10 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.common.util.FakePlayerFactory;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import team.recrafted.blastfromthepast.entity.HollowEntity;
+import team.recrafted.blastfromthepast.entity.ai.goal.CustomPanicGoal;
 import team.recrafted.blastfromthepast.entity.misc.AnimatedAttacker;
 import team.recrafted.blastfromthepast.init.ModEnchantments;
 import team.recrafted.blastfromthepast.init.ModEntities;
@@ -38,18 +42,19 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class EntityHelper {
 
     private static final GameProfile BLAST_FROM_THE_PAST = new GameProfile(UUID.fromString("cf41e056-477d-4afa-bcdb-39d84cb95f14"), "[Blast From The Past]");
 
     public static void spawnSmashAttackParticles(LevelAccessor level, AABB attackBounds, int power) {
-        Vec3 boundsBottomCenter = attackBounds.getBottomCenter();
+        Vec3 boundsBottomCenter = new Vec3(Mth.lerp(0.5, attackBounds.minX, attackBounds.maxX), attackBounds.minY, Mth.lerp(0.5, attackBounds.minZ, attackBounds.maxZ));
         double radius = getXZSize(attackBounds);
         double halfRadius = radius * 0.5D;
         BlockPos pos = BlockPos.containing(boundsBottomCenter.subtract(0, 1.0E-5F, 0));
         Vec3 particleCenter = boundsBottomCenter.add(0.0, 0.5, 0.0);
-        BlockParticleOption dustPillar = new BlockParticleOption(ParticleTypes.DUST_PILLAR, level.getBlockState(pos));
+        BlockParticleOption dustPillar = new BlockParticleOption(ParticleTypes.BLOCK, level.getBlockState(pos));
 
         double zSpeed;
         int index;
@@ -106,33 +111,36 @@ public class EntityHelper {
 
     // A copy of Mob#doHurtTarget, but with the ability to specify the attack damage and knockback values
     public static boolean doHurtTarget(LivingEntity attacker, LivingEntity target, float attackDamage, float attackKnockback){
-        DamageSource damagesource = attacker.damageSources().mobAttack(attacker);
-        if (attacker.level() instanceof ServerLevel serverlevel) {
-            attackDamage = EnchantmentHelper.modifyDamage(serverlevel, attacker.getWeaponItem(), target, damagesource, attackDamage);
+
+        if (target instanceof LivingEntity) {
+            attackDamage += EnchantmentHelper.getDamageBonus(attacker.getMainHandItem(), target.getMobType());
+            attackKnockback += (float)EnchantmentHelper.getKnockbackBonus(attacker);
         }
 
-        boolean hurt = target.hurt(damagesource, attackDamage);
-        if (hurt) {
-            if (attacker.level() instanceof ServerLevel serverlevel) {
-                attackKnockback = EnchantmentHelper.modifyKnockback(serverlevel, attacker.getWeaponItem(), attacker, damagesource, attackKnockback);
-            }
-            if (attackKnockback > 0.0F) {
-                target.knockback(
-                        attackKnockback * 0.5F,
-                        Mth.sin(attacker.getYRot() * Mth.DEG_TO_RAD),
-                        -Mth.cos(attacker.getYRot() * Mth.DEG_TO_RAD)
-                );
-                attacker.setDeltaMovement(attacker.getDeltaMovement().multiply(0.6, 1.0, 0.6));
+        int i = EnchantmentHelper.getFireAspect(attacker);
+        if (i > 0) {
+            target.setSecondsOnFire(i * 4);
+        }
+
+        boolean flag = target.hurt(attacker.damageSources().mobAttack(attacker), attackDamage);
+        if (flag) {
+            if (attackKnockback > 0.0F && target instanceof LivingEntity) {
+                target.knockback(attackKnockback * 0.5F, Mth.sin(attacker.getYRot() * ((float)Math.PI / 180F)), -Mth.cos(attacker.getYRot() * ((float)Math.PI / 180F)));
+                attacker.setDeltaMovement(attacker.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
             }
 
-            if (attacker.level() instanceof ServerLevel serverlevel) {
-                EnchantmentHelper.doPostAttackEffects(serverlevel, target, damagesource);
+            if (target instanceof Player player) {
+                if(attacker instanceof Mob mob){
+                    mob.maybeDisableShield(player, attacker.getMainHandItem(), player.isUsingItem() ? player.getUseItem() : ItemStack.EMPTY);
+                }
+
             }
 
+            attacker.doEnchantDamageEffects(attacker, target);
             attacker.setLastHurtMob(target);
         }
 
-        return hurt;
+        return flag;
     }
 
     public static void throwTarget(LivingEntity attacker, LivingEntity target, double attackKnockback) {
@@ -156,8 +164,9 @@ public class EntityHelper {
         }
     }
 
-    public static TagKey<DamageType> getPanicInducingDamageTypes(PathfinderMob mob) {
-        return mob.isBaby() ? DamageTypeTags.PANIC_CAUSES : DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES;
+    public static<T extends PathfinderMob> Predicate<T> getPanicInducingDamageTypes() {
+
+        return mob -> mob.isBaby() ? CustomPanicGoal.isMobDamage(mob) || CustomPanicGoal.isEnvironmentDamage(mob): CustomPanicGoal.isEnvironmentDamage(mob);
     }
 
     public static FakePlayer getFakePlayer(ServerLevel serverLevel) {
@@ -203,7 +212,7 @@ public class EntityHelper {
 
     public static boolean canWalkOnTarBlocks(LivingEntity entity) {
         ItemStack boots = entity.getItemBySlot(EquipmentSlot.FEET);
-        return boots.is(ModTags.Items.ALLOWS_WALKING_ON_TAR) || boots.getEnchantmentLevel(ModEnchantments.TAR_MARCHER) != 0;
+        return boots.is(ModTags.Items.ALLOWS_WALKING_ON_TAR) || boots.getEnchantmentLevel(ModEnchantments.TAR_MARCHER.get()) != 0;
     }
 
     public static boolean noBlockCollisions(LivingEntity entity) {
@@ -218,7 +227,7 @@ public class EntityHelper {
         assert dummyHollow != null;
 
         // Calc a valid position within the world
-        BlockPos validBlockPos = serverLevel.getWorldBorder().clampToBounds(entity.position());
+        BlockPos validBlockPos = serverLevel.getWorldBorder().clampToBounds(entity.position().x, entity.position().y, entity.position().z);
         Vec3 validPos = new Vec3(validBlockPos.getX(), Mth.clamp(entity.getY(), serverLevel.getMinBuildHeight(), serverLevel.getMaxBuildHeight()), validBlockPos.getZ());
         dummyHollow.setPos(validPos);
 
@@ -280,22 +289,47 @@ public class EntityHelper {
 
     @Nullable
     public static ItemStack getIdolOfRetrievalInHand(ServerPlayer player) {
-        if (player.getMainHandItem().is(ModItems.IDOL_OF_RETRIEVAL)) {
+        if (player.getMainHandItem().is(ModItems.IDOL_OF_RETRIEVAL.get())) {
             return player.getMainHandItem();
-        } else if (player.getOffhandItem().is(ModItems.IDOL_OF_RETRIEVAL)) {
+        } else if (player.getOffhandItem().is(ModItems.IDOL_OF_RETRIEVAL.get())) {
             return player.getOffhandItem();
         }
         return null;
     }
 
     public static boolean isWearingFrostbiteSet(LivingEntity entity) {
-        return entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.FROST_BITE_HELMET)
-                && entity.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.FROST_BITE_CHESTPLATE)
-                && entity.getItemBySlot(EquipmentSlot.LEGS).is(ModItems.FROST_BITE_LEGGINGS)
-                && entity.getItemBySlot(EquipmentSlot.FEET).is(ModItems.FROST_BITE_BOOTS);
+        return entity.getItemBySlot(EquipmentSlot.HEAD).is(ModItems.FROST_BITE_HELMET.get())
+                && entity.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.FROST_BITE_CHESTPLATE.get())
+                && entity.getItemBySlot(EquipmentSlot.LEGS).is(ModItems.FROST_BITE_LEGGINGS.get())
+                && entity.getItemBySlot(EquipmentSlot.FEET).is(ModItems.FROST_BITE_BOOTS.get());
     }
 
     public static boolean isWearingFrostbiteBoots(LivingEntity entity) {
-        return entity.getItemBySlot(EquipmentSlot.FEET).is(ModItems.FROST_BITE_BOOTS);
+        return entity.getItemBySlot(EquipmentSlot.FEET).is(ModItems.FROST_BITE_BOOTS.get());
     }
+
+    public static boolean isPanicking(Animal mob) {
+        if (mob.getBrain().hasMemoryValue(MemoryModuleType.IS_PANICKING)) {
+            return mob.getBrain().getMemory(MemoryModuleType.IS_PANICKING).isPresent();
+        } else {
+            for (WrappedGoal wrappedgoal : mob.goalSelector.getAvailableGoals()) {
+                if (wrappedgoal.isRunning() && wrappedgoal.getGoal() instanceof PanicGoal) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    public static EquipmentSlot getSlotForHand(InteractionHand hand) {
+        return hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+    }
+
+    public static void consumeStack(int i, @Nullable LivingEntity arg, ItemStack stack) {
+        if (arg == null || !(arg instanceof Player player && player.isCreative())) {
+            stack.shrink(i);
+        }
+    }
+
 }

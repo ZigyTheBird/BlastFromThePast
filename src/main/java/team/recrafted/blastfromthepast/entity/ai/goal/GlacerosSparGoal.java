@@ -52,6 +52,7 @@ public class GlacerosSparGoal extends Goal {
         super.start();
         this.glaceros.chargeTimer = 0;
         this.glaceros.setRushing(false);
+        this.glaceros.getNavigation().stop();
     }
 
     @Override

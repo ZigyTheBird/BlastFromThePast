@@ -2,6 +2,7 @@ package team.recrafted.blastfromthepast.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -22,14 +23,15 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.access.PlayerBFTPDataAccess;
@@ -58,6 +60,11 @@ public class HollowEntity extends LivingEntity implements GeoEntity {
 
     public HollowEntity(EntityType<? extends HollowEntity> hollowEntityEntityType, Level level) {
         super(hollowEntityEntityType, level);
+    }
+
+    @Override
+    public boolean isNoGravity() {
+        return true;
     }
 
     public static HollowEntity create(ServerPlayer player) {
@@ -137,7 +144,7 @@ public class HollowEntity extends LivingEntity implements GeoEntity {
                 this,
                 this.getBoundingBox().inflate(5)
         );
-        return nearbyPlayer.isEmpty() ? null : nearbyPlayer.getFirst();
+        return nearbyPlayer.isEmpty() ? null : nearbyPlayer.get(0);
     }
 
     @Override
@@ -146,9 +153,9 @@ public class HollowEntity extends LivingEntity implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(STATE, TransitioningState.INACTIVE);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(STATE, TransitioningState.INACTIVE);
     }
 
     @NotNull
@@ -265,7 +272,7 @@ public class HollowEntity extends LivingEntity implements GeoEntity {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         if (compound.contains("stored_inventory")) {
-            this.storedInventory = StoredInventory.fromSaveData(registryAccess(), compound.getCompound("stored_inventory"));
+            this.storedInventory = StoredInventory.fromSaveData(compound.getCompound("stored_inventory"));
         }
     }
 
@@ -273,14 +280,14 @@ public class HollowEntity extends LivingEntity implements GeoEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         if (storedInventory != null)
-            compound.put("stored_inventory", storedInventory.getSaveData(registryAccess()));
+            compound.put("stored_inventory", storedInventory.getSaveData());
     }
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<GeoAnimatable>(this, "main", 5, state -> {
+        controllers.add(new AnimationController<>(this, "main", 5, state -> {
             TransitioningState state1 = getEntityData().get(STATE);
             if (state1 == TransitioningState.INACTIVE_TO_ACTIVE) return state.setAndContinue(ORB_SPAWN);
             if (state1 == TransitioningState.ACTIVE_TO_INACTIVE) return state.setAndContinue(ORB_DESPAWN);
@@ -296,23 +303,31 @@ public class HollowEntity extends LivingEntity implements GeoEntity {
     }
 
     public record StoredInventory(UUID playerUuid, ListTag inventoryData, Optional<List<ItemStack>> additionalItems) {
-        public CompoundTag getSaveData(RegistryAccess registryAccess) {
+
+        public CompoundTag getSaveData() {
             CompoundTag data = new CompoundTag();
             data.putUUID("player", playerUuid);
             data.put("items", inventoryData);
+
             ListTag additionalItems = new ListTag();
-            this.additionalItems.ifPresent(items -> items.forEach(item -> additionalItems.add(item.saveOptional(registryAccess))));
+
+            this.additionalItems.ifPresent(items -> items.forEach(item -> additionalItems.add(item.save(data))));
+
             if (!additionalItems.isEmpty())
                 data.put("additional_items", additionalItems);
+
             return data;
         }
 
-        public static StoredInventory fromSaveData(RegistryAccess registryAccess, CompoundTag data) {
+        public static StoredInventory fromSaveData(CompoundTag data) {
             List<ItemStack> additionalItems = new ArrayList<>();
+
             if (data.contains("additional_items")) {
                 ListTag additionalItemsData = data.getList("additional_items", 10);
+
                 for (Tag tag : additionalItemsData) {
-                    ItemStack.parse(registryAccess, tag).ifPresent(additionalItems::add);
+
+                    Optional.of(ItemStack.of((CompoundTag) tag)).ifPresent(additionalItems::add);
                 }
             }
 

@@ -1,5 +1,7 @@
 package team.recrafted.blastfromthepast.entity.pack;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.common.collect.Streams;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -24,10 +26,12 @@ public class EntityPack<T extends Mob> {
     private final Set<UUID> unloadedMembers = new HashSet<>();
     private final List<T> members = new ArrayList<>();
 
+    public static final Codec<Set<UUID>> CODEC_SET = Codec.list(UUIDUtil.CODEC).xmap(Sets::newHashSet, Lists::newArrayList);
+
     public static final Codec<EntityPack<?>> CODEC = RecordCodecBuilder.create((instance) -> instance
             .group(
                     UUIDUtil.CODEC.fieldOf("uuid").forGetter(pack -> pack.uuid),
-                    UUIDUtil.CODEC_SET.fieldOf("members").forGetter(EntityPack::createMemberUUIDs))
+                    CODEC_SET.fieldOf("members").forGetter(EntityPack::createMemberUUIDs))
             .apply(instance, EntityPack::new));
 
     public EntityPack(){

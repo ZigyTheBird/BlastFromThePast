@@ -50,38 +50,38 @@ public class FemurBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Direction direction = state.getValue(FACING);
         boolean isConnected = state.getValue(CONNECTED);
         return direction.getAxis() == Direction.Axis.X ? ShapeUtils.rotateXtoZ(makeShape(isConnected)) : makeShape(isConnected);
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         if(direction != Direction.UP){
             return state;
         }
 
-        return state.setValue(CONNECTED, neighborState.is(ModBlocks.BEASTLY_FEMUR));
+        return state.setValue(CONNECTED, neighborState.is(ModBlocks.BEASTLY_FEMUR.get()));
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState upState = context.getLevel().getBlockState(context.getClickedPos().above());
-        boolean shouldConnect = upState.is(ModBlocks.BEASTLY_FEMUR);
+        boolean shouldConnect = upState.is(ModBlocks.BEASTLY_FEMUR.get());
         return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(CONNECTED, shouldConnect).setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    protected BlockState rotate(BlockState state, Rotation rotation) {
+    public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
-    protected BlockState mirror(BlockState state, Mirror mirror) {
+    public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
-    protected @NotNull FluidState getFluidState(BlockState state) {
+    public @NotNull FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 

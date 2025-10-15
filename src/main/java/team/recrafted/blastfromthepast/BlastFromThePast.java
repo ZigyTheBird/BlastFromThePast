@@ -10,19 +10,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 import team.recrafted.blastfromthepast.client.models.block.AntlerDisplayBlockModel;
@@ -37,16 +38,27 @@ import team.recrafted.blastfromthepast.entity.boats.BFTPBoat;
 import team.recrafted.blastfromthepast.entity.pack.EntityPacks;
 import team.recrafted.blastfromthepast.events.CuriosCompat;
 import team.recrafted.blastfromthepast.init.*;
+import team.recrafted.blastfromthepast.network.*;
+import team.recrafted.blastfromthepast.network.handlers.ClientPayloadHandler;
+import team.recrafted.blastfromthepast.network.handlers.ServerPayloadHandler;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
+// The value here should match an entry in the META-INF/mods.toml file
 @Mod(BlastFromThePast.MODID)
 public class BlastFromThePast {
     public static final String MODID = "blastfromthepast";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final boolean CURIOS_LOADED = ModList.get().isLoaded("curios");
+    private static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+            ResourceLocation.fromNamespaceAndPath(MODID, "main"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
 
-    public BlastFromThePast(IEventBus modEventBus, ModContainer modContainer) {
-        NeoForge.EVENT_BUS.register(this);
+    public BlastFromThePast(FMLJavaModLoadingContext context) {
+        MinecraftForge.EVENT_BUS.register(this);
+        IEventBus modEventBus = context.getModEventBus();
 
         modEventBus.addListener(this::addCreative);
 
@@ -57,20 +69,66 @@ public class BlastFromThePast {
         ModSounds.SOUND_EVENTS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
         ModDecoratedPatterns.PATTERNS.register(modEventBus);
-        ModArmorMaterials.ARMOR_MATERIAL.register(modEventBus);
         ModFeatures.FEATURES.register(modEventBus);
         ModDataSerializers.DATA_SERIALIZERS.register(modEventBus);
         ModFoliageTypes.FOLIAGE_PLACER_TYPES.register(modEventBus);
         ModMobEffects.MOB_EFFECTS.register(modEventBus);
         ModStructureProcessors.STRUCTURE_PROCESSORS.register(modEventBus);
+        ModEnchantments.ENCHANTMENTS.register(modEventBus);
 
         if (CURIOS_LOADED) {
-            NeoForge.EVENT_BUS.register(CuriosCompat.class);
+            MinecraftForge.EVENT_BUS.register(CuriosCompat.class);
         }
+
+        registerPayloadHandlers();
+    }
+
+    private static void registerPayloadHandlers(){
+        int i=0;
+
+        BlastFromThePast.INSTANCE.registerMessage(
+                i++,
+                RiddenEntityPayload.class,
+                RiddenEntityPayload::write,
+                RiddenEntityPayload::read,
+                ServerPayloadHandler::handleRiddenEntityPayload
+        );
+
+        BlastFromThePast.INSTANCE.registerMessage(
+                i++,
+                FrostomperCollidePayload.class,
+                FrostomperCollidePayload::write,
+                FrostomperCollidePayload::read,
+                ServerPayloadHandler::handleFroststomperCollidePayload
+        );
+
+        BlastFromThePast.INSTANCE.registerMessage(
+                i++,
+                BearGloveWallAnimPayload.class,
+                BearGloveWallAnimPayload::write,
+                BearGloveWallAnimPayload::read,
+                ClientPayloadHandler::handleBearGloveAnim
+        );
+
+        BlastFromThePast.INSTANCE.registerMessage(
+                i++,
+                ScreenShakePayload.class,
+                ScreenShakePayload::write,
+                ScreenShakePayload::read,
+                ClientPayloadHandler::handleScreenShake
+        );
+
+        BlastFromThePast.INSTANCE.registerMessage(
+                i++,
+                PsychoedEffectPayload.class,
+                PsychoedEffectPayload::write,
+                PsychoedEffectPayload::read,
+                ClientPayloadHandler::handlePsychoedShader
+        );
     }
 
     public static EntityPacks getEntityPacks(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(EntityPacks.factory(level), EntityPacks.getFileId());
+        return level.getDataStorage().computeIfAbsent((tag)-> EntityPacks.load(level, tag), ()-> new EntityPacks(level), EntityPacks.getFileId());
     }
 
     public static EntityPacks getUniversalEntityPacks(MinecraftServer server) {
@@ -87,14 +145,14 @@ public class BlastFromThePast {
     }
 
     @SubscribeEvent
-    public void onServerTick(LevelTickEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel serverLevel && event.getLevel().dimension().equals(Level.OVERWORLD) && serverLevel.tickRateManager().runsNormally()) {
+    public void onServerTick(TickEvent.LevelTickEvent event) {
+        if (event.level instanceof ServerLevel serverLevel && event.level.dimension().equals(Level.OVERWORLD) && serverLevel.getServer().isRunning()) {
             getEntityPacks(serverLevel).tick();
         }
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {

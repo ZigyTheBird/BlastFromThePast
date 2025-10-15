@@ -2,8 +2,8 @@ package team.recrafted.blastfromthepast.client.models.entity;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
@@ -55,7 +55,7 @@ public class GlacerosModel extends GeoModel<GlacerosEntity> {
 
     @Override
     public void setCustomAnimations(GlacerosEntity animatable, long instanceId, AnimationState<GlacerosEntity> animationState) {
-        GeoBone head = this.getBone("neck").orElseThrow();
+        CoreGeoBone head = this.getBone("neck").orElseThrow();
         if (animationState.isCurrentAnimation(GlacerosEntity.IDLE)) head.setRotZ(0);
         if(!animatable.isBaby()){
             this.getBone("Antlers1").orElseThrow().setHidden(animatable.isSheared());

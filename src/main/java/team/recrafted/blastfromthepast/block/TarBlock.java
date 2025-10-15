@@ -31,7 +31,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class TarBlock extends Block {
     public static FogType FOG_TYPE;
 
-    public static final MapCodec<TarBlock> CODEC = simpleCodec(TarBlock::new);
     private static final float IN_BLOCK_HORIZONTAL_SPEED_MULTIPLIER = 0.25F;
     private static final float IN_BLOCK_VERTICAL_SPEED_MULTIPLIER = 0.1F;
     private static final float NUM_BLOCKS_TO_FALL_INTO_BLOCK = 2.5F;
@@ -50,19 +49,19 @@ public class TarBlock extends Block {
     }
 
     @Override
-    protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
+    public boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
         // account for lower height of the cover block state
         return (adjacentState.is(this) && state.getValue(COVER) == adjacentState.getValue(COVER)) || super.skipRendering(state, adjacentState, direction);
     }
 
     @Override
-    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return Shapes.empty();
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
-        if (entity.getInBlockState().is(this)) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+        if (level.getBlockState(entity.blockPosition()).is(this)) {
             entity.makeStuckInBlock(state, new Vec3(IN_BLOCK_HORIZONTAL_SPEED_MULTIPLIER, IN_BLOCK_VERTICAL_SPEED_MULTIPLIER, IN_BLOCK_HORIZONTAL_SPEED_MULTIPLIER));
 
             if (!(entity instanceof LivingEntity)) return;
@@ -89,7 +88,7 @@ public class TarBlock extends Block {
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext entitycollisioncontext) {
             Entity entity = entitycollisioncontext.getEntity();
             if (entity != null) {
@@ -108,7 +107,7 @@ public class TarBlock extends Block {
     }
 
     @Override
-    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.empty();
     }
 
@@ -118,7 +117,7 @@ public class TarBlock extends Block {
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState p_60475_, BlockGetter p_60476_, BlockPos p_60477_, PathComputationType p_60478_) {
         return false;
     }
 

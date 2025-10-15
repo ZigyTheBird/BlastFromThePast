@@ -1,26 +1,14 @@
 package team.recrafted.blastfromthepast.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import team.recrafted.blastfromthepast.BlastFromThePast;
+import net.minecraft.network.FriendlyByteBuf;
 
-public record PsychoedEffectPayload(boolean shouldApply) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PsychoedEffectPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "psychoed_effect_packet"));
-    public static final StreamCodec<ByteBuf, PsychoedEffectPayload> STREAM_CODEC;
+public record PsychoedEffectPayload(boolean shouldApply) {
 
-    static {
-        STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.BOOL,
-                PsychoedEffectPayload::shouldApply,
-                PsychoedEffectPayload::new
-        );
+    public static void write(PsychoedEffectPayload packet, FriendlyByteBuf buffer) {
+        buffer.writeBoolean(packet.shouldApply);
     }
 
-    @Override
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static PsychoedEffectPayload read(FriendlyByteBuf buffer) {
+        return new PsychoedEffectPayload(buffer.readBoolean());
     }
 }

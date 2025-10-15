@@ -1,16 +1,16 @@
 package team.recrafted.blastfromthepast.client;
 
 import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.access.PlayerBFTPDataAccess;
 import team.recrafted.blastfromthepast.block.TarBlock;
 import team.recrafted.blastfromthepast.client.vfx.ScreenShake;
 
-@EventBusSubscriber(modid = BlastFromThePast.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = BlastFromThePast.MODID, value = Dist.CLIENT)
 public class ClientEventsHandler {
     @SubscribeEvent
     public static void modifyFogColor(ViewportEvent.ComputeFogColor event) {

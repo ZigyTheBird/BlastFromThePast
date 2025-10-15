@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:shaggy_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "shaggy_pelt": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "blastfromthepast:shaggy_pelt"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "shaggy_pelt",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:shaggy_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

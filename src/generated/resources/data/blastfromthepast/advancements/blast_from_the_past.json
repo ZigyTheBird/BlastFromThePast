@@ -1,0 +1,45 @@
+{
+  "criteria": {
+    "blast_from_the_past": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "blastfromthepast:frostbite_forest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "blastfromthepast:textures/block/permafrost.png",
+    "description": {
+      "translate": "advancements.blastfromthepast.blast_from_the_past.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "blastfromthepast:snowdo_spawn_egg"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.blastfromthepast.blast_from_the_past.title"
+    }
+  },
+  "requirements": [
+    [
+      "blast_from_the_past"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

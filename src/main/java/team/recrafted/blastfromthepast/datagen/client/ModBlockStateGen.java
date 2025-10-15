@@ -7,12 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.block.*;
 import team.recrafted.blastfromthepast.block.signs.SnowyStoneBlock;
@@ -64,14 +64,14 @@ public class ModBlockStateGen extends BlockStateProvider {
         generateTotemPole(ModBlocks.FROSTOMPER_TOTEM_POLE);
     }
     
-    public void generateTotemPole(DeferredBlock<?> block) {
+    public void generateTotemPole(RegistryObject<Block> block) {
         this.getVariantBuilder(block.get()).forAllStates((state) -> {
             Direction dir = state.getValue(BlockStateProperties.FACING);
             return ConfiguredModel.builder().modelFile(models().getExistingFile(block.getId())).rotationY(dir.getAxis().isVertical() ? 0 : ((int)dir.toYRot() + 180) % 360).build();
         });
     }
     
-    public void generatePermafrostPainting(DeferredBlock<?> block) {
+    public void generatePermafrostPainting(RegistryObject<Block> block) {
         ResourceLocation permafrost = modLoc("block/permafrost");
         this.getVariantBuilder(block.get()).forAllStates((state) -> {
             Direction dir = state.getValue(BlockStateProperties.FACING);
@@ -96,7 +96,7 @@ public class ModBlockStateGen extends BlockStateProvider {
         });
     }
 
-    public void generateBeastChopsBlockState(DeferredBlock<Block> block) {
+    public void generateBeastChopsBlockState(RegistryObject<Block> block) {
         getVariantBuilder(block.get()).forAllStates(state -> {
             Direction.Axis axis = state.getValue(RotatedPillarBlock.AXIS);
             int blockState = state.getValue(BeastChopsBlock.STATES);
@@ -215,7 +215,7 @@ public class ModBlockStateGen extends BlockStateProvider {
         wallBlock(stoneGroup.POLISHED_WALL.get(), this.blockTexture(stoneGroup.POLISHED.get()));
         simpleBlock(stoneGroup.CHISELED_BRICKS.get());
 
-        for (DeferredBlock<?> block : stoneGroup.blocks) {
+        for (RegistryObject<? extends Block> block : stoneGroup.blocks) {
             if (block.getId().getPath().contains("ore")) simpleBlock(block.get());
         }
     }
@@ -250,12 +250,12 @@ public class ModBlockStateGen extends BlockStateProvider {
         wallBlock(blockGroup.WALL.get(), this.blockTexture(blockGroup.BLOCK.get()));
     }
 
-    private void hangingSign(DeferredBlock<CeilingHangingSignBlock> hangingSignBlock, DeferredBlock<WallHangingSignBlock> wallHangingSignBlock, ResourceLocation texture){
+    private void hangingSign(RegistryObject<CeilingHangingSignBlock> hangingSignBlock, RegistryObject<WallHangingSignBlock> wallHangingSignBlock, ResourceLocation texture){
         ModelFile sign = models().sign(hangingSignBlock.getId().getPath(), texture);
         hangingSign(hangingSignBlock, wallHangingSignBlock, sign);
     }
 
-    private void hangingSign(DeferredBlock<CeilingHangingSignBlock> hangingSignBlock, DeferredBlock<WallHangingSignBlock> wallHangingSignBlock, ModelFile sign) {
+    private void hangingSign(RegistryObject<CeilingHangingSignBlock> hangingSignBlock, RegistryObject<WallHangingSignBlock> wallHangingSignBlock, ModelFile sign) {
         simpleBlock(hangingSignBlock.get(), sign);
         simpleBlock(wallHangingSignBlock.get(), sign);
     }
@@ -264,19 +264,19 @@ public class ModBlockStateGen extends BlockStateProvider {
         return BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 
-    private void createSinglePlant(DeferredBlock<Block> block){
+    private void createSinglePlant(RegistryObject<Block> block){
         createSinglePlant(block, models().cross(block.getId().getPath(),
                 modLoc("block/" + block.getId().getPath())).renderType("cutout_mipped"));
     }
 
-    private void createSinglePlant(DeferredBlock<Block> block, ModelFile model) {
+    private void createSinglePlant(RegistryObject<Block> block, ModelFile model) {
         getVariantBuilder(block.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(model)
                 .uvLock(true)
                 .build());
     }
 
-    private void createDoublePlantBlock(DeferredBlock<Block> block) {
+    private void createDoublePlantBlock(RegistryObject<Block> block) {
         createDoublePlantBlock(block,
                 models().cross(block.getId().getPath() + "_top",
                         modLoc("block/" + block.getId().getPath() + "_top")).renderType("cutout_mipped"),
@@ -284,7 +284,7 @@ public class ModBlockStateGen extends BlockStateProvider {
                         modLoc("block/" + block.getId().getPath() + "_bottom")).renderType("cutout_mipped"));
     }
 
-    private void createDoublePlantBlock(DeferredBlock<Block> block, ModelFile upper, ModelFile bottom) {
+    private void createDoublePlantBlock(RegistryObject<Block> block, ModelFile upper, ModelFile bottom) {
         getVariantBuilder(block.get()).forAllStatesExcept(state -> {
             ModelFile model = bottom;
             if (state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
@@ -297,7 +297,7 @@ public class ModBlockStateGen extends BlockStateProvider {
         });
     }
 
-    private void createSnowyBlock(DeferredBlock<Block> block, ModelFile stone, ModelFile snowy){
+    private void createSnowyBlock(RegistryObject<Block> block, ModelFile stone, ModelFile snowy){
         getVariantBuilder(block.get()).forAllStatesExcept(state -> {
             ModelFile model = stone;
             if(state.getValue(SnowyStoneBlock.SNOWY)){

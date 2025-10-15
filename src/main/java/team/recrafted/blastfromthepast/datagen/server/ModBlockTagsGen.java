@@ -3,12 +3,13 @@ package team.recrafted.blastfromthepast.datagen.server;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.common.data.BlockTagsProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.block.BFTPBlockGroup;
@@ -81,24 +82,24 @@ public class ModBlockTagsGen extends BlockTagsProvider {
     }
 
     private void loadStoneGroupBlockTags(BFTPStoneGroup stoneGroup){
-        for(DeferredBlock<?> deferredBlock : stoneGroup.blocks){
+        for(RegistryObject<? extends Block> deferredBlock : stoneGroup.blocks){
             tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .add(deferredBlock.get());
             tag(BlockTags.NEEDS_STONE_TOOL)
                     .add(deferredBlock.get());
         }
 
-        for(DeferredBlock<StairBlock> deferredBlock : stoneGroup.getStairs()){
+        for(RegistryObject<StairBlock> deferredBlock : stoneGroup.getStairs()){
             tag(BlockTags.STAIRS)
                     .add(deferredBlock.get());
         }
 
-        for(DeferredBlock<WallBlock> deferredBlock : stoneGroup.getWall()){
+        for(RegistryObject<WallBlock> deferredBlock : stoneGroup.getWall()){
             tag(BlockTags.WALLS)
                     .add(deferredBlock.get());
         }
 
-        for(DeferredBlock<SlabBlock> deferredBlock : stoneGroup.getSlab()){
+        for(RegistryObject<SlabBlock> deferredBlock : stoneGroup.getSlab()){
             tag(BlockTags.SLABS)
                     .add(deferredBlock.get());
         }

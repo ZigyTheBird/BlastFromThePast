@@ -101,6 +101,7 @@ public class GlacialGuidebookScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         int x = (this.width - 192) / 2 - 29;
         int xOffset = this.currentPage % 2 == 0 ? 120 : 0;
@@ -181,8 +182,8 @@ public class GlacialGuidebookScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        this.renderTransparentBackground(guiGraphics);
+    public void renderBackground(GuiGraphics guiGraphics) {
+        super.renderBackground(guiGraphics);
         guiGraphics.blit(BOOK_LOCATION, (this.width - 192) / 2 - 29, 22, 0, 0, 250, 156, 250, 156);
     }
 

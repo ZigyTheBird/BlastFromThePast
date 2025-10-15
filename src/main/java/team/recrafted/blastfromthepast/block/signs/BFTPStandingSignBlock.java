@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 public class BFTPStandingSignBlock extends StandingSignBlock {
     public BFTPStandingSignBlock(Properties properties, WoodType woodType) {
-        super(woodType, properties);
+        super(properties, woodType);
     }
 
     @Nullable

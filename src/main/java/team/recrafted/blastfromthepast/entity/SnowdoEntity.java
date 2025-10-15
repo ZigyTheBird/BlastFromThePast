@@ -24,15 +24,18 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.entity.ai.goal.SnowdoBreedGoal;
 import team.recrafted.blastfromthepast.init.ModCriteriaTriggers;
@@ -66,7 +69,7 @@ public class SnowdoEntity extends Animal implements GeoEntity {
     public SnowdoEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 2;
-        this.setPathfindingMalus(PathType.WATER, 0.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -80,7 +83,7 @@ public class SnowdoEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SnowdoBreedGoal(this, 1));
         this.goalSelector.addGoal(2, new PanicGoal(this, 1.5));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0, (stack) -> stack.is(ModItems.MELON_ICE_CREAM), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.0, Ingredient.of(ModItems.MELON_ICE_CREAM.get()), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 5.0F));
@@ -97,10 +100,10 @@ public class SnowdoEntity extends Animal implements GeoEntity {
     }
 
     @Override
-    public void setRecordPlayingNearby(BlockPos pos, boolean isPartying) {
+    public void setRecordPlayingNearby(@NotNull BlockPos pos, boolean isPartying) {
         this.jukebox = pos;
         if (!level().isClientSide && isPartying && !(this.jukebox == null || !this.jukebox.closerToCenterThan(this.position(), 15) || !this.level().getBlockState(this.jukebox).is(Blocks.JUKEBOX)))
-            level().getEntitiesOfClass(Player.class, this.getHitbox().inflate(10)).forEach(player -> ModCriteriaTriggers.DANCE_TRIGGER.trigger((ServerPlayer) player, this));
+            level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10)).forEach(player -> ModCriteriaTriggers.DANCE_TRIGGER.trigger((ServerPlayer) player, this));
     }
 
     public void setTripped(boolean tripped){
@@ -144,20 +147,25 @@ public class SnowdoEntity extends Animal implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(TRIPPED, false);
-        builder.define(RIDDEN_PLAYER, Optional.empty());
-        builder.define(GLIDING, false);
-        builder.define(IS_SHEARED, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(TRIPPED, false);
+        this.entityData.define(RIDDEN_PLAYER, Optional.empty());
+        this.entityData.define(GLIDING, false);
+        this.entityData.define(IS_SHEARED, false);
     }
 
-    public EntityDimensions getDefaultDimensions(Pose pose) {
-        return this.isBaby() ? EntityDimensions.fixed(0.35f, 0.35f).withEyeHeight(0.2f) : super.getDefaultDimensions(pose);
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+        return this.isBaby() ? EntityDimensions.fixed(0.35f, 0.35f) : super.getDimensions(pose);
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    protected float getStandingEyeHeight(@NotNull Pose p_21131_, @NotNull EntityDimensions p_21132_) {
+        return this.isBaby()? 0.2f: super.getStandingEyeHeight(p_21131_, p_21132_);
+    }
+
+    @Override
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         this.jukebox = null;
         this.party = false;
         return super.hurt(source, amount);
@@ -231,14 +239,14 @@ public class SnowdoEntity extends Animal implements GeoEntity {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float multiplier, @NotNull DamageSource source) {
         if(this.isGliding()){
             return false;
         }
         return super.causeFallDamage(fallDistance, multiplier, source);
     }
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         if(player.getMainHandItem().isEmpty() && !this.isBaby() && player.getFirstPassenger() == null){
             this.startRiding(player, true);
             this.setRiddenPlayer(Optional.of(player.getUUID()));
@@ -256,7 +264,7 @@ public class SnowdoEntity extends Animal implements GeoEntity {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSource) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
         return ModSounds.SNOWDO_HURT.get();
     }
 
@@ -272,17 +280,17 @@ public class SnowdoEntity extends Animal implements GeoEntity {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(ModItems.MELON_ICE_CREAM);
+        return stack.is(ModItems.MELON_ICE_CREAM.get());
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob otherParent) {
         return ModEntities.SNOWDO.get().create(level);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setTripped(compound.getBoolean("tripped"));
         this.tripTicks = compound.getInt("tripTicks");
@@ -293,7 +301,7 @@ public class SnowdoEntity extends Animal implements GeoEntity {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("tripped", this.isTripped());
         compound.putInt("tripTicks", this.tripTicks);

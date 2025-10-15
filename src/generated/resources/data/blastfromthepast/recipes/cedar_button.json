@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "blastfromthepast:cedar"
+    }
+  ],
+  "result": {
+    "item": "blastfromthepast:cedar_button"
+  }
+}

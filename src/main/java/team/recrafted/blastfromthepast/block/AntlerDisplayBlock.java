@@ -21,11 +21,11 @@ public class AntlerDisplayBlock extends BlockWithDirection implements EntityBloc
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Shapes.block();
     }
 
-    protected RenderShape getRenderShape(BlockState blockState) {
+    public RenderShape getRenderShape(BlockState blockState) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 

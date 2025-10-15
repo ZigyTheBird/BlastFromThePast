@@ -5,25 +5,25 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.entity.DecoratedPotPattern;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 
 public class ModDecoratedPatterns {
-    public static final DeferredRegister<DecoratedPotPattern> PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERN, BlastFromThePast.MODID);
-    public static final DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> FROST = registerPatternKey("frost_pottery_pattern");
-    public static final DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> BEAST = registerPatternKey("beast_pottery_pattern");
-    public static final DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> WOODS = registerPatternKey("woods_pottery_pattern");
+    public static final DeferredRegister<String> PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, BlastFromThePast.MODID);
+    public static final RegistryObject<String> FROST = registerPatternKey("frost_pottery_pattern");
+    public static final RegistryObject<String> BEAST = registerPatternKey("beast_pottery_pattern");
+    public static final RegistryObject<String> WOODS = registerPatternKey("woods_pottery_pattern");
 
-    public static ImmutableMap<Item, ResourceKey<DecoratedPotPattern>> CUSTOM_ITEM_TO_POT_PATTERN;
+    public static ImmutableMap<Item, ResourceKey<String>> CUSTOM_ITEM_TO_POT_PATTERN;
 
-    public static DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> registerPatternKey(String name){
-        return PATTERNS.register(name, () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, name)));
+    public static RegistryObject<String> registerPatternKey(String name){
+//        return PATTERNS.register(name, () -> ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, name).toString());
+        return PATTERNS.register(name, () -> name);
     }
 
     public static void expandVanillaPottery(){
-        ImmutableMap.Builder<Item, ResourceKey<DecoratedPotPattern>> itemsToPot = new ImmutableMap.Builder<>();
+        ImmutableMap.Builder<Item, ResourceKey<String>> itemsToPot = new ImmutableMap.Builder<>();
         //itemsToPot.putAll(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
         itemsToPot.put(ModItems.FROST_POTTERY_SHERD.get(), FROST.getKey());
         itemsToPot.put(ModItems.BEAST_POTTERY_SHERD.get(), BEAST.getKey());

@@ -9,14 +9,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -27,26 +25,25 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.datagen.server.ModEntityLootGen;
-import team.recrafted.blastfromthepast.entity.ai.goal.EatDelphiniumGoal;
-import team.recrafted.blastfromthepast.entity.ai.goal.GlacerosAlertPanicGoal;
-import team.recrafted.blastfromthepast.entity.ai.goal.GlacerosSparGoal;
-import team.recrafted.blastfromthepast.entity.ai.goal.MoveAwayFromBlockGoal;
+import team.recrafted.blastfromthepast.entity.ai.goal.*;
 import team.recrafted.blastfromthepast.entity.ai.navigation.AzureNavigation;
 import team.recrafted.blastfromthepast.entity.pack.EntityPack;
 import team.recrafted.blastfromthepast.entity.pack.EntityPackAgeableMobData;
@@ -95,9 +92,9 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
     public GlacerosEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 5;
-        this.setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
-        this.getAttribute(Attributes.STEP_HEIGHT).addOrReplacePermanentModifier(new AttributeModifier(STEP_ATTRIBUTE, 0.6, AttributeModifier.Operation.ADD_VALUE));
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+        this.setMaxUpStep(1.5f);
     }
 
     @Override
@@ -118,7 +115,7 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
         this.goalSelector.addGoal(1, new GlacerosAlertPanicGoal(this, 3.5));
         this.goalSelector.addGoal(3, new FollowParentGoal(this, 1));
         this.goalSelector.addGoal(4, new BreedGoal(this, 1.1));
-        this.goalSelector.addGoal(5, new TemptGoal(this, 1, itemStack -> itemStack.is(this.getVariant().getDelphinium().asItem()) ,false));
+        this.goalSelector.addGoal(5, new TemptGoal(this, 1, Ingredient.of(this.getVariant().getDelphinium().asItem()),false));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(6, new EatDelphiniumGoal(this, 1, 15));
         this.goalSelector.addGoal(7, new GlacerosLookAtPlayerGoal(this, Player.class, 5.0F));
@@ -130,7 +127,7 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, CompoundTag compoundTag) {
         RandomSource randomsource = level.getRandom();
         //this.setRandomStrength(randomsource);
         GlacerosEntity.Variant glaceros$variant;
@@ -144,7 +141,7 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
         }
 
         this.setVariant(glaceros$variant);
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, compoundTag);
     }
 
     private Variant getVariantFromChance(RandomSource random){
@@ -181,7 +178,7 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
             if (this.isRushing()) return state.setAndContinue(CHARGE);
             if (this.isCharging()) return state.setAndContinue(CHARGE_PREPARE);
             if (this.isEating()) return state.setAndContinue(EAT);
-            if (isPanicking() || isRunning()) return state.setAndContinue(FLEE);
+            if ((isPanicking() || isRunning()) && state.isMoving()) return state.setAndContinue(FLEE);
             if (getDeltaMovement().horizontalDistanceSqr() > 1.0E-6D) return state.setAndContinue(WALK);
             if (this.party && !this.isBaby()) return state.setAndContinue(DANCE);
             return state.setAndContinue(IDLE);
@@ -225,7 +222,7 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
     @Override
     protected void actuallyHurt(DamageSource damageSource, float damageAmount) {
         super.actuallyHurt(damageSource, damageAmount);
-        if(damageSource.is(DamageTypeTags.PANIC_CAUSES)){
+        if(CustomPanicGoal.isMobDamage(this)){
             List<GlacerosEntity> glacerosEntities = this.level()
                     .getEntitiesOfClass(GlacerosEntity.class, this.getBoundingBox().inflate(16));
             if(!glacerosEntities.isEmpty()){
@@ -238,16 +235,15 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
     }
 
     @Override
-    public @NotNull ResourceKey<LootTable> getDefaultLootTable() {
+    public @NotNull ResourceLocation getDefaultLootTable() {
         if(this.isSheared()){
             return this.getType().getDefaultLootTable();
         } else {
-            ResourceKey key = switch (getVariant()) {
+            ResourceLocation key = switch (getVariant()) {
                 case BROAD -> ModEntityLootGen.GLACEROS_BROAD;
                 case CURLY -> ModEntityLootGen.GLACEROS_CURLY;
                 case SPIKEY -> ModEntityLootGen.GLACEROS_SPIKEY;
                 case STRAIGHT -> ModEntityLootGen.GLACEROS_STRAIGHT;
-                default -> throw new MatchException(null, null);
             };
 
             return key;
@@ -315,17 +311,17 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DATA_VARIANT_ID, 0);
-        //builder.define(DATA_STRENGTH_ID, 0);
-        builder.define(PANICKING, false);
-        builder.define(EATING, false);
-        builder.define(SHEARED, false);
-        builder.define(RUNNING, false);
-        builder.define(CHARGING, false);
-        builder.define(RUSHING, false);
-        builder.define(SPARRING_PARTNER, Optional.empty());
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_VARIANT_ID, 0);
+        //this.entityData.define(DATA_STRENGTH_ID, 0);
+        this.entityData.define(PANICKING, false);
+        this.entityData.define(EATING, false);
+        this.entityData.define(SHEARED, false);
+        this.entityData.define(RUNNING, false);
+        this.entityData.define(CHARGING, false);
+        this.entityData.define(RUSHING, false);
+        this.entityData.define(SPARRING_PARTNER, Optional.empty());
     }
 
     @Nullable
@@ -354,7 +350,6 @@ public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<G
         }
     }
 
-    @Override
     public boolean isPanicking() {
         return this.entityData.get(PANICKING);
     }

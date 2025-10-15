@@ -18,13 +18,13 @@ public class EntityDisplayItemRenderer extends BlockEntityWithoutLevelRenderer {
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
         if (stack.getItem() instanceof EntityDisplayItem item) {
-            if (item.renderEntity == null || item.renderEntity.level() != Minecraft.getInstance().level) item.renderEntity = item.entity.create(Minecraft.getInstance().level);
+            if (item.renderEntity == null || item.renderEntity.level() != Minecraft.getInstance().level) item.renderEntity = item.entity.get().create(Minecraft.getInstance().level);
             poseStack.translate(0.45, 0, 0);
-            if (item.entity != ModEntities.BURREL.get() && item.entity != ModEntities.SNOWDO.get()) poseStack.scale(0.5F, 0.5F, 0.5F);
+            if (item.entity.get() != ModEntities.BURREL.get() && item.entity.get() != ModEntities.SNOWDO.get()) poseStack.scale(0.5F, 0.5F, 0.5F);
             else poseStack.scale(0.65F, 0.65F, 0.65F);
-            if (item.entity == ModEntities.FROSTOMPER.get()) poseStack.scale(0.5F, 0.5F, 0.5F);
+            if (item.entity.get() == ModEntities.FROSTOMPER.get()) poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(Axis.YP.rotationDegrees(45));
-            Minecraft.getInstance().getEntityRenderDispatcher().render(item.renderEntity, 0, 0, 0, 0, Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true), poseStack, buffer, packedLight);
+            Minecraft.getInstance().getEntityRenderDispatcher().render(item.renderEntity, 0, 0, 0, 0, Minecraft.getInstance().getFrameTime(), poseStack, buffer, packedLight);
         }
     }
 }

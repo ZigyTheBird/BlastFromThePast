@@ -9,7 +9,9 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DiodeBlock;
@@ -20,8 +22,8 @@ import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.init.ModEntities;
 import team.recrafted.blastfromthepast.misc.Constants;
@@ -46,14 +48,35 @@ public class SapEntity extends HangingEntity implements GeoEntity {
     @Override
     public boolean isPickable() {return false;}
 
+//    @Override
+//    protected @NotNull AABB calculateBoundingBox(BlockPos pos, Direction direction) {
+//        Vec3 vec3 = Vec3.atCenterOf(pos).relative(direction, -0.46875F);
+//        Direction.Axis direction$axis = direction.getAxis();
+//        double d0 = direction$axis == Direction.Axis.X ? (double)0.0625F : (double)0.75F;
+//        double d1 = direction$axis == Direction.Axis.Y ? (double)0.0625F : (double)0.75F;
+//        double d2 = direction$axis == Direction.Axis.Z ? (double)0.0625F : (double)0.75F;
+//        return AABB.ofSize(vec3, d0, d1, d2);
+//    }
+
+
     @Override
-    protected @NotNull AABB calculateBoundingBox(BlockPos pos, Direction direction) {
-        Vec3 vec3 = Vec3.atCenterOf(pos).relative(direction, -0.46875F);
-        Direction.Axis direction$axis = direction.getAxis();
-        double d0 = direction$axis == Direction.Axis.X ? (double)0.0625F : (double)0.75F;
-        double d1 = direction$axis == Direction.Axis.Y ? (double)0.0625F : (double)0.75F;
-        double d2 = direction$axis == Direction.Axis.Z ? (double)0.0625F : (double)0.75F;
-        return AABB.ofSize(vec3, d0, d1, d2);
+    public int getWidth() {
+        return 12;
+    }
+
+    @Override
+    public int getHeight() {
+        return 12;
+    }
+
+    @Override
+    protected float getEyeHeight(Pose p_19976_, EntityDimensions p_19977_) {
+        return 0f;
+    }
+
+    @Override
+    public float getEyeHeight(Pose p_20237_) {
+        return 0;
     }
 
     @Override
@@ -114,7 +137,7 @@ public class SapEntity extends HangingEntity implements GeoEntity {
     public void dropItem(@Nullable Entity entity) {}
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {}
+    protected void defineSynchedData() {}
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}
