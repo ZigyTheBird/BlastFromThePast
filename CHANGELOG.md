@@ -1,4 +1,4 @@
-#### Additions  
+### Additions  
 - Added a recipe for the glacial guidebook.  
 
 ### Changes
