@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModTreeGrowers;
 
@@ -40,12 +42,27 @@ public class PineconeBlock extends SaplingBlock {
         builder.add(new Property[]{STAGE}).add(HANGING);
     }
 
-    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+    protected boolean mayPlaceOn(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
         return super.mayPlaceOn(state, level, pos) || state.is(Blocks.CLAY);
     }
 
+    public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction directionUpdated, @NotNull BlockState facingState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+        return directionUpdated == Direction.UP
+                && !state.canSurvive(level, currentPos) ?
+                Blocks.AIR.defaultBlockState() :
+                super.updateShape(state, directionUpdated, facingState, level, currentPos, facingPos);
+    }
+
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
+        if (isHanging(state)) {
+            return level.getBlockState(pos.above()).is(ModBlocks.CEDAR.LEAVES.get());
+        } else {
+            return super.canSurvive(state, level, pos);
+        }
+    }
+
     @Override
-    public void advanceTree(ServerLevel level, BlockPos pos, BlockState state, RandomSource random) {
+    public void advanceTree(@NotNull ServerLevel level, @NotNull BlockPos pos, BlockState state, @NotNull RandomSource random) {
         if (state.getValue(STAGE) == 0) {
             level.setBlock(pos, state.cycle(STAGE), 4);
         } else {
@@ -56,30 +73,22 @@ public class PineconeBlock extends SaplingBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         if (isHanging(state)) return SHAPE_HANGING;
         return SHAPE;
     }
 
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        if (isHanging(state)) {
-            boolean soilDecision = level.getBlockState(pos.above()).canSustainPlant(level, pos.above(), Direction.DOWN, this);
-            return !soilDecision || level.getBlockState(pos.above()).is(ModBlocks.CEDAR.LEAVES.get());
-        } else {
-            return super.canSurvive(state, level, pos);
-        }
-    }
-
     @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (!isHanging(state)) super.randomTick(state, level, pos, random);
     }
 
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    @Override
+    public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean p_55994_) {
         return !isHanging(state);
     }
 
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(@NotNull Level level, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
         return !isHanging(state) && super.isBonemealSuccess(level, random, pos, state);
     }
 

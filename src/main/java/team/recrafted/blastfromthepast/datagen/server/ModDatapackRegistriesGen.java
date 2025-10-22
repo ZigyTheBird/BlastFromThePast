@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModDatapackRegistriesGen extends DatapackBuiltinEntriesProvider {
     public ModDatapackRegistriesGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, datapackEntriesBuilder(), Set.of(BlastFromThePast.MODID));
+        super(output, registries, datapackEntriesBuilder(), Set.of(BlastFromThePast.MOD_ID));
     }
 
     private static RegistrySetBuilder datapackEntriesBuilder(){

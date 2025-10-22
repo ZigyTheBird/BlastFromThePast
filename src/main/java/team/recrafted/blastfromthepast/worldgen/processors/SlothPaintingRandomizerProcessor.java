@@ -58,7 +58,7 @@ public class SlothPaintingRandomizerProcessor extends StructureProcessor {
         processedBlockInfos.stream().filter(info -> BuiltInRegistries.BLOCK.getKey(info.state().getBlock()).getPath().contains("painting")).forEach(info -> {
                     if (!selectedPaintings.contains(info.state().getBlock())) {
                         newInfo.removeIf(info2 -> info2 == info);
-                        newInfo.add(new StructureTemplate.StructureBlockInfo(info.pos(), ModBlocks.PERMAFROST.BLOCK.get().defaultBlockState(), null));
+                        newInfo.add(new StructureTemplate.StructureBlockInfo(info.pos(), ModBlocks.PERMAFROST.STONE.get().defaultBlockState(), null));
                     }
                 }
         );

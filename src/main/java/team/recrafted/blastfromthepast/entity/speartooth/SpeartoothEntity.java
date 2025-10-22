@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -86,7 +85,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
     public static final RawAnimation STRETCH = RawAnimation.begin().then("animation.speartooth.stretch", Animation.LoopType.DEFAULT);
     public static final RawAnimation SIT = RawAnimation.begin().then("animation.speartooth.sit", Animation.LoopType.DEFAULT);
     public static final RawAnimation STALK = RawAnimation.begin().then("animation.speartooth.stalk", Animation.LoopType.DEFAULT);
-    public static final RawAnimation BITE = RawAnimation.begin().then("animation.speartooth.bite", Animation.LoopType.DEFAULT);
+    public static final RawAnimation BITE = RawAnimation.begin().then("animation.speartooth.attack", Animation.LoopType.DEFAULT);
     public static final RawAnimation ROAR = RawAnimation.begin().then("animation.speartooth.roar", Animation.LoopType.DEFAULT);
     public static final RawAnimation LUNGE = RawAnimation.begin().then("animation.speartooth.lunge", Animation.LoopType.DEFAULT);
     public static final RawAnimation WALK = RawAnimation.begin().then("animation.speartooth.walk", Animation.LoopType.DEFAULT);
@@ -187,7 +186,8 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
 
     @Override
     public void setTarget(@Nullable LivingEntity target) {
-        if (target != null) {
+        //Only hunt cooldown if not tamed
+        if (target != null && !this.isTame()) {
             if (huntCooldown > 0) return;
             huntCooldown = 6000;
         }

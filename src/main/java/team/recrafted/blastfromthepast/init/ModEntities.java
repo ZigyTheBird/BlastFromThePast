@@ -20,7 +20,7 @@ import team.recrafted.blastfromthepast.util.HitboxHelper;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEntities {
-    public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, BlastFromThePast.MODID);
+    public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, BlastFromThePast.MOD_ID);
 
     public static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String name, EntityType.EntityFactory<T> entity,
                                                                                            float width, float height) {
@@ -100,6 +100,6 @@ public class ModEntities {
     }
 
     private static String getName(String name) {
-        return BlastFromThePast.MODID + ":" + name;
+        return BlastFromThePast.MOD_ID + ":" + name;
     }
 }

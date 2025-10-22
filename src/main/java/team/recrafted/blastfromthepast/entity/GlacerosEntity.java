@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -31,7 +30,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -57,7 +55,7 @@ import java.util.UUID;
 import java.util.function.IntFunction;
 
 public class GlacerosEntity extends Animal implements GeoEntity, VariantHolder<GlacerosEntity.Variant>, EntityPackHolder<GlacerosEntity> {
-    public static final ResourceLocation STEP_ATTRIBUTE = ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "glaceros_jump");
+    public static final ResourceLocation STEP_ATTRIBUTE = ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "glaceros_jump");
 
     private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(GlacerosEntity.class, EntityDataSerializers.INT);
     public  static final EntityDataAccessor<Boolean> PANICKING = SynchedEntityData.defineId(GlacerosEntity.class, EntityDataSerializers.BOOLEAN);

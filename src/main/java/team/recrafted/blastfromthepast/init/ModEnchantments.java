@@ -11,7 +11,7 @@ import team.recrafted.blastfromthepast.enchantment.TarMarcherEnchantment;
 
 public class ModEnchantments {
     public static final DeferredRegister<Enchantment> ENCHANTMENTS =
-            DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, BlastFromThePast.MODID);
+            DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<Enchantment> TAR_MARCHER =
             ENCHANTMENTS.register("tar_marcher", () ->

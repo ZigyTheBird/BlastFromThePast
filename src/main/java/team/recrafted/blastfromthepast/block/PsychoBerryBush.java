@@ -38,13 +38,15 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IForgeShearable;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModEntities;
 import team.recrafted.blastfromthepast.init.ModItems;
 
+@SuppressWarnings("deprecation")
 public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IForgeShearable, BonemealableBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_1;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 
     public PsychoBerryBush(Properties properties) {
         super(properties);
@@ -52,13 +54,14 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IF
     }
 
     public boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(AGE) < 1;
+        return state.getValue(AGE) < 2;
     }
-    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+
+    public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
         return Shapes.empty();
     }
 
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -67,24 +70,24 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IF
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void tick(@NotNull BlockState state, ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (!level.isAreaLoaded(pos, 1)) return;
         if (!canSurvive(state, level, pos)) {
             level.destroyBlock(pos, true);
         }
     }
 
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         int i = state.getValue(AGE);
-        if (i < 1 && level.getRawBrightness(pos.above(), 0) >= 9 && ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(10) == 0)) {
-            BlockState blockstate = (BlockState)state.setValue(AGE, i + 1);
+        if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(10) == 0)) {
+            BlockState blockstate = state.setValue(AGE, i + 1);
             level.setBlock(pos, blockstate, 2);
             ForgeHooks.onCropsGrowPost(level, pos, state);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
         }
     }
 
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
         if (entity instanceof LivingEntity && entity.getType() != ModEntities.PSYCHO_BEAR.get() && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
             entity.makeStuckInBlock(state, new Vec3(0.6, 0.7, 0.6));
             if (!level.isClientSide) {
@@ -93,16 +96,20 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IF
         }
     }
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
-        int i = state.getValue(AGE);
-        boolean flag = i == 1;
+    public @NotNull InteractionResult use(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult blockHitResult) {
+        int age = state.getValue(AGE);
+        boolean flag = age == 2;
         if (!flag && player.getItemInHand(hand).is(Items.BONE_MEAL)) {
             return InteractionResult.PASS;
-        } else if (i > 0) {
-            int j = 1 + level.random.nextInt(2);
-            popResource(level, pos, new ItemStack(ModItems.PSYCHO_BERRY.get(), j + (flag ? 1 : 0)));
+        } else if (age > 1) {
+
+            int amount = 1 + level.random.nextInt(2);
+            popResource(level, pos, new ItemStack(ModItems.PSYCHO_BERRY.get(), amount));
+
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+
             BlockState blockstate = state.setValue(AGE, 0);
+
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -115,24 +122,24 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IF
         builder.add(AGE, WATERLOGGED);
     }
 
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean b) {
-        return state.getValue(AGE) == 0;
+    public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, BlockState state, boolean b) {
+        return state.getValue(AGE) < 2;
     }
 
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(@NotNull Level level, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
         return true;
     }
 
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        int i = Math.min(1, state.getValue(AGE) + 1);
+    public void performBonemeal(ServerLevel level, @NotNull RandomSource random, @NotNull BlockPos pos, BlockState state) {
+        int i = Math.min(2, state.getValue(AGE) + 1);
         level.setBlock(pos, state.setValue(AGE, i), 2);
     }
 
-    public FluidState getFluidState(BlockState state) {
+    public @NotNull FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(@NotNull BlockState state, Level level, BlockPos pos, @NotNull RandomSource random) {
         if (level.isRainingAt(pos.above()) && random.nextInt(15) == 1) {
             BlockPos blockpos = pos.below();
             BlockState blockstate = level.getBlockState(blockpos);
@@ -140,7 +147,6 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IF
                 ParticleUtils.spawnParticleBelow(level, pos, random, ParticleTypes.DRIPPING_WATER);
             }
         }
-
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -149,7 +155,7 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IF
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, LevelReader level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos.below());
         return blockState.isSolidRender(level, pos) || blockState.is(ModBlocks.PSYCHO_BERRY_BUSH.get());
     }

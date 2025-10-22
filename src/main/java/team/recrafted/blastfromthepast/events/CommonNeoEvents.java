@@ -17,7 +17,7 @@ import team.recrafted.blastfromthepast.init.*;
 import team.recrafted.blastfromthepast.worldgen.biome.BFTPOverworldRegion;
 import terrablender.api.Regions;
 
-@Mod.EventBusSubscriber(modid = BlastFromThePast.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = BlastFromThePast.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonNeoEvents {
 
     @SubscribeEvent
@@ -27,7 +27,7 @@ public class CommonNeoEvents {
         registerFlammables();
 
         event.enqueueWork(() ->
-                Regions.register(new BFTPOverworldRegion(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "overworld"), 1)));
+                Regions.register(new BFTPOverworldRegion(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "overworld"), 1)));
     }
 
     @SubscribeEvent

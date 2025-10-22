@@ -21,7 +21,7 @@ import team.recrafted.blastfromthepast.init.ModItems;
 public class ModLangGen extends LanguageProvider {
 
     public ModLangGen(PackOutput output) {
-        super(output, BlastFromThePast.MODID, "en_us");
+        super(output, BlastFromThePast.MOD_ID, "en_us");
     }
 
     @Override
@@ -120,7 +120,7 @@ public class ModLangGen extends LanguageProvider {
         addBlock(ModBlocks.SPEARTOOTH_TOTEM_POLE);
         addBlock(ModBlocks.FROSTOMPER_TOTEM_POLE);
 
-        add("itemGroup." + BlastFromThePast.MODID, "Blast From The Past");
+        add("itemGroup." + BlastFromThePast.MOD_ID, "Blast From The Past");
         add("enchantment.blastfromthepast.tar_marcher", "Tar Marcher");
         add("death.attack.bear_trap", "%1$s died in a bear trap");
 

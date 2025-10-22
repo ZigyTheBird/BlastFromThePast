@@ -32,7 +32,7 @@ public class BFTPBoatRenderer extends EntityRenderer<BFTPBoat> {
     public BFTPBoatRenderer(EntityRendererProvider.Context pContext, boolean pChestBoat) {
         super(pContext);
         this.shadowRadius = 0.8F;
-        this.boatResources = Stream.of(BFTPBoat.BoatType.values()).collect(ImmutableMap.toImmutableMap((p_173938_) -> p_173938_, (modType) -> Pair.of(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, getTextureLocation(modType, pChestBoat)), this.createBoatModel(pContext, modType, pChestBoat))));
+        this.boatResources = Stream.of(BFTPBoat.BoatType.values()).collect(ImmutableMap.toImmutableMap((p_173938_) -> p_173938_, (modType) -> Pair.of(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, getTextureLocation(modType, pChestBoat)), this.createBoatModel(pContext, modType, pChestBoat))));
     }
 
     private ListModel<BFTPBoat> createBoatModel(EntityRendererProvider.Context pContext, BFTPBoat.BoatType pType, boolean pChestBoat) {
@@ -51,7 +51,7 @@ public class BFTPBoatRenderer extends EntityRenderer<BFTPBoat> {
     }
 
     private static ModelLayerLocation createLocation(String pPath) {
-        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, pPath), "main");
+        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, pPath), "main");
     }
 
     private static String getTextureLocation(BFTPBoat.BoatType pType, boolean pChestBoat) {

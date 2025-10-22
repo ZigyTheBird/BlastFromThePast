@@ -9,7 +9,7 @@ import team.recrafted.blastfromthepast.worldgen.processors.SlothPaintingRandomiz
 
 public class ModStructureProcessors {
     public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSORS =
-            DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, BlastFromThePast.MODID);
+            DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<StructureProcessorType<SlothPaintingRandomizerProcessor>> SLOTH_PAINTING_RANDOMIZER
             = STRUCTURE_PROCESSORS.register("sloth_painting_randomizer", () -> () -> SlothPaintingRandomizerProcessor.CODEC.codec());

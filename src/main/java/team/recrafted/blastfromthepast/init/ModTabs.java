@@ -11,11 +11,11 @@ import team.recrafted.blastfromthepast.block.BFTPBlockGroup;
 import team.recrafted.blastfromthepast.block.BFTPStoneGroup;
 import team.recrafted.blastfromthepast.block.BFTPWoodGroup;
 
-import static team.recrafted.blastfromthepast.BlastFromThePast.MODID;
+import static team.recrafted.blastfromthepast.BlastFromThePast.MOD_ID;
 
 public class ModTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> BLAST_FROM_THE_PAST =
             CREATIVE_TABS.register("blastfromthepast", () -> CreativeModeTab.builder()

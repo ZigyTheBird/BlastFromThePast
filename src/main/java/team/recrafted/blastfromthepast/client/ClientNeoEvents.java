@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.SnowdoEntity;
 
-@Mod.EventBusSubscriber(modid = BlastFromThePast.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = BlastFromThePast.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientNeoEvents {
     @SubscribeEvent
     public static void renderHand(RenderHandEvent event){

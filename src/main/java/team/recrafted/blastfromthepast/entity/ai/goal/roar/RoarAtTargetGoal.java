@@ -28,6 +28,7 @@ public class RoarAtTargetGoal<T extends Mob & Roaring> extends Goal {
 
     @Override
     public boolean canUse() {
+        if(!this.mob.canRoar()) return false;
         // prevent memory leak by not keeping last known targets that have been removed
         if(this.lastKnownTarget != null && (this.lastKnownTarget.isRemoved()
                 || HitboxHelper.getDistSqrBetweenHitboxes(this.mob, this.lastKnownTarget) > Mth.square(EntityHelper.getFollowRange(this.mob)))){

@@ -21,11 +21,11 @@ import javax.annotation.Nullable;
 public class ModBiomes {
     public static final ResourceKey<Biome> FROSTBITE_FOREST = ResourceKey.create(
             Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_forest")
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "frostbite_forest")
     );
     public static final ResourceKey<Biome> FROSTBITE_RIVER = ResourceKey.create(
             Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_river")
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "frostbite_river")
     );
     public static final int FROSTBITE_WATER_COLOR = 0x85BAC6;
     public static final int FROSTBITE_WATER_FOG_COLOR = 0x85BAC6;

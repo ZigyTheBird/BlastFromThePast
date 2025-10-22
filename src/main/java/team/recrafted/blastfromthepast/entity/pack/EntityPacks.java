@@ -101,6 +101,6 @@ public class EntityPacks extends SavedData {
     }
 
     public static String getFileId() {
-        return BlastFromThePast.MODID + "_" + ENTITY_PACKS_FILE_ID;
+        return BlastFromThePast.MOD_ID + "_" + ENTITY_PACKS_FILE_ID;
     }
 }

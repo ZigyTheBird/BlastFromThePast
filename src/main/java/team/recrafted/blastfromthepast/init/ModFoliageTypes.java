@@ -8,7 +8,7 @@ import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.worldgen.feature.CedarFoliagePlacer;
 
 public class ModFoliageTypes {
-    public static final DeferredRegister<FoliagePlacerType<?>> FOLIAGE_PLACER_TYPES = DeferredRegister.create(Registries.FOLIAGE_PLACER_TYPE, BlastFromThePast.MODID);
+    public static final DeferredRegister<FoliagePlacerType<?>> FOLIAGE_PLACER_TYPES = DeferredRegister.create(Registries.FOLIAGE_PLACER_TYPE, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<FoliagePlacerType<CedarFoliagePlacer>> CEDAR_FOLIAGE_PLACER = FOLIAGE_PLACER_TYPES.register("cedar_foliage_placer",
             () -> new FoliagePlacerType<>(CedarFoliagePlacer.CODEC.codec()));

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BFTPStoneGroup {
-    public final RegistryObject<Block> BLOCK;
+    public final RegistryObject<Block> STONE;
     public final RegistryObject<StairBlock> STAIRS;
     public final RegistryObject<SlabBlock> SLAB;
     public final RegistryObject<WallBlock> WALL;
@@ -45,11 +45,11 @@ public class BFTPStoneGroup {
     public final List<RegistryObject<? extends Block>> blocks;
 
     public BFTPStoneGroup(String name, MapColor mapColor, Item.Properties empty){
-        BLOCK = ModBlocks.createRegistry(name, () -> new SnowyStoneBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(mapColor)), empty);
+        STONE = ModBlocks.createRegistry(name, () -> new SnowyStoneBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(mapColor)), empty);
 
-        STAIRS = ModBlocks.createRegistry(name + "_stairs", () -> new StairBlock(BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(BLOCK.get()).mapColor(mapColor)), empty);
-        SLAB = ModBlocks.createRegistry(name + "_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(BLOCK.get()).mapColor(mapColor)), empty);
-        WALL = ModBlocks.createRegistry(name + "_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(BLOCK.get()).mapColor(mapColor)), empty);
+        STAIRS = ModBlocks.createRegistry(name + "_stairs", () -> new StairBlock(STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(STONE.get()).mapColor(mapColor)), empty);
+        SLAB = ModBlocks.createRegistry(name + "_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(STONE.get()).mapColor(mapColor)), empty);
+        WALL = ModBlocks.createRegistry(name + "_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(STONE.get()).mapColor(mapColor)), empty);
 
         BRICKS = ModBlocks.createRegistry(name + "_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(mapColor)), empty);
 
@@ -80,7 +80,7 @@ public class BFTPStoneGroup {
         LAPIS_ORE = ModBlocks.createRegistry(name + "_lapis_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.LAPIS_ORE).mapColor(mapColor), UniformInt.of(2, 5)), empty);
         REDSTONE_ORE = ModBlocks.createRegistry(name + "_redstone_ore", () -> new RedStoneOreBlock(BlockBehaviour.Properties.copy(Blocks.REDSTONE_ORE).mapColor(mapColor)), empty);
 
-        blocks = new ArrayList<>(Arrays.asList(BLOCK, STAIRS, SLAB, WALL, BRICKS, BRICKS_STAIRS, BRICKS_SLAB, BRICKS_WALL, COBBLESTONE, COBBLESTONE_STAIRS, COBBLESTONE_SLAB, COBBLESTONE_WALL, POLISHED, POLISHED_STAIRS, POLISHED_SLAB, POLISHED_WALL, CHISELED_BRICKS, COAL_ORE, COPPER_ORE, DIAMOND_ORE, EMERALD_ORE, GOLD_ORE, IRON_ORE, LAPIS_ORE, REDSTONE_ORE));
+        blocks = new ArrayList<>(Arrays.asList(STONE, STAIRS, SLAB, WALL, BRICKS, BRICKS_STAIRS, BRICKS_SLAB, BRICKS_WALL, COBBLESTONE, COBBLESTONE_STAIRS, COBBLESTONE_SLAB, COBBLESTONE_WALL, POLISHED, POLISHED_STAIRS, POLISHED_SLAB, POLISHED_WALL, CHISELED_BRICKS, COAL_ORE, COPPER_ORE, DIAMOND_ORE, EMERALD_ORE, GOLD_ORE, IRON_ORE, LAPIS_ORE, REDSTONE_ORE));
     }
 
     public List<RegistryObject<StairBlock>> getStairs(){

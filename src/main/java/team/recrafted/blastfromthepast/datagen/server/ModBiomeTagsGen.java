@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModBiomeTagsGen extends BiomeTagsProvider {
     public ModBiomeTagsGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, provider, BlastFromThePast.MODID, existingFileHelper);
+        super(output, provider, BlastFromThePast.MOD_ID, existingFileHelper);
     }
 
     @Override

@@ -11,7 +11,7 @@ import team.recrafted.blastfromthepast.block.signs.entity.BFTPHangingSignBlockEn
 import team.recrafted.blastfromthepast.block.signs.entity.BFTPSignBlockEntity;
 
 public class ModBlockEntities {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, BlastFromThePast.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<BFTPHangingSignBlockEntity>> HANGING_SIGN = BLOCK_ENTITY_TYPES.register("hanging_sign", () -> BlockEntityType.Builder.of(BFTPHangingSignBlockEntity::new, ModBlocks.CEDAR.HANGING_SIGN.get(), ModBlocks.CEDAR.HANGING_SIGN_WALL.get()).build(null));
     public static final RegistryObject<BlockEntityType<BFTPSignBlockEntity>> SIGN = BLOCK_ENTITY_TYPES.register("sign", () -> BlockEntityType.Builder.of(BFTPSignBlockEntity::new, ModBlocks.CEDAR.SIGN.get(), ModBlocks.CEDAR.WALL_SIGN.get()).build(null));

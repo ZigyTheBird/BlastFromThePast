@@ -15,6 +15,7 @@ import java.util.Optional;
 public class SpeartoothModel extends GeoModel<SpeartoothEntity> {
     public static final ResourceLocation MODEL = BlastFromThePast.location("geo/entity/speartooth.geo.json");
     public static final ResourceLocation BABY_MODEL = BlastFromThePast.location("geo/entity/baby_speartooth.geo.json");
+
     public static final ResourceLocation ANIMATION = BlastFromThePast.location("animations/entity/speartooth.animation.json");
     public static final ResourceLocation BABY_ANIMATION = BlastFromThePast.location("animations/entity/baby_speartooth.animation.json");
     

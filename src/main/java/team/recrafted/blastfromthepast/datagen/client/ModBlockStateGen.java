@@ -20,7 +20,7 @@ import team.recrafted.blastfromthepast.init.ModBlocks;
 
 public class ModBlockStateGen extends BlockStateProvider {
     public ModBlockStateGen(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, BlastFromThePast.MODID, exFileHelper);
+        super(output, BlastFromThePast.MOD_ID, exFileHelper);
     }
 
     @Override
@@ -181,26 +181,28 @@ public class ModBlockStateGen extends BlockStateProvider {
     }
 
     private void createPsychoBerryBush(){
-        BlockModelBuilder grownBush = models().withExistingParent("grown_psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorn_berries");
+        BlockModelBuilder berriesBush = models().withExistingParent("grown_psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorn_berries");
+        BlockModelBuilder flowerBush = models().withExistingParent("flower_psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorn_flowers");
         BlockModelBuilder bush = models().withExistingParent("psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorns");
 
-        getVariantBuilder(ModBlocks.PSYCHO_BERRY_BUSH.get()).forAllStatesExcept(
+        getVariantBuilder(ModBlocks.PSYCHO_BERRY_BUSH.get())
+                .forAllStatesExcept(
                 state -> ConfiguredModel.builder()
-                        .modelFile(state.getValue(PsychoBerryBush.AGE) == 1 ? grownBush : bush)
+                        .modelFile(state.getValue(PsychoBerryBush.AGE) == 2 ? berriesBush : state.getValue(PsychoBerryBush.AGE) == 1 ? flowerBush : bush)
                         .build());
     }
 
     private void registerStoneGroup(BFTPStoneGroup stoneGroup){
-        createSnowyBlock(stoneGroup.BLOCK,
-                models().cubeAll(this.name(stoneGroup.BLOCK.get()),
-                        this.blockTexture(stoneGroup.BLOCK.get())),
-                models().cubeBottomTop("snowy_" + this.name(stoneGroup.BLOCK.get()),
-                        modLoc("block/" + "snowy_" + stoneGroup.BLOCK.getId().getPath()),
-                        this.blockTexture(stoneGroup.BLOCK.get()),
+        createSnowyBlock(stoneGroup.STONE,
+                models().cubeAll(this.name(stoneGroup.STONE.get()),
+                        this.blockTexture(stoneGroup.STONE.get())),
+                models().cubeBottomTop("snowy_" + this.name(stoneGroup.STONE.get()),
+                        modLoc("block/" + "snowy_" + stoneGroup.STONE.getId().getPath()),
+                        this.blockTexture(stoneGroup.STONE.get()),
                         this.blockTexture(Blocks.SNOW)));
-        stairsBlock(stoneGroup.STAIRS.get(), this.blockTexture(stoneGroup.BLOCK.get()));
-        slabBlock(stoneGroup.SLAB.get(), this.blockTexture(stoneGroup.BLOCK.get()), this.blockTexture(stoneGroup.BLOCK.get()));
-        wallBlock(stoneGroup.WALL.get(), this.blockTexture(stoneGroup.BLOCK.get()));
+        stairsBlock(stoneGroup.STAIRS.get(), this.blockTexture(stoneGroup.STONE.get()));
+        slabBlock(stoneGroup.SLAB.get(), this.blockTexture(stoneGroup.STONE.get()), this.blockTexture(stoneGroup.STONE.get()));
+        wallBlock(stoneGroup.WALL.get(), this.blockTexture(stoneGroup.STONE.get()));
         simpleBlock(stoneGroup.BRICKS.get());
         stairsBlock(stoneGroup.BRICKS_STAIRS.get(), this.blockTexture(stoneGroup.BRICKS.get()));
         slabBlock(stoneGroup.BRICKS_SLAB.get(), this.blockTexture(stoneGroup.BRICKS.get()), this.blockTexture(stoneGroup.BRICKS.get()));

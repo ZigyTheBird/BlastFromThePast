@@ -30,19 +30,19 @@ import java.util.Optional;
 
 public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> CEDAR_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "cedar_tree"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "cedar_tree"));
     public static ResourceKey<ConfiguredFeature<?, ?>> RUSTY_CEDAR_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "rusty_cedar_tree"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "rusty_cedar_tree"));
     public static ResourceKey<ConfiguredFeature<?, ?>> FROSTBITE_FOREST_FLOWERS = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_forest_flowers"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "frostbite_forest_flowers"));
     public static ResourceKey<ConfiguredFeature<?, ?>> TAR_PIT = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "tar_pit"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "tar_pit"));
     public static ResourceKey<ConfiguredFeature<?, ?>> PSYCHO_BERRY = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "psycho_berry"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "psycho_berry"));
     public static ResourceKey<ConfiguredFeature<?, ?>> PERMAFROST_BOULDERS = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "permafrost_boulders"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "permafrost_boulders"));
     public static ResourceKey<ConfiguredFeature<?, ?>> CHILLY_MOSS = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "chilly_moss"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "chilly_moss"));
 
     public static void register(BootstapContext<ConfiguredFeature<?, ?>> context){
         FeatureUtils.register(
@@ -120,13 +120,13 @@ public class ModConfiguredFeatures {
                 TAR_PIT,
                 ModFeatures.PIT.get(),
                 new PitFeature.Configuration(
-                        BlockStateProvider.simple(ModBlocks.TAR.get().defaultBlockState()), Optional.of(BlockStateProvider.simple(ModBlocks.TAR.get().defaultBlockState().setValue(TarBlock.COVER, true))), BlockStateProvider.simple(ModBlocks.PERMAFROST.BLOCK.get().defaultBlockState())
+                        BlockStateProvider.simple(ModBlocks.TAR.get().defaultBlockState()), Optional.of(BlockStateProvider.simple(ModBlocks.TAR.get().defaultBlockState().setValue(TarBlock.COVER, true))), BlockStateProvider.simple(ModBlocks.PERMAFROST.STONE.get().defaultBlockState())
                 )
         );
 
         FeatureUtils.register(context, PSYCHO_BERRY, Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PSYCHO_BERRY_BUSH.get().defaultBlockState().setValue(PsychoBerryBush.AGE, 1))), List.of(Blocks.GRASS_BLOCK)));
 
-        FeatureUtils.register(context, PERMAFROST_BOULDERS, ModFeatures.BOULDER.get(), new BlockPileConfiguration(BlockStateProvider.simple(ModBlocks.PERMAFROST.BLOCK.get())));
+        FeatureUtils.register(context, PERMAFROST_BOULDERS, ModFeatures.BOULDER.get(), new BlockPileConfiguration(BlockStateProvider.simple(ModBlocks.PERMAFROST.STONE.get())));
         FeatureUtils.register(context, CHILLY_MOSS, ModFeatures.CHILLY_MOSS.get(), new NoneFeatureConfiguration());
     }
 }

@@ -16,14 +16,32 @@ import team.recrafted.blastfromthepast.item.AntlerDisplayItem;
 import team.recrafted.blastfromthepast.item.BearTrapBlockItem;
 import team.recrafted.blastfromthepast.misc.AntlerDisplayType;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class ModBlocks {
     public static DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(Registries.BLOCK, BlastFromThePast.MODID);
+            DeferredRegister.create(Registries.BLOCK, BlastFromThePast.MOD_ID);
 
+    //Wood
     public static final BFTPWoodGroup CEDAR = new BFTPWoodGroup("cedar",  MapColor.COLOR_BROWN, new Item.Properties(), BLOCKS);
+    //Stone
     public static final BFTPStoneGroup PERMAFROST = new BFTPStoneGroup("permafrost",  MapColor.STONE, new Item.Properties());
+    //Blocks
+    public static final BFTPBlockGroup SNOW_BRICK = new BFTPBlockGroup("snow_brick", MapColor.SNOW, BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK), new Item.Properties());
+    public static final BFTPBlockGroup ICE_BRICK = new BFTPBlockGroup("ice_brick", MapColor.ICE, BlockBehaviour.Properties.copy(Blocks.ICE), new Item.Properties());
+
+    //For loot generation
+    public static List<BFTPStoneGroup> getStoneGroups(){
+        return List.of(PERMAFROST);
+    }
+    public static List<BFTPWoodGroup> getWoodGroups(){
+        return List.of(CEDAR);
+    }
+
+    public static List<BFTPBlockGroup> getBlockGroups(){
+        return List.of(ICE_BRICK, SNOW_BRICK);
+    }
 
     public static final RegistryObject<Block> PINECONE = createRegistry("pinecone",
             () -> new PineconeBlock(ModTreeGrowers.CEDAR, BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), new Item.Properties());
@@ -131,9 +149,6 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> FROSTOMPER_TOTEM_POLE = createRegistry("frostomper_totem_pole",
             () -> new BlockWithDirection(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion(), true), new Item.Properties());
-
-    public static final BFTPBlockGroup SNOW_BRICK = new BFTPBlockGroup("snow_brick", MapColor.SNOW, BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK), new Item.Properties());
-    public static final BFTPBlockGroup ICE_BRICK = new BFTPBlockGroup("ice_brick", MapColor.ICE, BlockBehaviour.Properties.copy(Blocks.ICE), new Item.Properties());
 
     public static <T extends Block> RegistryObject<T> createRegistry(String name, Supplier<T> block, Item.Properties properties) {
         RegistryObject<T> object = BLOCKS.register(name, block);

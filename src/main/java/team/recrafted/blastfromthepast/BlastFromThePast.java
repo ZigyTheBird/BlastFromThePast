@@ -43,14 +43,14 @@ import team.recrafted.blastfromthepast.network.handlers.ClientPayloadHandler;
 import team.recrafted.blastfromthepast.network.handlers.ServerPayloadHandler;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(BlastFromThePast.MODID)
+@Mod(BlastFromThePast.MOD_ID)
 public class BlastFromThePast {
-    public static final String MODID = "blastfromthepast";
+    public static final String MOD_ID = "blastfromthepast";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final boolean CURIOS_LOADED = ModList.get().isLoaded("curios");
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            ResourceLocation.fromNamespaceAndPath(MODID, "main"),
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "main"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
@@ -152,7 +152,7 @@ public class BlastFromThePast {
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
@@ -176,7 +176,7 @@ public class BlastFromThePast {
                 BlockEntityRenderers.register(ModBlockEntities.HANGING_SIGN.get(), HangingSignRenderer::new);
                 BlockEntityRenderers.register(ModBlockEntities.ANTLER_DISPLAY.get(), (context) -> new GeoBlockRenderer<>(new AntlerDisplayBlockModel()));
 
-                ItemProperties.register(ModItems.ICE_SPEAR.get(), ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "throwing"), (stack, level, living, j) ->
+                ItemProperties.register(ModItems.ICE_SPEAR.get(), ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "throwing"), (stack, level, living, j) ->
                         living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
             });
         }
@@ -191,6 +191,6 @@ public class BlastFromThePast {
     }
 
     public static ResourceLocation location(String name) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, name);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
 }

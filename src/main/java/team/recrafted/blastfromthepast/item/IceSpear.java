@@ -3,8 +3,6 @@ package team.recrafted.blastfromthepast.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
@@ -37,6 +34,7 @@ public class IceSpear extends Item {
         super(properties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot slot) {
         return slot.equals(EquipmentSlot.MAINHAND)? createAttributes(): super.getDefaultAttributeModifiers(slot);
@@ -57,7 +55,8 @@ public class IceSpear extends Item {
         return UseAnim.SPEAR;
     }
 
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+    @Override
+    public int getUseDuration(@NotNull ItemStack stack) {
         return 72000;
     }
 

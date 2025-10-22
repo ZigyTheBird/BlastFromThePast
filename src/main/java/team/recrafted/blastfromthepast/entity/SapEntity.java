@@ -6,8 +6,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DiodeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,16 +45,35 @@ public class SapEntity extends HangingEntity implements GeoEntity {
     @Override
     public boolean isPickable() {return false;}
 
-//    @Override
-//    protected @NotNull AABB calculateBoundingBox(BlockPos pos, Direction direction) {
-//        Vec3 vec3 = Vec3.atCenterOf(pos).relative(direction, -0.46875F);
-//        Direction.Axis direction$axis = direction.getAxis();
-//        double d0 = direction$axis == Direction.Axis.X ? (double)0.0625F : (double)0.75F;
-//        double d1 = direction$axis == Direction.Axis.Y ? (double)0.0625F : (double)0.75F;
-//        double d2 = direction$axis == Direction.Axis.Z ? (double)0.0625F : (double)0.75F;
-//        return AABB.ofSize(vec3, d0, d1, d2);
-//    }
 
+    @Override
+    protected void recalculateBoundingBox() {
+        if (this.direction != null) {
+            double d1 = (double)this.pos.getX() + 0.5D - (double)this.direction.getStepX() * 0.46875D;
+            double d2 = (double)this.pos.getY() + 0.5D - (double)this.direction.getStepY() * 0.46875D;
+            double d3 = (double)this.pos.getZ() + 0.5D - (double)this.direction.getStepZ() * 0.46875D;
+            this.setPosRaw(d1, d2, d3);
+            double d4 = this.getWidth();
+            double d5 = this.getHeight();
+            double d6 = this.getWidth();
+            Direction.Axis direction$axis = this.direction.getAxis();
+            switch (direction$axis) {
+                case X:
+                    d4 = 1.0D;
+                    break;
+                case Y:
+                    d5 = 1.0D;
+                    break;
+                case Z:
+                    d6 = 1.0D;
+            }
+
+            d4 /= 32.0D;
+            d5 /= 32.0D;
+            d6 /= 32.0D;
+            this.setBoundingBox(new AABB(d1 - d4, d2 - d5, d3 - d6, d1 + d4, d2 + d5, d3 + d6));
+        }
+    }
 
     @Override
     public int getWidth() {
@@ -70,17 +86,17 @@ public class SapEntity extends HangingEntity implements GeoEntity {
     }
 
     @Override
-    protected float getEyeHeight(Pose p_19976_, EntityDimensions p_19977_) {
+    protected float getEyeHeight(@NotNull Pose p_19976_, @NotNull EntityDimensions p_19977_) {
         return 0f;
     }
 
     @Override
-    public float getEyeHeight(Pose p_20237_) {
+    public float getEyeHeight(@NotNull Pose p_20237_) {
         return 0;
     }
 
     @Override
-    protected void setDirection(Direction facingDirection) {
+    protected void setDirection(@NotNull Direction facingDirection) {
         Validate.notNull(facingDirection);
         this.direction = facingDirection;
         if (facingDirection.getAxis().isHorizontal()) {
@@ -94,30 +110,31 @@ public class SapEntity extends HangingEntity implements GeoEntity {
         this.recalculateBoundingBox();
     }
 
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("Facing", (byte)this.direction.get3DDataValue());
         compound.putBoolean("Invisible", this.isInvisible());
     }
 
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
 
         this.setDirection(Direction.from3DDataValue(compound.getByte("Facing")));
         this.setInvisible(compound.getBoolean("Invisible"));
     }
 
-    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
+    public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
         this.setDirection(Direction.from3DDataValue(packet.getData()));
     }
 
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this, this.direction.get3DDataValue(), this.getPos());
     }
 
     @Override
-    public void remove(RemovalReason reason) {
+    public void remove(@NotNull RemovalReason reason) {
         super.remove(reason);
         BlockState state = this.level().getBlockState(this.getPos());
         if (state.hasProperty(Constants.SAPPED) && this.level().getEntitiesOfClass(SapEntity.class, new AABB(this.getPos())).isEmpty())
@@ -127,7 +144,7 @@ public class SapEntity extends HangingEntity implements GeoEntity {
     @Override
     public boolean survives() {
         BlockState blockstate = this.level().getBlockState(this.pos.relative(this.direction.getOpposite()));
-        return !blockstate.isSolid() && (!this.direction.getAxis().isHorizontal() || !DiodeBlock.isDiode(blockstate)) ? false : this.level().getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();
+        return (blockstate.isSolid() || (this.direction.getAxis().isHorizontal() && DiodeBlock.isDiode(blockstate))) && this.level().getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();
     }
 
     @Override
@@ -135,9 +152,6 @@ public class SapEntity extends HangingEntity implements GeoEntity {
 
     @Override
     public void dropItem(@Nullable Entity entity) {}
-
-    @Override
-    protected void defineSynchedData() {}
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}

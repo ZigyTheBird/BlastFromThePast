@@ -7,6 +7,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.init.ModBlocks;
@@ -18,11 +19,11 @@ import java.util.concurrent.CompletableFuture;
 public class ModItemTagsGen extends ItemTagsProvider {
 
     public ModItemTagsGen(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagLookup<Block>> pBlockTags, @Nullable ExistingFileHelper existingFileHelper) {
-        super(pOutput, pLookupProvider, pBlockTags, BlastFromThePast.MODID, existingFileHelper);
+        super(pOutput, pLookupProvider, pBlockTags, BlastFromThePast.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(ItemTags.DECORATED_POT_SHERDS)
                 .add(ModItems.BEAST_POTTERY_SHERD.get())
                 .add(ModItems.FROST_POTTERY_SHERD.get())

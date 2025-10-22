@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class ModItems {
     public static final Boat.Type CEDAR_TYPE = Boat.Type.byName("cedar");
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, BlastFromThePast.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<Item>  BLIZZARD_REVELRY_DISC = register("blizzard_revelry_disc",
             () -> new RecordItem(15, ModSounds.BLIZZARD_REVELRY,new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 187));

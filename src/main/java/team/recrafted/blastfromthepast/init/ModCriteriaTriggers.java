@@ -33,7 +33,7 @@ public class ModCriteriaTriggers {
 
         @Override
         public @NotNull ResourceLocation getId() {
-            return ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "dance_trigger");
+            return ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "dance_trigger");
         }
 
         public static class TriggerInstance extends AbstractCriterionTriggerInstance {

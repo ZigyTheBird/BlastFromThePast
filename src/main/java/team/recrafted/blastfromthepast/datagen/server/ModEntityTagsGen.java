@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModEntityTagsGen extends EntityTypeTagsProvider {
     public ModEntityTagsGen(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, provider, BlastFromThePast.MODID, existingFileHelper);
+        super(output, provider, BlastFromThePast.MOD_ID, existingFileHelper);
     }
 
     @Override

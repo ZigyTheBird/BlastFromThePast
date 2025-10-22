@@ -12,7 +12,7 @@ import team.recrafted.blastfromthepast.worldgen.feature.ChillyMossFeature;
 import team.recrafted.blastfromthepast.worldgen.feature.PitFeature;
 
 public class ModFeatures {
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, BlastFromThePast.MODID);
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<Feature<PitFeature.Configuration>> PIT = FEATURES.register("pit",
             () -> new PitFeature(PitFeature.Configuration.CODEC));

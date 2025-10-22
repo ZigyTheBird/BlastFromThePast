@@ -10,7 +10,7 @@ import team.recrafted.blastfromthepast.access.PlayerBFTPDataAccess;
 import team.recrafted.blastfromthepast.block.TarBlock;
 import team.recrafted.blastfromthepast.client.vfx.ScreenShake;
 
-@Mod.EventBusSubscriber(modid = BlastFromThePast.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = BlastFromThePast.MOD_ID, value = Dist.CLIENT)
 public class ClientEventsHandler {
     @SubscribeEvent
     public static void modifyFogColor(ViewportEvent.ComputeFogColor event) {

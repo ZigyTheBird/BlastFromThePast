@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.block.BFTPBlockGroup;
 import team.recrafted.blastfromthepast.block.BFTPStoneGroup;
 import team.recrafted.blastfromthepast.block.BFTPWoodGroup;
@@ -22,7 +23,7 @@ public class ModRecipesGen extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> recipeOutput) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> recipeOutput) {
         createIceCream(recipeOutput, ModItems.SAP_ICE_CREAM.get(), ModItems.SAP_BALL.get());
         createIceCream(recipeOutput, ModItems.PSYCHO_BERRY_ICE_CREAM.get(), ModItems.PSYCHO_BERRY.get());
         createIceCream(recipeOutput, ModItems.MELON_ICE_CREAM.get(), Items.MELON_SLICE);
@@ -35,6 +36,15 @@ public class ModRecipesGen extends RecipeProvider {
         chestBoat(recipeOutput, ModItems.CEDAR_CHEST_BOAT.get(), ModItems.CEDAR_BOAT.get());
         blockGroup(recipeOutput, ModBlocks.SNOW_BRICK);
         blockGroup(recipeOutput, ModBlocks.ICE_BRICK);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GLACIAL_GUIDEBOOK.get())
+                .define('B', Items.BOOK)
+                .define('I', Items.BLUE_ICE)
+                .pattern(" I ")
+                .pattern("IBI")
+                .pattern(" I ")
+                .unlockedBy("blue_ice", has(Items.BLUE_ICE))
+                .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.BEAR_TRAP.get())
                 .define('#', Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
@@ -108,20 +118,20 @@ public class ModRecipesGen extends RecipeProvider {
     }
 
     private void stoneGroup(Consumer<FinishedRecipe> pRecipeOutput, BFTPStoneGroup group) {
-        smeltingResultFromBase(pRecipeOutput, group.COBBLESTONE.get().asItem(), group.BLOCK.get().asItem());
-        stairBuilder(group.STAIRS.get(), Ingredient.of(group.BLOCK.get())).unlockedBy(getHasName(group.BLOCK.get()), has(group.BLOCK.get())).save(pRecipeOutput);
-        slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.SLAB.get(), group.BLOCK.get());
-        wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.WALL.get(), group.BLOCK.get());
-        stairBuilder(group.POLISHED_STAIRS.get(), Ingredient.of(group.POLISHED.get())).unlockedBy(getHasName(group.BLOCK.get()), has(group.BLOCK.get())).save(pRecipeOutput);
+        smeltingResultFromBase(pRecipeOutput, group.COBBLESTONE.get().asItem(), group.STONE.get().asItem());
+        stairBuilder(group.STAIRS.get(), Ingredient.of(group.STONE.get())).unlockedBy(getHasName(group.STONE.get()), has(group.STONE.get())).save(pRecipeOutput);
+        slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.SLAB.get(), group.STONE.get());
+        wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.WALL.get(), group.STONE.get());
+        stairBuilder(group.POLISHED_STAIRS.get(), Ingredient.of(group.POLISHED.get())).unlockedBy(getHasName(group.STONE.get()), has(group.STONE.get())).save(pRecipeOutput);
         slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.POLISHED_SLAB.get(), group.POLISHED.get());
         wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.POLISHED_WALL.get(), group.POLISHED.get());
-        stairBuilder(group.COBBLESTONE_STAIRS.get(), Ingredient.of(group.COBBLESTONE.get())).unlockedBy(getHasName(group.BLOCK.get()), has(group.BLOCK.get())).save(pRecipeOutput);
+        stairBuilder(group.COBBLESTONE_STAIRS.get(), Ingredient.of(group.COBBLESTONE.get())).unlockedBy(getHasName(group.STONE.get()), has(group.STONE.get())).save(pRecipeOutput);
         slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.COBBLESTONE_SLAB.get(), group.COBBLESTONE.get());
         wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.COBBLESTONE_WALL.get(), group.COBBLESTONE.get());
-        stairBuilder(group.BRICKS_STAIRS.get(), Ingredient.of(group.BRICKS.get())).unlockedBy(getHasName(group.BLOCK.get()), has(group.BLOCK.get())).save(pRecipeOutput);
+        stairBuilder(group.BRICKS_STAIRS.get(), Ingredient.of(group.BRICKS.get())).unlockedBy(getHasName(group.STONE.get()), has(group.STONE.get())).save(pRecipeOutput);
         slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.BRICKS_SLAB.get(), group.BRICKS.get());
         wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.BRICKS_WALL.get(), group.BRICKS.get());
-        chiseled(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.CHISELED_BRICKS.get(), group.BLOCK.get());
+        chiseled(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, group.CHISELED_BRICKS.get(), group.STONE.get());
     }
 
     private void woodGroup(Consumer<FinishedRecipe> pRecipeOutput, BFTPWoodGroup group) {

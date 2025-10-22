@@ -12,12 +12,12 @@ import team.recrafted.blastfromthepast.BlastFromThePast;
 public class ModSounds {
 
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(Registries.SOUND_EVENT, BlastFromThePast.MODID);
+            DeferredRegister.create(Registries.SOUND_EVENT, BlastFromThePast.MOD_ID);
 
     public static final RegistryObject<SoundEvent> AURORA_FROLICS = registerSoundEvent(BlastFromThePast.location("aurora_frolics"));
 
     // MUSIC DISC
-    public static final RegistryObject<SoundEvent> BLIZZARD_REVELRY = registerSoundEvent(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "blizzard_revelry"));
+    public static final RegistryObject<SoundEvent> BLIZZARD_REVELRY = registerSoundEvent(ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "blizzard_revelry"));
 
     // GLACEROS
     public static final RegistryObject<SoundEvent> GLACEROS_DEATH = registerSoundEventForEntityType(ModEntities.GLACEROS, "_death");

@@ -10,6 +10,6 @@ public class ModDamageTypes {
     public static final ResourceKey<DamageType> BEAR_TRAP = register("bear_trap");
 
     private static ResourceKey<DamageType> register(String name) {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, name));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, name));
     }
 }

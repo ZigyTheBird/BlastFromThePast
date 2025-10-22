@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "blastfromthepast:tar"
+          "name": "blastfromthepast:snowdo_totem_pole"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "blastfromthepast:blocks/tar"
+  "random_sequence": "blastfromthepast:blocks/snowdo_totem_pole"
 }

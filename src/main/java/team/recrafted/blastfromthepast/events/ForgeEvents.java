@@ -29,7 +29,6 @@ import team.recrafted.blastfromthepast.block.BearTrapBlockEntity;
 import team.recrafted.blastfromthepast.entity.GlacerosEntity;
 import team.recrafted.blastfromthepast.entity.HollowEntity;
 import team.recrafted.blastfromthepast.entity.TarArrow;
-import team.recrafted.blastfromthepast.init.ModBiomes;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModMobEffects;
 import team.recrafted.blastfromthepast.init.ModSounds;
@@ -39,7 +38,7 @@ import team.recrafted.blastfromthepast.util.EntityHelper;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-@Mod.EventBusSubscriber(modid = BlastFromThePast.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = BlastFromThePast.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEvents {
     public static Predicate<BlockState> PERMAFROST_PREDICATE = state -> {
         Block block = state.getBlock();
@@ -52,7 +51,7 @@ public class ForgeEvents {
 
     public static Function<BlockState, BlockState> PERMAFROST_FUNCTION = state -> {
         Block block = state.getBlock();
-        if (block == Blocks.STONE) return ModBlocks.PERMAFROST.BLOCK.get().defaultBlockState();
+        if (block == Blocks.STONE) return ModBlocks.PERMAFROST.STONE.get().defaultBlockState();
         ResourceLocation location = BuiltInRegistries.BLOCK.getKey(block);
         if (block == Blocks.GRANITE) return Blocks.ICE.defaultBlockState();
         if (block == Blocks.DIORITE) return Blocks.PACKED_ICE.defaultBlockState();

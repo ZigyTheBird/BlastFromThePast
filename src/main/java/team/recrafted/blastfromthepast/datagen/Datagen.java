@@ -19,7 +19,7 @@ import team.recrafted.blastfromthepast.datagen.server.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(modid = BlastFromThePast.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = BlastFromThePast.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Datagen {
 
     @SubscribeEvent

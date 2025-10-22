@@ -13,20 +13,18 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
                         }
-                      ]
-                    }
+                      }
+                    ]
                   }
                 }
               ],
-              "name": "blastfromthepast:permafrost"
+              "name": "blastfromthepast:permafrost_psycho_bear_painting"
             },
             {
               "type": "minecraft:item",
@@ -43,5 +41,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "blastfromthepast:blocks/permafrost"
+  "random_sequence": "blastfromthepast:blocks/permafrost_psycho_bear_painting"
 }

@@ -12,7 +12,7 @@ import team.recrafted.blastfromthepast.entity.misc.TransitioningState;
 import team.recrafted.blastfromthepast.entity.speartooth.SpeartoothEntity;
 
 public class ModDataSerializers {
-    public static final DeferredRegister<EntityDataSerializer<?>> DATA_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, BlastFromThePast.MODID);
+    public static final DeferredRegister<EntityDataSerializer<?>> DATA_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, BlastFromThePast.MOD_ID);
     public static final RegistryObject<EntityDataSerializer<TransitioningState>> TRANSITIONING_STATE = register("transitioning_state", TransitioningState.class);
     public static final RegistryObject<EntityDataSerializer<FrostomperEntity.IdleState>> FROSTOMPER_IDLE_STATE = register("frostomper_idle_state", FrostomperEntity.IdleState.class);
     public static final RegistryObject<EntityDataSerializer<SpeartoothEntity.State>> SPEARTOOTH_STATE = register("speartooth_state", SpeartoothEntity.State.class);

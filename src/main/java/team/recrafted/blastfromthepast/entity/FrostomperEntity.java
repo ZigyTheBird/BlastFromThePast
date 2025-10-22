@@ -44,6 +44,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -138,11 +139,12 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.75)
                 .add(Attributes.ATTACK_DAMAGE, 12.0)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.5)
-                .add(Attributes.FOLLOW_RANGE, 32.0);
+                .add(Attributes.FOLLOW_RANGE, 32.0)
+                .add(Attributes.JUMP_STRENGTH, 0.42f);
     }
 
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
+    public @NotNull EntityDimensions getDimensions(Pose pose) {
         return this.isBaby() ? BABY_FROSTOMPER_DIMENSIONS : super.getDimensions(pose);
     }
 
@@ -239,7 +241,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     }
 
     @Override
-    protected PathNavigation createNavigation(Level level) {
+    protected @NotNull PathNavigation createNavigation(Level level) {
         return new AzureNavigation(this, level);
     }
 
@@ -341,7 +343,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     }
 
     @Override
-    public SoundEvent getSaddleSoundEvent() {
+    public @NotNull SoundEvent getSaddleSoundEvent() {
         return SoundEvents.HORSE_SADDLE;
     }
 
@@ -474,7 +476,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     }
 
     @Override
-    protected BodyRotationControl createBodyControl() {
+    protected @NotNull BodyRotationControl createBodyControl() {
         return new OverridableBodyRotationControl<>(this);
     }
 
@@ -500,6 +502,25 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     public FrostomperAttackType getActiveAttackType(){
         OptionalInt ordinal = this.entityData.get(DATA_ACTIVE_ATTACK_TYPE);
         return ordinal.isEmpty() ? null : FrostomperAttackType.byOrdinal(ordinal.getAsInt());
+    }
+
+    @Override
+    protected void positionRider(@NotNull Entity passenger, @NotNull MoveFunction callback) {
+        if (this.hasPassenger(passenger)) {
+
+            // Vertical position
+            double y = this.getY()+this.getBoundingBox().getYsize()-0.6;
+
+            // Offset forward and right relative to the body rotation
+            float bodyYawRad = this.yBodyRot * Mth.DEG_TO_RAD;
+            double forwardOffset = 0; // Forward (Z direction)
+            double sideOffset = -0.0;    // Right (X direction)
+
+            double x = this.getX() + (Mth.sin(bodyYawRad) * forwardOffset) + (Mth.cos(bodyYawRad) * sideOffset);
+            double z = this.getZ() - (Mth.cos(bodyYawRad) * forwardOffset) + (Mth.sin(bodyYawRad) * sideOffset);
+
+            callback.accept(passenger, x, y, z);
+        }
     }
 
     @Override
@@ -588,7 +609,9 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
                         nearbyBlockState = this.level().getBlockState(nearbyBlockPos);
                     } while(!(nearbyBlockState.is(ModTags.Blocks.FROSTOMPER_CAN_BREAK)));
 
-                    destroyedBlock = this.level().destroyBlock(nearbyBlockPos, true, this) || destroyedBlock;
+                    if (nearbyBlockState.canEntityDestroy(this.level(), nearbyBlockPos, this) && net.minecraftforge.event.ForgeEventFactory.onEntityDestroyBlock(this, nearbyBlockPos, nearbyBlockState)) {
+                        destroyedBlock = this.level().destroyBlock(nearbyBlockPos, true, this) || destroyedBlock;
+                    }
                 }
             }
         }
@@ -726,13 +749,13 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
 
 
     @Override
-    protected Vec2 getRiddenRotation(LivingEntity entity) {
+    protected @NotNull Vec2 getRiddenRotation(LivingEntity entity) {
         boolean rotationBlocked = !this.canRotate();
         return rotationBlocked ? new Vec2(this.getXRot(), this.getYRot()) : super.getRiddenRotation(entity);
     }
 
     @Override
-    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) {
+    protected @NotNull Vec3 getRiddenInput(Player player, Vec3 travelVector) {
         boolean movementBlocked = !this.canMove();
         return movementBlocked ? Vec3.ZERO : super.getRiddenInput(player, travelVector);
     }

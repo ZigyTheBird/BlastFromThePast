@@ -18,30 +18,30 @@ import team.recrafted.blastfromthepast.BlastFromThePast;
 
 public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> CEDAR_TREE = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "cedar_placed"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "cedar_placed"));
     public static final ResourceKey<PlacedFeature> RUSTY_CEDAR_TREE = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "rusty_cedar_placed"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "rusty_cedar_placed"));
 
     public static ResourceKey<PlacedFeature> FROSTBITE_FOREST_FLOWERS = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_forest_flowers"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "frostbite_forest_flowers"));
 
     public static ResourceKey<PlacedFeature> TAR_PIT = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "tar_pit"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "tar_pit"));
 
     public static ResourceKey<PlacedFeature> PSYCHO_BERRY = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "psycho_berry"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "psycho_berry"));
 
     public static ResourceKey<PlacedFeature> CHILLY_MOSS = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "chilly_moss"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "chilly_moss"));
 
     public static ResourceKey<PlacedFeature> PERMAFROST_BOULDERS = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "permafrost_boulders"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "permafrost_boulders"));
 
     public static ResourceKey<PlacedFeature> FROSTBITE_FOSSILS_UPPER = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_fossils_upper"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "frostbite_fossils_upper"));
 
     public static ResourceKey<PlacedFeature> FROSTBITE_FOSSILS_LOWER = ResourceKey.create(Registries.PLACED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "frostbite_fossils_lower"));
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "frostbite_fossils_lower"));
 
     public static void register(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);

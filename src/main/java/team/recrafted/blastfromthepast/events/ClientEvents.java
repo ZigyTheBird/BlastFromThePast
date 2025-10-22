@@ -16,7 +16,7 @@ import team.recrafted.blastfromthepast.client.layers.FrostbiteAntlersLayer;
 
 import java.util.function.Function;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BlastFromThePast.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BlastFromThePast.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event)

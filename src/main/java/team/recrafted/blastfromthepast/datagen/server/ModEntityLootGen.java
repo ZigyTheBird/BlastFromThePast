@@ -124,7 +124,7 @@ public class ModEntityLootGen extends EntityLootSubProvider {
     }
 
     public static ResourceLocation registerLootKey(String name){
-        return ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, name);
+        return ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, name);
     }
 
     protected static LootTable.Builder createGlacerosTable(ItemLike woolItem) {

@@ -33,12 +33,13 @@ public class BFTPWoodGroup {
     public final RegistryObject<PressurePlateBlock> PRESSURE_PLATE;
     public final RegistryObject<TrapDoorBlock> TRAPDOOR;
     public final RegistryObject<StandingSignBlock> SIGN;
-    public final RegistryObject<Item> SIGN_ITEM;
     public final RegistryObject<WallSignBlock> WALL_SIGN;
     public final RegistryObject<CeilingHangingSignBlock> HANGING_SIGN;
     public final RegistryObject<WallHangingSignBlock> HANGING_SIGN_WALL;
-    public final RegistryObject<Item> HANGING_SIGN_ITEM;
     public final RegistryObject<Block> LEAVES;
+
+    public final RegistryObject<Item> SIGN_ITEM;
+    public final RegistryObject<Item> HANGING_SIGN_ITEM;
 
     public final WoodType woodType;
     public final BlockSetType woodSetType;
@@ -57,10 +58,12 @@ public class BFTPWoodGroup {
                 SoundEvents.WOODEN_BUTTON_CLICK_OFF,
                 SoundEvents.WOODEN_BUTTON_CLICK_ON
         ));
-        woodType = WoodType.register(new WoodType(BlastFromThePast.MODID + ":" + name, woodSetType));
+
+        woodType = WoodType.register(new WoodType(BlastFromThePast.MOD_ID + ":" + name, woodSetType));
+        //Block Registry
         BLOCK = blockRegister.register(name, () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).mapColor(color)));
         SLAB = blockRegister.register(name + "_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB).mapColor(color)));
-        STAIRS = blockRegister.register(name + "_stairs", () -> new StairBlock(BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).mapColor(color)));
+        STAIRS = blockRegister.register(name + "_stairs", () -> new StairBlock(()-> BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS).mapColor(color)));
         FENCE = blockRegister.register(name + "_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE).mapColor(color)));
         FENCE_GATE = blockRegister.register(name + "_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).mapColor(color), woodType));
         STRIPPED_LOG = blockRegister.register("stripped_" + name + "_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).mapColor(color)));
@@ -75,6 +78,7 @@ public class BFTPWoodGroup {
         WALL_SIGN = blockRegister.register(name + "_wall_sign", () -> new BFTPWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN).mapColor(color), woodType));
         HANGING_SIGN = blockRegister.register(name + "_hanging_sign", () -> new BFTPCeilingHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN).mapColor(color), woodType));
         HANGING_SIGN_WALL = blockRegister.register(name + "_hanging_wall_sign", () -> new BFTPWallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_HANGING_SIGN).mapColor(color), woodType));
+
         if (name.equals("cedar")) LEAVES = blockRegister.register("cedar_leaves", () -> new CedarLeavesBlock(
                 BlockBehaviour.Properties.of()
                         .mapColor(MapColor.PLANT)
@@ -91,6 +95,7 @@ public class BFTPWoodGroup {
         ));
         else LEAVES = blockRegister.register(name + "_leaves", BFTPWoodGroup::leaves);
 
+        //Items registry
         ModItems.register(name, () -> new BlockItem(BLOCK.get(), empty));
         ModItems.register(name + "_slab", () -> new BlockItem(SLAB.get(), empty));
         ModItems.register(name + "_stairs", () -> new BlockItem(STAIRS.get(), empty));
