@@ -7,9 +7,15 @@
       "model": "blastfromthepast:block/psycho_berry_bush"
     },
     "age=1,waterlogged=false": {
-      "model": "blastfromthepast:block/grown_psycho_berry_bush"
+      "model": "blastfromthepast:block/flower_psycho_berry_bush"
     },
     "age=1,waterlogged=true": {
+      "model": "blastfromthepast:block/flower_psycho_berry_bush"
+    },
+    "age=2,waterlogged=false": {
+      "model": "blastfromthepast:block/grown_psycho_berry_bush"
+    },
+    "age=2,waterlogged=true": {
       "model": "blastfromthepast:block/grown_psycho_berry_bush"
     }
   }

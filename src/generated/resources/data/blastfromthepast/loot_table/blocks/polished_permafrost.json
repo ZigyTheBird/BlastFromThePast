@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:polished_permafrost"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "blastfromthepast:blocks/polished_permafrost"
+}

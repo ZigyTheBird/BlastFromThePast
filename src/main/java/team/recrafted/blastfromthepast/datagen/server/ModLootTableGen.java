@@ -15,7 +15,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModLootTableGen extends LootTableProvider {
     public ModLootTableGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(ModEntityLootGen::new, LootContextParamSets.ENTITY)), registries);
+        super(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(ModEntityLootGen::new, LootContextParamSets.ENTITY),
+                new LootTableProvider.SubProviderEntry(ModBlockLootGen::new, LootContextParamSets.BLOCK)), registries);
     }
 
     protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {

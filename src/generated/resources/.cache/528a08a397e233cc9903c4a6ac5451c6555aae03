@@ -1,8 +1,9 @@
-// 1.21.1	2025-09-28T20:36:27.0058747	Tags for minecraft:item mod id blastfromthepast
+// 1.21.1	2025-10-22T15:44:09.6359309	Tags for minecraft:item mod id blastfromthepast
 9b03da703b68c3d79864427fc75aaf80b4a99d2b data/blastfromthepast/tags/item/baby_frostomper_food.json
 3f9ee7e575a4e21dadef974b0fa582d4bfc6c762 data/blastfromthepast/tags/item/baby_frostomper_tempt_items.json
 4c5cb1513054c5726a2e630bfc1ec70be84d45ab data/blastfromthepast/tags/item/baby_psycho_bear_food.json
 a62ba860f75c9cb002ecb0d2777e16e00f122cda data/blastfromthepast/tags/item/baby_psycho_bear_tempt_items.json
+eeb6b86907d56753c3645ad41d5c44d776e725ba data/blastfromthepast/tags/item/burrel_food.json
 4a5b14d10b21ca3ad9d131bebd82f97404d1dcf8 data/blastfromthepast/tags/item/frostomper_food.json
 67c50e3c228c549b522561d3dc1f9d773ea680a9 data/blastfromthepast/tags/item/frostomper_tempt_items.json
 48ba74183d6223c5c27634d321ebc32dba2c9077 data/blastfromthepast/tags/item/glaceros_antlers.json

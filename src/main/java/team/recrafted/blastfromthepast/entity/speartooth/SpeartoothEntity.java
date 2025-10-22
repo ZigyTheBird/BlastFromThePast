@@ -48,6 +48,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.GlacerosEntity;
 import team.recrafted.blastfromthepast.entity.Roaring;
+import team.recrafted.blastfromthepast.entity.ai.goal.CustomPanicGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.pack.PackHurtByTargetGoal;
 import team.recrafted.blastfromthepast.entity.ai.goal.roar.RoarAtTargetGoal;
 import team.recrafted.blastfromthepast.entity.misc.ComplexAnimal;
@@ -82,7 +83,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
     public static final RawAnimation STRETCH = RawAnimation.begin().then("animation.speartooth.stretch", Animation.LoopType.DEFAULT);
     public static final RawAnimation SIT = RawAnimation.begin().then("animation.speartooth.sit", Animation.LoopType.DEFAULT);
     public static final RawAnimation STALK = RawAnimation.begin().then("animation.speartooth.stalk", Animation.LoopType.DEFAULT);
-    public static final RawAnimation BITE = RawAnimation.begin().then("animation.speartooth.bite", Animation.LoopType.DEFAULT);
+    public static final RawAnimation BITE = RawAnimation.begin().then("animation.speartooth.attack", Animation.LoopType.DEFAULT);
     public static final RawAnimation ROAR = RawAnimation.begin().then("animation.speartooth.roar", Animation.LoopType.DEFAULT);
     public static final RawAnimation LUNGE = RawAnimation.begin().then("animation.speartooth.lunge", Animation.LoopType.DEFAULT);
     public static final RawAnimation WALK = RawAnimation.begin().then("animation.speartooth.walk", Animation.LoopType.DEFAULT);
@@ -136,7 +137,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
         this.goalSelector.addGoal(i++, new SpeartoothStalkTargetGoal(this, pounceGoal, 30f, 4f));
         this.goalSelector.addGoal(i++, new SpeartoothBiteAttackGoal(this, 2.0f, false));
 //        this.goalSelector.addGoal(i++, new AnimatedMeleeAttackGoal<>(this, 1.2f, false));
-        this.goalSelector.addGoal(i++, new PanicGoal(this, 2.0F, EntityHelper::getPanicInducingDamageTypes));
+        this.goalSelector.addGoal(i++, new CustomPanicGoal<>(this, p->true, 2.0F, EntityHelper::getPanicInducingDamageTypes));
 
         this.goalSelector.addGoal(i++, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(i++, new FollowOwnerGoal(this, 1.25f, 10.0F, 2.0F));
@@ -175,7 +176,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
 
     @Override
     public void setTarget(@Nullable LivingEntity target) {
-        if (target != null) {
+        if (target != null && !this.isTame()) {
             if (huntCooldown > 0) return;
             huntCooldown = 6000;
         }
@@ -185,6 +186,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
     }
 
     public void setTame(boolean tame, boolean applyTamingSideEffects) {
+        super.setTame(tame, applyTamingSideEffects);
         if (tame) {
             this.targetSelector.removeGoal(huntGlacerosGoal);
             this.targetSelector.removeGoal(huntPlayerGoal);

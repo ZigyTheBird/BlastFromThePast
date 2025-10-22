@@ -181,13 +181,15 @@ public class ModBlockStateGen extends BlockStateProvider {
     }
 
     private void createPsychoBerryBush(){
-        BlockModelBuilder grownBush = models().withExistingParent("grown_psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorn_berries");
+        BlockModelBuilder berriesBush = models().withExistingParent("grown_psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorn_berries");
+        BlockModelBuilder flowerBush = models().withExistingParent("flower_psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorn_flowers");
         BlockModelBuilder bush = models().withExistingParent("psycho_berry_bush", modLoc("block/thorns")).texture("2", "block/thorns");
 
-        getVariantBuilder(ModBlocks.PSYCHO_BERRY_BUSH.get()).forAllStatesExcept(
-                state -> ConfiguredModel.builder()
-                        .modelFile(state.getValue(PsychoBerryBush.AGE) == 1 ? grownBush : bush)
-                        .build());
+        getVariantBuilder(ModBlocks.PSYCHO_BERRY_BUSH.get())
+                .forAllStatesExcept(
+                        state -> ConfiguredModel.builder()
+                                .modelFile(state.getValue(PsychoBerryBush.AGE) == 2 ? berriesBush : state.getValue(PsychoBerryBush.AGE) == 1 ? flowerBush : bush)
+                                .build());
     }
 
     private void registerStoneGroup(BFTPStoneGroup stoneGroup){

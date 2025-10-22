@@ -8,7 +8,8 @@ import net.minecraft.world.level.block.Block;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 
 public class ModTags {
-    public static class Items{
+    public static class Items {
+        public static final TagKey<Item> BURREL_FOOD = TagKey.create(Registries.ITEM, BlastFromThePast.location("burrel_food"));
         public static final TagKey<Item> FROSTOMPER_FOOD = TagKey.create(Registries.ITEM, ModEntities.FROSTOMPER.getId().withSuffix("_food"));
         public static final TagKey<Item> FROSTOMPER_TEMPT_ITEMS = TagKey.create(Registries.ITEM, ModEntities.FROSTOMPER.getId().withSuffix("_tempt_items"));
         public static final TagKey<Item> BABY_FROSTOMPER_FOOD = TagKey.create(Registries.ITEM, ModEntities.FROSTOMPER.getId().withPrefix("baby_").withSuffix("_food"));

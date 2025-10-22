@@ -28,7 +28,16 @@ public class ModRecipesGen extends RecipeProvider {
         createIceCream(recipeOutput, ModItems.PSYCHO_BERRY_ICE_CREAM, ModItems.PSYCHO_BERRY);
         createIceCream(recipeOutput, ModItems.MELON_ICE_CREAM, Items.MELON_SLICE);
         smeltingResultFromBase(recipeOutput, ModItems.COOKED_VENISON, ModItems.RAW_VENISON);
-        smeltingResultFromBase(recipeOutput, ModBlocks.BEAST_CHOPS.asItem(), ModBlocks.BEAST_CHOPS_COOKED.asItem());
+        smeltingResultFromBase(recipeOutput, ModBlocks.BEAST_CHOPS_COOKED.asItem(), ModBlocks.BEAST_CHOPS.asItem());
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GLACIAL_GUIDEBOOK.get())
+                .define('B', Items.BOOK)
+                .define('I', Items.BLUE_ICE)
+                .pattern(" I ")
+                .pattern("IBI")
+                .pattern(" I ")
+                .unlockedBy("blue_ice", has(Items.BLUE_ICE))
+                .save(recipeOutput);
 
         stoneGroup(recipeOutput, ModBlocks.PERMAFROST);
         woodGroup(recipeOutput, ModBlocks.CEDAR);

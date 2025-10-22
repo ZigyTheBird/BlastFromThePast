@@ -163,7 +163,7 @@ public class ModLangGen extends LanguageProvider {
         add("effect.blastfromthepast.psychod", "Psycho'd");
 
         for (AdvancementHolder holder : ModAdvancementGen.holders) {
-            add("advancements.blastfromthepast." + holder.id().getPath() + ".title", StringUtils.capitaliseAllWords(holder.id().getPath().replaceAll("_", " ")));
+            add("advancements.blastfromthepast." + holder.id().getPath() + ".title", StringUtils.capitaliseAllWords(holder.id().getPath().replaceAll("_", " ").replace("thats", "that's")));
         }
     }
 

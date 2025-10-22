@@ -64,21 +64,20 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerBFTPData
             if (ClientUtils.isPlayerHoldingSpace(player) && player.horizontalCollision
                     && player.getMainHandItem().getItem() == ModItems.BEAR_GLOVES.get() && player.getOffhandItem().getItem() == ModItems.BEAR_GLOVES.get()) {
                 Vec3 deltaMovement = player.getDeltaMovement();
-                player.setDeltaMovement(deltaMovement.x, 0, deltaMovement.z);
+                 player.setDeltaMovement(deltaMovement.x, 0, deltaMovement.z);
                 if (!bftp$shouldPlayBearGloveWallAnim) {
                     bftp$shouldPlayBearGloveWallAnim = true;
                     this.resetFallDistance();
                     PacketDistributor.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), true));
                 }
+            } else if (bftp$shouldPlayBearGloveWallAnim) {
+                bftp$shouldPlayBearGloveWallAnim = false;
+                PacketDistributor.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
             }
             if (bftp$screenShake != null) {
                 bftp$screenShake.incrementElapsedTicks();
                 if (bftp$screenShake.elapsedTicks > bftp$screenShake.maxDuration) bftp$screenShake = null;
             }
-        }
-        else if (bftp$shouldPlayBearGloveWallAnim) {
-            bftp$shouldPlayBearGloveWallAnim = false;
-            PacketDistributor.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
         }
     }
 

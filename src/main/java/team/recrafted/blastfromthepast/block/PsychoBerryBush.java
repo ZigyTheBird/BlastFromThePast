@@ -46,7 +46,7 @@ import team.recrafted.blastfromthepast.init.ModItems;
 
 public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IShearable, BonemealableBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_1;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
     public static final MapCodec<PsychoBerryBush> CODEC = simpleCodec(PsychoBerryBush::new);
 
     public PsychoBerryBush(Properties properties) {
@@ -60,7 +60,7 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
     }
 
     protected boolean isRandomlyTicking(BlockState state) {
-        return state.getValue(AGE) < 1;
+        return state.getValue(AGE) < 2;
     }
     protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
         return Shapes.empty();
@@ -84,8 +84,8 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
 
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int i = state.getValue(AGE);
-        if (i < 1 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(10) == 0)) {
-            BlockState blockstate = (BlockState)state.setValue(AGE, i + 1);
+        if (i < 2 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(10) == 0)) {
+            BlockState blockstate = state.setValue(AGE, i + 1);
             level.setBlock(pos, blockstate, 2);
             CommonHooks.fireCropGrowPost(level, pos, state);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockstate));
@@ -103,13 +103,13 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
 
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int i = state.getValue(AGE);
-        boolean flag = i == 1;
+        boolean flag = i == 2;
         return !flag && stack.is(Items.BONE_MEAL) ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION : super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         int i = state.getValue(AGE);
-        if (i == 1) {
+        if (i == 2) {
             int j = 1 + level.random.nextInt(2);
             popResource(level, pos, new ItemStack(ModItems.PSYCHO_BERRY.get(), j));
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
@@ -127,7 +127,7 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
     }
 
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
-        return state.getValue(AGE) == 0;
+        return state.getValue(AGE) < 2;
     }
 
     public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
@@ -135,7 +135,7 @@ public class PsychoBerryBush extends Block implements SimpleWaterloggedBlock, IS
     }
 
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        int i = Math.min(1, state.getValue(AGE) + 1);
+        int i = Math.min(2, state.getValue(AGE) + 1);
         level.setBlock(pos, state.setValue(AGE, i), 2);
     }
 

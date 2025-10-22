@@ -41,6 +41,9 @@ public class ModItemTagsGen extends ItemTagsProvider {
         copy(BlockTags.LEAVES, ItemTags.LEAVES);
         copy(BlockTags.TALL_FLOWERS, ItemTags.TALL_FLOWERS);
 
+        tag(ModTags.Items.BURREL_FOOD)
+                .add(ModBlocks.PINECONE.asItem());
+
         tag(ModTags.Items.FROSTOMPER_FOOD)
                 .add(ModItems.MELON_ICE_CREAM.get());
         tag(ModTags.Items.FROSTOMPER_TEMPT_ITEMS)

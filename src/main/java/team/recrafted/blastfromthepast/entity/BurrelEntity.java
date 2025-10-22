@@ -41,9 +41,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.ai.goal.burrel.*;
 import team.recrafted.blastfromthepast.entity.ai.navigation.AzureNavigation;
-import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModEntities;
 import team.recrafted.blastfromthepast.init.ModSounds;
+import team.recrafted.blastfromthepast.init.ModTags;
 
 public class BurrelEntity extends TamableAnimal implements GeoEntity {
     public static final ResourceLocation STEP_ATTRIBUTE = ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MODID, "burrel_jump");
@@ -317,7 +317,7 @@ public class BurrelEntity extends TamableAnimal implements GeoEntity {
 
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return itemStack.is(ModBlocks.PINECONE.asItem());
+        return itemStack.is(ModTags.Items.BURREL_FOOD);
     }
 
     @Nullable

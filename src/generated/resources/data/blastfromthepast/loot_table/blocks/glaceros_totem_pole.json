@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:glaceros_totem_pole"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "blastfromthepast:blocks/glaceros_totem_pole"
+}

@@ -4,10 +4,10 @@
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": {
-    "item": "blastfromthepast:cooked_beast_chops"
+    "item": "blastfromthepast:raw_beast_chops"
   },
   "result": {
     "count": 1,
-    "id": "blastfromthepast:raw_beast_chops"
+    "id": "blastfromthepast:cooked_beast_chops"
   }
 }

@@ -933,7 +933,7 @@
 				}
 			}
 		},
-		"animation.snowdo.fall": {
+		"animation.snowdo.glide": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {

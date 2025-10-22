@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "ala",
+    "plp",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "tag": "minecraft:planks"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "a": {
+      "item": "blastfromthepast:straight_glaceros_antlers"
+    }
+  },
+  "result": {
+    "id": "blastfromthepast:antler_display",
+    "count": 1
+  }
+}

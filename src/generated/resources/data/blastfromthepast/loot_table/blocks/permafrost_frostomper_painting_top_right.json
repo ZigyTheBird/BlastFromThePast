@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:permafrost_frostomper_painting_top_right"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "blastfromthepast:blocks/permafrost_frostomper_painting_top_right"
+}

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_beast_chops": {
+    "blue_ice": {
       "conditions": {
         "items": [
           {
-            "items": "blastfromthepast:cooked_beast_chops"
+            "items": "minecraft:blue_ice"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "blastfromthepast:raw_beast_chops"
+        "recipe": "blastfromthepast:glacial_guidebook"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cooked_beast_chops"
+      "blue_ice"
     ]
   ],
   "rewards": {
     "recipes": [
-      "blastfromthepast:raw_beast_chops"
+      "blastfromthepast:glacial_guidebook"
     ]
   }
 }

@@ -66,7 +66,7 @@ public class ModItemModelGen extends ItemModelProvider {
         singleTextureDoublePlantBlock(ModBlocks.SNOW_LARKSPUR, true);
         singleTextureDoublePlantBlock(ModBlocks.BLUSH_LARKSPUR, true);
         withExistingParent(ModBlocks.BEASTLY_FEMUR.getId().getPath(), modLoc( "block/femur"));
-        withExistingParent(ModBlocks.PSYCHO_BERRY_BUSH.getId().getPath(), modLoc("block/grown_psycho_berry_bush"));
+        withExistingParent(ModBlocks.PSYCHO_BERRY_BUSH.getId().getPath(), modLoc("block/psycho_berry_bush"));
         singleTexturePlantBlock(ModBlocks.PSYCHO_BERRY_SPROUT);
         singleTextureBlock(ModBlocks.SNOWDO_EGG);
         createWithParent(ModBlocks.TAR);
