@@ -1,0 +1,121 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "blastfromthepast:shaggy_block",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "blastfromthepast:beastly_femur",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:bone",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "blastfromthepast:shaggy_pelt",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "blastfromthepast:speartooth",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:woods_pottery_sherd",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:frost_pottery_sherd",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:beast_pottery_sherd",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:ice_spear",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "blastfromthepast:blizzard_revelry_disc",
+          "weight": 5
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 5.0,
+        "min": 1.0
+      }
+    }
+  ],
+  "random_sequence": "blastfromthepast:chests/sloth_chest"
+}

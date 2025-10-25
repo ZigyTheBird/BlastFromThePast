@@ -4,7 +4,6 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import team.recrafted.blastfromthepast.entity.speartooth.SpeartoothEntity;
 
 public class SpeartoothBiteAttackGoal extends MeleeAttackGoal {
-    private int animationTimer;
     private final SpeartoothEntity tiger;
 
     public SpeartoothBiteAttackGoal(SpeartoothEntity tiger, double speedModifier, boolean followingTargetEvenIfNotSeen) {
@@ -20,7 +19,7 @@ public class SpeartoothBiteAttackGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        this.animationTimer = 0;
+        this.tiger.setAggressive(true);
         this.tiger.setTexture(SpeartoothEntity.Texture.AGGRESSIVE);
     }
 
@@ -35,13 +34,12 @@ public class SpeartoothBiteAttackGoal extends MeleeAttackGoal {
     @Override
     public void tick() {
         super.tick();
-        if (this.animationTimer <= 0) {
-            this.tiger.setState(SpeartoothEntity.State.BITE);
-        }
-        this.animationTimer++;
-        if (this.animationTimer >= 15 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
-            this.tiger.setState(SpeartoothEntity.State.IDLE);
-        }
-        this.tiger.setAggressive(this.animationTimer >= 15 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2);
+//        if (this.animationTimer <= 0) {
+//            this.tiger.setState(SpeartoothEntity.State.BITE);
+//        }
+//        this.animationTimer++;
+//        if (this.animationTimer >= 15 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
+//            this.tiger.setState(SpeartoothEntity.State.IDLE);
+//        }
     }
 }

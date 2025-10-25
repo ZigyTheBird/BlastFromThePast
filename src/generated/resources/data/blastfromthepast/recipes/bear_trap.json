@@ -10,9 +10,9 @@
     }
   },
   "pattern": [
-    "# #",
-    "# #",
-    "#H#"
+    "H H",
+    "H H",
+    "H#H"
   ],
   "result": {
     "item": "blastfromthepast:bear_trap"

@@ -16,7 +16,6 @@ public abstract class InventoryScreenMixin {
     private static void render(GuiGraphics guiGraphics, int x, int y, int scale, Quaternionf pose, Quaternionf cameraOrientation, LivingEntity entity, CallbackInfo ci) {
         if (entity instanceof FrostomperEntity frostomper) {
             frostomper.canAnimateLook = false;
-            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         }
     }
 

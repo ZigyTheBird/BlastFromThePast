@@ -19,7 +19,6 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.block.PsychoBerryBush;
-import team.recrafted.blastfromthepast.block.PsychoBerrySprout;
 import team.recrafted.blastfromthepast.init.ModBlocks;
 import team.recrafted.blastfromthepast.init.ModItems;
 
@@ -116,7 +115,6 @@ public class ModBlockLootGen extends BlockLootSubProvider {
                     this.add(bftpStoneGroup.REDSTONE_ORE.get(), this::createRedstoneOreDrops);
                 }
         );
-
 
         ModBlocks.getBlockGroups().forEach(
                 bftpBlockGroup -> {

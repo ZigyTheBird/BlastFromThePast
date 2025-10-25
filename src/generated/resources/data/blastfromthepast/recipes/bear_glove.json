@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "blastfromthepast:bear_claw"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    " C ",
+    "CLC",
+    "LLL"
+  ],
+  "result": {
+    "item": "blastfromthepast:bear_glove"
+  },
+  "show_notification": true
+}

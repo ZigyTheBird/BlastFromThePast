@@ -44,6 +44,9 @@ public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> CHILLY_MOSS = ResourceKey.create(Registries.CONFIGURED_FEATURE,
             ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "chilly_moss"));
 
+    public static ResourceKey<ConfiguredFeature<?, ?>> PERMAFROST_REPLACER = ResourceKey.create(Registries.CONFIGURED_FEATURE,
+            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "permafrost_replacer"));
+
     public static void register(BootstapContext<ConfiguredFeature<?, ?>> context){
         FeatureUtils.register(
                 context,
@@ -124,7 +127,7 @@ public class ModConfiguredFeatures {
                 )
         );
 
-        FeatureUtils.register(context, PSYCHO_BERRY, Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PSYCHO_BERRY_BUSH.get().defaultBlockState().setValue(PsychoBerryBush.AGE, 1))), List.of(Blocks.GRASS_BLOCK)));
+        FeatureUtils.register(context, PSYCHO_BERRY, ModFeatures.PSYCHO_BERRY_BUSH.get(), new BlockPileConfiguration(BlockStateProvider.simple(ModBlocks.PSYCHO_BERRY_BUSH.get())));
 
         FeatureUtils.register(context, PERMAFROST_BOULDERS, ModFeatures.BOULDER.get(), new BlockPileConfiguration(BlockStateProvider.simple(ModBlocks.PERMAFROST.STONE.get())));
         FeatureUtils.register(context, CHILLY_MOSS, ModFeatures.CHILLY_MOSS.get(), new NoneFeatureConfiguration());

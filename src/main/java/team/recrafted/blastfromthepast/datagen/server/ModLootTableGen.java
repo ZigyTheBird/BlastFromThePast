@@ -11,6 +11,8 @@ public class ModLootTableGen extends LootTableProvider {
     public ModLootTableGen(PackOutput output) {
         super(output, Set.of(),
                 List.of(new LootTableProvider.SubProviderEntry(ModEntityLootGen::new, LootContextParamSets.ENTITY),
-                        new LootTableProvider.SubProviderEntry(ModBlockLootGen::new, LootContextParamSets.BLOCK)));
+                        new LootTableProvider.SubProviderEntry(ModBlockLootGen::new, LootContextParamSets.BLOCK),
+                        new LootTableProvider.SubProviderEntry(ModChestLootGen::new, LootContextParamSets.CHEST)
+                ));
     }
 }

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_straight_glaceros_antlers": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "blastfromthepast:straight_glaceros_antlers"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "blastfromthepast:antler_display"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_straight_glaceros_antlers",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "blastfromthepast:antler_display"
+    ]
+  },
+  "sends_telemetry_event": false
+}

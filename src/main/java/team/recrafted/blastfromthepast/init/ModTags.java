@@ -22,9 +22,12 @@ public class ModTags {
         public static final TagKey<Item> ALLOWS_WALKING_ON_TAR = TagKey.create(Registries.ITEM, BlastFromThePast.location("allows_walking_on_tar"));
         public static final TagKey<Item> PERMAFROST_PAINTING = TagKey.create(Registries.ITEM, BlastFromThePast.location("permafrost_painting"));
     }
-    public static class Blocks{
+    public static class Blocks {
         public static final TagKey<Block> FROSTOMPER_CAN_BREAK = TagKey.create(Registries.BLOCK, ModEntities.FROSTOMPER.getId().withSuffix("_can_break"));
         public static final TagKey<Block> PSYCHO_BEAR_SCRATCHES_BACK_ON = TagKey.create(Registries.BLOCK, ModEntities.PSYCHO_BEAR.getId().withSuffix("_scratches_back_on"));
+
+        public static final TagKey<Block> PERMAFROST_ORE_REPLACEABLES = TagKey.create(Registries.BLOCK, BlastFromThePast.location("permafrost_ore_replaceables"));
+
     }
 
     public static class EntityTypes{

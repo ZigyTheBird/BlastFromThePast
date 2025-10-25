@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.vehicle.Boat;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 import team.recrafted.blastfromthepast.BlastFromThePast;
@@ -58,7 +59,7 @@ public class BFTPBoatRenderer extends EntityRenderer<BFTPBoat> {
         return pChestBoat ? "textures/entity/boat/chest/" + pType.getName() + ".png" : "textures/entity/boat/" + pType.getName() + ".png";
     }
 
-    public void render(BFTPBoat pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(BFTPBoat pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
         pMatrixStack.pushPose();
         pMatrixStack.translate(0.0F, 0.375F, 0.0F);
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(180.0F - pEntityYaw));
@@ -84,7 +85,7 @@ public class BFTPBoatRenderer extends EntityRenderer<BFTPBoat> {
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         listmodel.setupAnim(pEntity, pPartialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexconsumer = pBuffer.getBuffer(listmodel.renderType(resourcelocation));
-        listmodel.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, -1, -1, -1, -1);
+        listmodel.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         if (!pEntity.isUnderWater()) {
             VertexConsumer vertexconsumer1 = pBuffer.getBuffer(RenderType.waterMask());
             if (listmodel instanceof WaterPatchModel waterpatchmodel) {

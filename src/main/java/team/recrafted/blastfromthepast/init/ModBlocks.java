@@ -28,7 +28,7 @@ public class ModBlocks {
     //Stone
     public static final BFTPStoneGroup PERMAFROST = new BFTPStoneGroup("permafrost",  MapColor.STONE, new Item.Properties());
     //Blocks
-    public static final BFTPBlockGroup SNOW_BRICK = new BFTPBlockGroup("snow_brick", MapColor.SNOW, BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK), new Item.Properties());
+    public static final BFTPBlockGroup SNOW_BRICK = new BFTPBlockGroup("snow_brick", MapColor.SNOW, BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(0.2F).sound(SoundType.SNOW), new Item.Properties());
     public static final BFTPBlockGroup ICE_BRICK = new BFTPBlockGroup("ice_brick", MapColor.ICE, BlockBehaviour.Properties.copy(Blocks.ICE), new Item.Properties());
 
     //For loot generation
@@ -51,7 +51,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> BEASTLY_FEMUR = createRegistry("beastly_femur",
             () -> new FemurBlock(BlockBehaviour.Properties.copy(Blocks.BONE_BLOCK).noOcclusion()), new Item.Properties());
     public static final RegistryObject<Block> PSYCHO_BERRY_BUSH = createRegistry("psycho_berry_bush",
-            () -> new PsychoBerryBush(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES).noCollission()), new Item.Properties());
+            () -> new PsychoBerryBush(BlockBehaviour.Properties.copy(Blocks.SWEET_BERRY_BUSH).noCollission()), new Item.Properties());
     public static final RegistryObject<Block> PSYCHO_BERRY_SPROUT = createRegistry("psycho_berry_sprout",
             () -> new PsychoBerrySprout(BlockBehaviour.Properties.copy(Blocks.DANDELION).randomTicks()), null);
     public static final RegistryObject<CustomLogBlock> SAPPY_CEDAR_LOG = createRegistry("sappy_cedar_log",

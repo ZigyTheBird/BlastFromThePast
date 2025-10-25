@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.entity.misc.BackScratcher;
 import team.recrafted.blastfromthepast.util.DebugFlags;
@@ -50,7 +51,7 @@ public class ScratchBackOnTreeGoal<T extends PathfinderMob & BackScratcher> exte
     }
 
     @Override
-    protected int nextStartTick(PathfinderMob creature) {
+    protected int nextStartTick(@NotNull PathfinderMob creature) {
         return DebugFlags.DEBUG_BACK_SCRATCH ? 40 : super.nextStartTick(creature);
     }
 
@@ -127,7 +128,7 @@ public class ScratchBackOnTreeGoal<T extends PathfinderMob & BackScratcher> exte
                     BlastFromThePast.LOGGER.info("{} is no longer scratching their back at {}", this.backScratcher, above);
                 this.canScratchBack = false;
             }
-        } else{
+        } else {
             if(this.backScratchCounter > 0){
                 BlastFromThePast.LOGGER.info("Forcibly stopping active back scratch animation for {}", this.backScratcher);
                 this.backScratcher.setBackScratching(false);
@@ -148,7 +149,7 @@ public class ScratchBackOnTreeGoal<T extends PathfinderMob & BackScratcher> exte
     }
 
     @Override
-    protected boolean isValidTarget(LevelReader level, BlockPos pos) {
+    protected boolean isValidTarget(@NotNull LevelReader level, @NotNull BlockPos pos) {
         boolean isTree = this.isTree(level, pos);
         if (isTree && this.wantsToScratchBack && !this.canScratchBack) {
             this.canScratchBack = true;
@@ -175,7 +176,7 @@ public class ScratchBackOnTreeGoal<T extends PathfinderMob & BackScratcher> exte
         this.turning = false;
         if(this.backScratchCounter > 0){
             this.backScratchCounter = 0;
-        } else{
+        } else {
             if(DebugFlags.DEBUG_BACK_SCRATCH)
                 BlastFromThePast.LOGGER.info("Prematurely ending scratch back behavior for {}", this.backScratcher);
         }

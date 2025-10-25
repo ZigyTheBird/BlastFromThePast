@@ -61,7 +61,7 @@ public class SnowdoEntity extends Animal implements GeoEntity {
 
     public static final RawAnimation IDLE = RawAnimation.begin().then("animation.snowdo.idle", Animation.LoopType.DEFAULT);
     public static final RawAnimation TRIP = RawAnimation.begin().then("animation.snowdo.trip", Animation.LoopType.DEFAULT);
-    public static final RawAnimation GLIDE = RawAnimation.begin().then("animation.snowdo.glide", Animation.LoopType.DEFAULT);
+    public static final RawAnimation FALL = RawAnimation.begin().then("animation.snowdo.fall", Animation.LoopType.DEFAULT);
     public static final RawAnimation TAIL = RawAnimation.begin().then("animation.snowdo.tail", Animation.LoopType.DEFAULT);
     public static final RawAnimation WALK = RawAnimation.begin().then("animation.snowdo.walk", Animation.LoopType.DEFAULT);
     public static final RawAnimation DANCE = RawAnimation.begin().then("animation.snowdo.dance", Animation.LoopType.DEFAULT);
@@ -316,7 +316,7 @@ public class SnowdoEntity extends Animal implements GeoEntity {
         controllers.add(new AnimationController<GeoAnimatable>(this, "main", 5, state -> {
             if (this.isTripped()) return state.setAndContinue(TRIP);
             if(!this.isBaby()){
-                if (this.isGliding()) return state.setAndContinue(GLIDE);
+                if (this.isGliding()) return state.setAndContinue(FALL);
             }
             if (state.isMoving()) return state.setAndContinue(WALK);
             if (this.party && !this.isBaby()) return state.setAndContinue(DANCE);

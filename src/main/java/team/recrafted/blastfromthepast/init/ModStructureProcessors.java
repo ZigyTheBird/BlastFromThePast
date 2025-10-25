@@ -5,6 +5,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import team.recrafted.blastfromthepast.BlastFromThePast;
+import team.recrafted.blastfromthepast.worldgen.processors.SlothDecoratedPotRandomizerProcessor;
 import team.recrafted.blastfromthepast.worldgen.processors.SlothPaintingRandomizerProcessor;
 
 public class ModStructureProcessors {
@@ -13,4 +14,7 @@ public class ModStructureProcessors {
 
     public static final RegistryObject<StructureProcessorType<SlothPaintingRandomizerProcessor>> SLOTH_PAINTING_RANDOMIZER
             = STRUCTURE_PROCESSORS.register("sloth_painting_randomizer", () -> () -> SlothPaintingRandomizerProcessor.CODEC.codec());
+
+    public static final RegistryObject<StructureProcessorType<SlothDecoratedPotRandomizerProcessor>> SLOTH_DECORATED_POT_RANDOMIZER
+            = STRUCTURE_PROCESSORS.register("sloth_decorated_pot_randomizer", () -> () -> SlothDecoratedPotRandomizerProcessor.CODEC.codec());
 }

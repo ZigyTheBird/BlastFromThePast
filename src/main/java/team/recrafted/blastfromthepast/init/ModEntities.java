@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -73,8 +74,11 @@ public class ModEntities {
             .clientTrackingRange(10)
             .build(getName("chest_boat")));
 
-    public static final RegistryObject<EntityType<PsychoBearEntity>> PSYCHO_BEAR = registerMob("psycho_bear", PsychoBearEntity::new,
-            HitboxHelper.pixelsToBlocks(53.0F), HitboxHelper.pixelsToBlocks(33.0F));
+    public static final RegistryObject<EntityType<PsychoBearEntity>> PSYCHO_BEAR =
+            ENTITIES.register("psycho_bear",
+                    () -> EntityType.Builder.of(PsychoBearEntity::new, MobCategory.CREATURE).sized(HitboxHelper.pixelsToBlocks(53.0F), HitboxHelper.pixelsToBlocks(33.0F))
+                            .immuneTo(Blocks.SWEET_BERRY_BUSH)
+                            .build("psycho_bear"));
 
     public static final RegistryObject<EntityType<HollowEntity>> HOLLOW = ENTITIES.register("hollow", () -> EntityType.Builder
             .of(HollowEntity::new, MobCategory.MISC)

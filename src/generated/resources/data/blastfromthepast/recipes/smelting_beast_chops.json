@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "blastfromthepast:raw_beast_chops"
+  },
+  "result": "blastfromthepast:cooked_beast_chops"
+}

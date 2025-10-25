@@ -15,6 +15,7 @@ import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
@@ -60,10 +61,15 @@ public class ModEntityLootGen extends EntityLootSubProvider {
         this.add(ModEntities.GLACEROS.get(), GLACEROS_CURLY, createGlacerosTable(ModItems.CURLY_GLACEROS_ANTLERS.get()));
         this.add(ModEntities.GLACEROS.get(), GLACEROS_SPIKEY, createGlacerosTable(ModItems.SPIKEY_GLACEROS_ANTLERS.get()));
 
-        this.add(ModEntities.SNOWDO.get(), LootTable.lootTable());
-        this.add(ModEntities.FROSTOMPER.get(), LootTable.lootTable());
-        this.add(ModEntities.SPEARTOOTH.get(), LootTable.lootTable());
         this.add(ModEntities.BURREL.get(), LootTable.lootTable());
+        this.add(ModEntities.SPEARTOOTH.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(
+                                LootItem.lootTableItem(ModItems.SPEARTOOTH.get())
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.6f, 0.1f)))
+                ));
         this.add(ModEntities.PSYCHO_BEAR.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))

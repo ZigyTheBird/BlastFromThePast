@@ -18,10 +18,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -107,9 +104,6 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
 
     private EntityPack<SpeartoothEntity> pack;
 
-    private Goal huntPlayerGoal;
-    private Goal huntGlacerosGoal;
-
     public SpeartoothEntity(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 5;
@@ -158,10 +152,8 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
         this.targetSelector.addGoal(t++, new HurtByTargetGoal(this).setAlertOthers());
         this.targetSelector.addGoal(t++, new PackHurtByTargetGoal<>(this, Predicate.not(AgeableMob::isBaby), AgeableMob::isBaby));
         // Hunt Glaceros and players
-        this.huntGlacerosGoal = new NearestAttackableTargetGoal<>(this, GlacerosEntity.class, false);
-        this.huntPlayerGoal = new NearestAttackableTargetGoal<>(this, Player.class, true);
-        this.targetSelector.addGoal(t, huntGlacerosGoal);
-        this.targetSelector.addGoal(t, huntPlayerGoal);
+        this.targetSelector.addGoal(t, new NonTameRandomTargetGoal<>(this, GlacerosEntity.class, false, (mob)-> true));
+        this.targetSelector.addGoal(t, new NonTameRandomTargetGoal<>(this, Player.class, true, (mob)->true));
     }
 
     private Ingredient isTemptItem() {
@@ -198,8 +190,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
 
     public void setTame(boolean tame, boolean applyTamingSideEffects) {
         if (tame) {
-            this.targetSelector.removeGoal(huntGlacerosGoal);
-            this.targetSelector.removeGoal(huntPlayerGoal);
+
         }
     }
 
@@ -543,6 +534,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if(huntCooldown>0 && source.getEntity() instanceof LivingEntity) huntCooldown=0;
         this.jukebox = null;
         this.party = false;
         return super.hurt(source, amount);
@@ -597,7 +589,7 @@ public class SpeartoothEntity extends TamableAnimal implements ComplexAnimal, Ge
                 if (state == State.LUNGE) return state1.setAndContinue(LUNGE);
             }
             if (state1.isMoving()) {
-                if (!this.isBaby() && this.getDeltaMovement().length() > 5.5) return state1.setAndContinue(RUN);
+                if (!this.isBaby() && this.isAggressive()) return state1.setAndContinue(RUN);
                 return state1.setAndContinue(WALK);
             }
             if (this.party && !this.isBaby()) return state1.setAndContinue(DANCE);

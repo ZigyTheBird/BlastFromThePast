@@ -118,7 +118,7 @@ public class FrostomperEntity extends AbstractChestedHorse implements GeoEntity,
     public static final RawAnimation STOMP_FLIPPED = RawAnimation.begin().then("animation.frostomper.stomp_flipped", Animation.LoopType.DEFAULT);
     public static final RawAnimation FLING = RawAnimation.begin().then("animation.frostomper.fling", Animation.LoopType.DEFAULT);
     public static final RawAnimation CHARGE = RawAnimation.begin().then("animation.frostomper.charge", Animation.LoopType.DEFAULT);
-    public static final RawAnimation TAILS = RawAnimation.begin().then("animation.frostomper.tails", Animation.LoopType.DEFAULT);
+    public static final RawAnimation TAILS = RawAnimation.begin().then("animation.frostomper.tail", Animation.LoopType.DEFAULT);
     public static final RawAnimation EARS = RawAnimation.begin().then("animation.frostomper.ears", Animation.LoopType.DEFAULT);
     public static final RawAnimation WALK = RawAnimation.begin().then("animation.frostomper.walk", Animation.LoopType.DEFAULT);
     public static final RawAnimation TRUMPET = RawAnimation.begin().then("animation.frostomper.trumpet", Animation.LoopType.DEFAULT);

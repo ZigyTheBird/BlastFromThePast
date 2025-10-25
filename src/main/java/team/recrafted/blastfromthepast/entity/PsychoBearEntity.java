@@ -34,6 +34,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
@@ -122,6 +123,7 @@ public class PsychoBearEntity extends Animal implements GeoEntity, OverrideAnima
         super(entityType, level);
         this.lookControl = new OverridableLookControl<>(this);
         this.moveControl = new OverridableMoveControl<>(this);
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_OTHER, 0.0F);
         this.setCanPickUpLoot(true);
         this.setMaxUpStep(1.0f);
     }

@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,10 +21,7 @@ import team.recrafted.blastfromthepast.client.vfx.ScreenShake;
 import team.recrafted.blastfromthepast.init.ModItems;
 import team.recrafted.blastfromthepast.init.ModSounds;
 import team.recrafted.blastfromthepast.network.BearGloveWallAnimPayload;
-import team.recrafted.blastfromthepast.network.FrostomperCollidePayload;
 import team.recrafted.blastfromthepast.util.ClientUtils;
-
-import javax.annotation.Nonnull;
 
 /**
  * Prevent inventory drops if player's items are to be stored in the Hollow.
@@ -59,25 +55,31 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerBFTPData
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci) {
         Player player = (Player)(Object)this;
-        if (player.level().isClientSide) {
-            if (ClientUtils.isPlayerHoldingSpace(player) && player.horizontalCollision
-                    && player.getMainHandItem().getItem() == ModItems.BEAR_GLOVES.get() && player.getOffhandItem().getItem() == ModItems.BEAR_GLOVES.get()) {
-                Vec3 deltaMovement = player.getDeltaMovement();
-                player.setDeltaMovement(deltaMovement.x, 0, deltaMovement.z);
-                if (!bftp$shouldPlayBearGloveWallAnim) {
-                    bftp$shouldPlayBearGloveWallAnim = true;
-                    this.resetFallDistance();
-                    BlastFromThePast.INSTANCE.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), true));
-                }
+
+        if (!player.level().isClientSide)
+            return; // this mixin should only run logic on client
+
+        if (ClientUtils.isPlayerHoldingSpace(player) && player.horizontalCollision
+                && player.getMainHandItem().getItem() == ModItems.BEAR_GLOVES.get() && player.getOffhandItem().getItem() == ModItems.BEAR_GLOVES.get()) {
+            Vec3 delta = player.getDeltaMovement();
+            player.setDeltaMovement(delta.x, 0, delta.z);
+
+            if (!bftp$shouldPlayBearGloveWallAnim) {
+                bftp$shouldPlayBearGloveWallAnim = true;
+                player.resetFallDistance();
+                BlastFromThePast.INSTANCE.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), true));
             }
-            if (bftp$screenShake != null) {
-                bftp$screenShake.incrementElapsedTicks();
-                if (bftp$screenShake.elapsedTicks > bftp$screenShake.maxDuration) bftp$screenShake = null;
+        } else {
+            if (bftp$shouldPlayBearGloveWallAnim) {
+                bftp$shouldPlayBearGloveWallAnim = false;
+                BlastFromThePast.INSTANCE.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
             }
         }
-        else if (bftp$shouldPlayBearGloveWallAnim) {
-            bftp$shouldPlayBearGloveWallAnim = false;
-            BlastFromThePast.INSTANCE.sendToServer(new BearGloveWallAnimPayload(player.getUUID(), false));
+
+        if (bftp$screenShake != null) {
+            bftp$screenShake.incrementElapsedTicks();
+            if (bftp$screenShake.elapsedTicks > bftp$screenShake.maxDuration)
+                bftp$screenShake = null;
         }
     }
 

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "blastfromthepast:spikey_glaceros_antlers"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "ALA",
+    "WWW",
+    "WWW"
+  ],
+  "result": {
+    "item": "blastfromthepast:spikey_antler_display"
+  },
+  "show_notification": true
+}

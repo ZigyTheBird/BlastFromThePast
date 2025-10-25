@@ -5,6 +5,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.init.ModBiomes;
@@ -17,8 +18,9 @@ public class ModBiomeTagsGen extends BiomeTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
-        this.tag(BiomeTags.IS_FOREST).add(ModBiomes.FROSTBITE_FOREST);
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
+        //No add to this tag, otherwise mobs from other mods can spawn on the forest
+//        this.tag(BiomeTags.IS_FOREST).add(ModBiomes.FROSTBITE_FOREST);
         this.tag(BiomeTags.IS_RIVER).add(ModBiomes.FROSTBITE_RIVER);
     }
 }

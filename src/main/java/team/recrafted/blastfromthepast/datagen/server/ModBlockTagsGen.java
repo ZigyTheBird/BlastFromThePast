@@ -3,10 +3,7 @@ package team.recrafted.blastfromthepast.datagen.server;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -79,6 +76,29 @@ public class ModBlockTagsGen extends BlockTagsProvider {
 
         loadBlockGroupBlockTags(ModBlocks.ICE_BRICK);
         loadBlockGroupBlockTags(ModBlocks.SNOW_BRICK);
+
+        tag(ModTags.Blocks.PERMAFROST_ORE_REPLACEABLES)
+                .add(ModBlocks.PERMAFROST.STONE.get())
+                .add(Blocks.ICE)
+                .add(Blocks.PACKED_ICE)
+                .add(Blocks.BLUE_ICE);
+
+        tag(BlockTags.IRON_ORES)
+                .add(ModBlocks.PERMAFROST.IRON_ORE.get());
+        tag(BlockTags.GOLD_ORES)
+                .add(ModBlocks.PERMAFROST.GOLD_ORE.get());
+        tag(BlockTags.REDSTONE_ORES)
+                .add(ModBlocks.PERMAFROST.REDSTONE_ORE.get());
+        tag(BlockTags.LAPIS_ORES)
+                .add(ModBlocks.PERMAFROST.LAPIS_ORE.get());
+        tag(BlockTags.COPPER_ORES)
+                .add(ModBlocks.PERMAFROST.COPPER_ORE.get());
+        tag(BlockTags.COAL_ORES)
+                .add(ModBlocks.PERMAFROST.COAL_ORE.get());
+        tag(BlockTags.EMERALD_ORES)
+                .add(ModBlocks.PERMAFROST.EMERALD_ORE.get());
+        tag(BlockTags.DIAMOND_ORES)
+                .add(ModBlocks.PERMAFROST.DIAMOND_ORE.get());
     }
 
     private void loadStoneGroupBlockTags(BFTPStoneGroup stoneGroup){

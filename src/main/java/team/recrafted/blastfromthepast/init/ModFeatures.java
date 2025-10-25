@@ -10,6 +10,7 @@ import team.recrafted.blastfromthepast.BlastFromThePast;
 import team.recrafted.blastfromthepast.worldgen.feature.BoulderPlacer;
 import team.recrafted.blastfromthepast.worldgen.feature.ChillyMossFeature;
 import team.recrafted.blastfromthepast.worldgen.feature.PitFeature;
+import team.recrafted.blastfromthepast.worldgen.feature.PsychoBerryBushPlacer;
 
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, BlastFromThePast.MOD_ID);
@@ -19,6 +20,9 @@ public class ModFeatures {
 
     public static final RegistryObject<Feature<BlockPileConfiguration>> BOULDER = FEATURES.register("boulder",
             () -> new BoulderPlacer(BlockPileConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<BlockPileConfiguration>> PSYCHO_BERRY_BUSH = FEATURES.register("psycho_berry_bush",
+            () -> new PsychoBerryBushPlacer(BlockPileConfiguration.CODEC));
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> CHILLY_MOSS = FEATURES.register("chilly_moss",
             ChillyMossFeature::new);
