@@ -22,6 +22,7 @@ import team.recrafted.blastfromthepast.block.CedarLeavesBlock;
 import team.recrafted.blastfromthepast.block.PineconeBlock;
 import team.recrafted.blastfromthepast.block.PsychoBerryBush;
 import team.recrafted.blastfromthepast.block.TarBlock;
+import team.recrafted.blastfromthepast.worldgen.feature.AlterTrunkDecorator;
 import team.recrafted.blastfromthepast.worldgen.feature.CedarFoliagePlacer;
 import team.recrafted.blastfromthepast.worldgen.feature.PitFeature;
 
@@ -44,9 +45,6 @@ public class ModConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> CHILLY_MOSS = ResourceKey.create(Registries.CONFIGURED_FEATURE,
             ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "chilly_moss"));
 
-    public static ResourceKey<ConfiguredFeature<?, ?>> PERMAFROST_REPLACER = ResourceKey.create(Registries.CONFIGURED_FEATURE,
-            ResourceLocation.fromNamespaceAndPath(BlastFromThePast.MOD_ID, "permafrost_replacer"));
-
     public static void register(BootstapContext<ConfiguredFeature<?, ?>> context){
         FeatureUtils.register(
                 context,
@@ -59,7 +57,11 @@ public class ModConfiguredFeatures {
                         new CedarFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 0, 2)
                 )
-                        .decorators(List.of(new AttachedToLeavesDecorator(0.14F, 0, 0, BlockStateProvider.simple(ModBlocks.PINECONE.get().defaultBlockState().setValue(PineconeBlock.HANGING, true)), 1, List.of(Direction.DOWN))))
+                        .decorators(List.of(
+                                new AttachedToLeavesDecorator(0.14F, 0, 0,
+                                        BlockStateProvider.simple(ModBlocks.PINECONE.get().defaultBlockState().setValue(PineconeBlock.HANGING, true)), 1, List.of(Direction.DOWN)),
+                                new AlterTrunkDecorator(0.10F,
+                                        BlockStateProvider.simple(ModBlocks.SAPPY_CEDAR_LOG.get().defaultBlockState()), true, 2)))
                         .build()
         );
         FeatureUtils.register(
@@ -73,7 +75,11 @@ public class ModConfiguredFeatures {
                         new CedarFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0)),
                         new TwoLayersFeatureSize(1, 0, 2)
                 )
-                        .decorators(List.of(new AttachedToLeavesDecorator(0.14F, 0, 0, BlockStateProvider.simple(ModBlocks.PINECONE.get().defaultBlockState().setValue(PineconeBlock.HANGING, true)), 1, List.of(Direction.DOWN))))
+                        .decorators(List.of(
+                                new AttachedToLeavesDecorator(0.14F, 0, 0,
+                                        BlockStateProvider.simple(ModBlocks.PINECONE.get().defaultBlockState().setValue(PineconeBlock.HANGING, true)), 1, List.of(Direction.DOWN)),
+                                new AlterTrunkDecorator(0.10F,
+                                        BlockStateProvider.simple(ModBlocks.SAPPY_CEDAR_LOG.get().defaultBlockState()), true, 2)))
                         .build()
         );
         FeatureUtils.register(

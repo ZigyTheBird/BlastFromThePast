@@ -70,6 +70,7 @@ public class BlastFromThePast {
         ModBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
         ModDecoratedPatterns.PATTERNS.register(modEventBus);
         ModFeatures.FEATURES.register(modEventBus);
+        ModFeatures.TREE_DECORATORS.register(modEventBus);
         ModDataSerializers.DATA_SERIALIZERS.register(modEventBus);
         ModFoliageTypes.FOLIAGE_PLACER_TYPES.register(modEventBus);
         ModMobEffects.MOB_EFFECTS.register(modEventBus);

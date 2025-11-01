@@ -1,3 +1,13 @@
+# 1.0.4 - 1.20.1
+### Additions
+- Added a probability of spawning sappy cedar logs
+
+### Changes
+- Modified frostomper and psychobear guidebook entry
+
+### Fixes
+- Cedar log can actually grow sap now
+
 # 1.0.3 - 1.20.1
 ### Additions
 - Added recipe for the glacial guidebook; 1 book surrounded by 4 blue ice

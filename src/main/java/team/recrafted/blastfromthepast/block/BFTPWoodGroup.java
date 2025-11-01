@@ -67,7 +67,9 @@ public class BFTPWoodGroup {
         FENCE = blockRegister.register(name + "_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE).mapColor(color)));
         FENCE_GATE = blockRegister.register(name + "_fence_gate", () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE).mapColor(color), woodType));
         STRIPPED_LOG = blockRegister.register("stripped_" + name + "_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).mapColor(color)));
-        LOG = blockRegister.register(name + "_log", () -> new CustomLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(color), STRIPPED_LOG));
+        if(name.equals("cedar")){
+            LOG = blockRegister.register(name + "_log", () -> new CedarLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(color), STRIPPED_LOG));
+        } else LOG = blockRegister.register(name + "_log", () -> new CustomLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(color), STRIPPED_LOG));
         STRIPPED_WOOD = blockRegister.register("stripped_" + name + "_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).mapColor(color)));
         WOOD = blockRegister.register(name + "_wood", () -> new CustomLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).mapColor(color), STRIPPED_WOOD));
         DOOR = blockRegister.register(name + "_door", () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR).mapColor(color), woodSetType));
