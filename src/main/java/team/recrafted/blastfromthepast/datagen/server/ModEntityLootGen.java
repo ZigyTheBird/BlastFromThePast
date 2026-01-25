@@ -62,9 +62,15 @@ public class ModEntityLootGen extends EntityLootSubProvider {
         this.add(ModEntities.GLACEROS.get(), GLACEROS_CURLY, createGlacerosTable(ModItems.CURLY_GLACEROS_ANTLERS));
         this.add(ModEntities.GLACEROS.get(), GLACEROS_SPIKEY, createGlacerosTable(ModItems.SPIKEY_GLACEROS_ANTLERS));
 
-        this.add(ModEntities.SNOWDO.get(), LootTable.lootTable());
-        this.add(ModEntities.FROSTOMPER.get(), LootTable.lootTable());
-        this.add(ModEntities.SPEARTOOTH.get(), LootTable.lootTable());
+        this.add(ModEntities.SPEARTOOTH.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(
+                                LootItem.lootTableItem(ModItems.SPEARTOOTH)
+                                        .setWeight(3)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))
+                ));
         this.add(ModEntities.BURREL.get(), LootTable.lootTable());
         this.add(ModEntities.PSYCHO_BEAR.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
