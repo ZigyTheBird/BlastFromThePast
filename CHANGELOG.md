@@ -1,3 +1,2 @@
 ### Fixes 
-- Fixed Speartooths not dropping anything.  
-- Fixed block loot tables being terrible. (Issue #26)
+- Tries to fix the issue where some users cannot load frostbite forest chunks.

@@ -36,7 +36,7 @@ import team.recrafted.blastfromthepast.util.EntityHelper;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-@EventBusSubscriber(modid = BlastFromThePast.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = BlastFromThePast.MODID)
 public class NeoForgeEvents {
     public static Predicate<BlockState> PERMAFROST_PREDICATE = state -> {
         Block block = state.getBlock();
@@ -64,7 +64,7 @@ public class NeoForgeEvents {
         if (!event.isNewChunk()) return;
         if (event.getChunk().getNoiseBiome(0, 0, 0).is(ModBiomes.FROSTBITE_RIVER) || event.getChunk().getNoiseBiome(0, 0, 0).is(ModBiomes.FROSTBITE_FOREST)) {
             event.getChunk().findBlocks(PERMAFROST_PREDICATE, (pos, state) -> {
-                event.getLevel().setBlock(pos, PERMAFROST_FUNCTION.apply(state), 4, 0);
+                event.getLevel().setBlock(pos, PERMAFROST_FUNCTION.apply(state), 0, 0);
             });
         }
     }
